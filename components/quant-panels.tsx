@@ -233,12 +233,12 @@ function Toggle({
   onChange: (v: string) => void;
 }) {
   return (
-    <div className="scroll-x flex gap-1 rounded-md border border-rule-soft bg-paper-2 p-1" role="tablist">
+    <div className="scroll-x flex gap-1 rounded-md border border-rule-soft bg-paper-2 p-1">
       {options.map((o) => (
         <button
           key={o.value}
-          role="tab"
-          aria-selected={value === o.value}
+          type="button"
+          aria-pressed={value === o.value}
           onClick={() => onChange(o.value)}
           className={`whitespace-nowrap rounded px-3 py-1.5 mono text-[11.5px] transition-colors ${
             value === o.value ? "bg-paper text-ink shadow-sm" : "text-ink-3 hover:text-ink-2"
