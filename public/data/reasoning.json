@@ -1,0 +1,85 @@
+{
+  "paper": {
+    "title": "Resampled Thought Trees: Measuring Intermediate-State Utility in Tree-of-Thought Search",
+    "authors": ["Nishka Parikh", "Faraaz Rahman", "Jithin Rajan", "Raunak Sood", "Weston Trautmann"],
+    "affiliation": "University of Southern California",
+    "model": "LLaMA-family, served locally through Ollama"
+  },
+  "scale": [
+    { "experiment": "Game24 resampling", "summaries": 1600, "trials": 16000, "trees": 200, "leaves": 2.935 },
+    { "experiment": "Game24 ablation", "summaries": 792, "trials": null, "trees": null, "leaves": null },
+    { "experiment": "Crossword branch-diverse", "summaries": 387, "trials": 3870, "trees": 40, "leaves": 0.575 },
+    { "experiment": "Crossword high-score-path", "summaries": 248, "trials": 2480, "trees": 40, "leaves": 0.525 }
+  ],
+  "categories": [
+    { "key": "critical", "label": "Critical", "rule": "p̂ ≥ 0.75, not redundant", "meaning": "Reliably preserves success and is close to necessary for it.", "color": "teal" },
+    { "key": "redundant_viable", "label": "Redundant-viable", "rule": "p̂ ≥ 0.75 and R > 1.5", "meaning": "Preserves many successful futures, but the puzzle survives without it.", "color": "ochre" },
+    { "key": "mixed", "label": "Mixed", "rule": "otherwise", "meaning": "Unstable — utility depends on the draw.", "color": "ink3" },
+    { "key": "misleading", "label": "Misleading", "rule": "rank ≤ 2 and p̂ ≤ 0.25", "meaning": "The model ranks it highly and it goes almost nowhere.", "color": "clay" },
+    { "key": "dead_end", "label": "Dead end", "rule": "p̂ ≤ 0.05", "meaning": "No successful continuation was ever found from here.", "color": "muted" }
+  ],
+  "game24_categories": [
+    { "temp": "0.0", "dead_end": 598, "critical": 101, "redundant_viable": 101, "mixed": 0, "misleading": 0 },
+    { "temp": "0.2", "dead_end": 564, "critical": 96, "redundant_viable": 84, "mixed": 47, "misleading": 9 }
+  ],
+  "depth_game24": [
+    { "temp": "0.0", "depth": 1, "n": 396, "success": 0.3889, "leaves": 0.7854 },
+    { "temp": "0.0", "depth": 2, "n": 404, "success": 0.1188, "leaves": 0.1411 },
+    { "temp": "0.2", "depth": 1, "n": 397, "success": 0.3861, "leaves": 0.7327 },
+    { "temp": "0.2", "depth": 2, "n": 403, "success": 0.1052, "leaves": 0.1223 }
+  ],
+  "depth_crossword": [
+    { "temp": "0.0", "depth": 1, "n": 72, "success": 0.1806 },
+    { "temp": "0.0", "depth": 4, "n": 18, "success": 0.7222 },
+    { "temp": "0.0", "depth": 16, "n": 17, "success": 0.7647 },
+    { "temp": "0.0", "depth": 24, "n": 15, "success": 0.8667 },
+    { "temp": "0.0", "depth": 32, "n": 13, "success": 1.0 },
+    { "temp": "0.0", "depth": 36, "n": 3, "success": 1.0 },
+    { "temp": "0.2", "depth": 1, "n": 72, "success": 0.1458 },
+    { "temp": "0.2", "depth": 4, "n": 17, "success": 0.6294 },
+    { "temp": "0.2", "depth": 16, "n": 14, "success": 0.75 },
+    { "temp": "0.2", "depth": 24, "n": 12, "success": 0.9333 },
+    { "temp": "0.2", "depth": 32, "n": 10, "success": 1.0 },
+    { "temp": "0.2", "depth": 36, "n": 2, "success": 1.0 }
+  ],
+  "ablation": {
+    "overall": { "base_solve": 0.6806, "abl_solve": 0.6822, "d_solve": -0.0016, "base_leaves": 2.4283, "abl_leaves": 2.2655, "d_leaves": 0.1628 },
+    "by_category": [
+      { "category": "dead_end", "n": 499, "node_success": 0.0, "solve_drop": -0.0685, "leaf_drop": -0.3128 },
+      { "category": "critical", "n": 113, "node_success": 0.9735, "solve_drop": 0.1133, "leaf_drop": 0.3938 },
+      { "category": "redundant_viable", "n": 139, "node_success": 0.9986, "solve_drop": 0.136, "leaf_drop": 1.7791 },
+      { "category": "mixed", "n": 31, "node_success": 0.371, "solve_drop": 0.0226, "leaf_drop": -0.2032 },
+      { "category": "misleading", "n": 10, "node_success": 0.11, "solve_drop": 0.05, "leaf_drop": -0.05 }
+    ]
+  },
+  "rank_game24": [
+    { "temp": "0.0", "rank": 1, "n": 496, "success": 0.1613, "leaves": 0.244 },
+    { "temp": "0.0", "rank": 2, "n": 108, "success": 0.4074, "leaves": 0.8333 },
+    { "temp": "0.0", "rank": 3, "n": 100, "success": 0.39, "leaves": 0.87 },
+    { "temp": "0.0", "rank": 4, "n": 96, "success": 0.4062, "leaves": 0.7292 },
+    { "temp": "0.2", "rank": 1, "n": 497, "success": 0.1646, "leaves": 0.2521 },
+    { "temp": "0.2", "rank": 2, "n": 106, "success": 0.3802, "leaves": 0.7538 },
+    { "temp": "0.2", "rank": 3, "n": 100, "success": 0.379, "leaves": 0.721 },
+    { "temp": "0.2", "rank": 4, "n": 97, "success": 0.368, "leaves": 0.6485 }
+  ],
+  "rank_crossword": [
+    { "rank": 1, "critical": 207, "dead_end": 46, "mixed": 17, "misleading": 13 },
+    { "rank": 2, "critical": 0, "dead_end": 40, "mixed": 0, "misleading": 0 },
+    { "rank": 3, "critical": 2, "dead_end": 30, "mixed": 0, "misleading": 0 },
+    { "rank": 4, "critical": 0, "dead_end": 32, "mixed": 0, "misleading": 0 }
+  ],
+  "examples": [
+    { "task": "Game24", "puzzle": "1 1 4 6", "thought": "1 + 1 = 2", "rank": 1, "category": "dead_end", "utility": 0.0, "reading": "Locally top-ranked, and no successful future exists below it." },
+    { "task": "Game24", "puzzle": "1 1 11 11", "thought": "11 + 11 = 22", "rank": 4, "category": "critical", "utility": 1.0, "reading": "Ranked last of four, and reliably preserves the solution." },
+    { "task": "Game24", "puzzle": "1 2 3 4", "thought": "1 + 3 = 4", "rank": null, "category": "dead_end", "utility": 0.0, "reading": "Blocking this branch raises the solve rate from 0.0 to 1.0 — it was consuming the search budget." },
+    { "task": "Game24", "puzzle": "2 2 4 6", "thought": "4 × 6 = 24", "rank": null, "category": "redundant_viable", "utility": 1.0, "reading": "Blocking it leaves solve rate at 1.0 but cuts successful leaves from 7 to 1." },
+    { "task": "Crossword", "puzzle": "tot_medium11x11_000", "thought": "1A PAREL", "rank": null, "category": "dead_end", "utility": 0.0, "reading": "A wrong early fill dies immediately under crossing constraints." },
+    { "task": "Crossword", "puzzle": "tot_medium11x11_000", "thought": "24D NUMPS", "rank": null, "category": "critical", "utility": 1.0, "reading": "A deep surviving state at depth 32; the grid has passed many compatibility checks." },
+    { "task": "Crossword", "puzzle": "tot_medium11x11_007", "thought": "1A COULD", "rank": 1, "category": "misleading", "utility": 0.2, "reading": "Top-ranked fill with low downstream success." }
+  ],
+  "trees": [
+    { "task": "Game24", "trees": 200, "success_trees": 159, "avg_nodes": 82.365, "max_depth": 3.0, "leaves": 2.935 },
+    { "task": "Crossword · branch-diverse", "trees": 40, "success_trees": 23, "avg_nodes": 37.525, "max_depth": 28.975, "leaves": 0.575 },
+    { "task": "Crossword · high-score-path", "trees": 40, "success_trees": 21, "avg_nodes": 36.0, "max_depth": 27.8, "leaves": 0.525 }
+  ]
+}
