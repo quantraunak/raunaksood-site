@@ -4,10 +4,10 @@ import { useMemo, useState } from "react";
 import r from "@/public/data/reasoning.json";
 
 const COLOR: Record<string, string> = {
-  critical: "var(--color-teal)",
-  redundant_viable: "var(--color-ochre)",
+  critical: "var(--color-kelp)",
+  redundant_viable: "var(--color-deep)",
   mixed: "var(--color-ink-3)",
-  misleading: "var(--color-clay)",
+  misleading: "var(--color-coral)",
   dead_end: "var(--color-ink-3)",
 };
 const OPACITY: Record<string, number> = {
@@ -70,7 +70,7 @@ export function ResamplingDemo() {
             step={2}
             value={trials}
             onChange={(e) => setTrials(Number(e.target.value))}
-            className="w-[200px] accent-[var(--color-ochre)]"
+            className="w-[200px] accent-[var(--color-deep)]"
             aria-label="Resampling trials per node"
           />
         </div>
@@ -83,7 +83,7 @@ export function ResamplingDemo() {
             title={ok ? "reached a solution" : "no solution"}
             className="h-6 w-6 rounded-[3px] transition-colors"
             style={{
-              background: ok ? "var(--color-teal)" : "var(--color-paper-3)",
+              background: ok ? "var(--color-kelp)" : "var(--color-paper-3)",
               opacity: ok ? 0.85 : 1,
             }}
           />
@@ -187,7 +187,7 @@ export function TreeExplorer() {
                   key={n.id}
                   d={`M${a.x},${a.y + 13} C${a.x},${a.y + 44} ${b.x},${b.y - 44} ${b.x},${b.y - 13}`}
                   fill="none"
-                  stroke={cut ? "var(--color-clay)" : "var(--color-rule)"}
+                  stroke={cut ? "var(--color-coral)" : "var(--color-rule)"}
                   strokeWidth={cut ? 1.2 : 1.4}
                   strokeDasharray={cut ? "3 3" : undefined}
                 />
@@ -254,7 +254,7 @@ export function TreeExplorer() {
                 })
               }
               disabled={node.depth === 0}
-              className="mt-5 w-full rounded border border-rule px-3 py-2 mono text-[11.5px] text-ink-2 transition-colors hover:border-ochre hover:text-ochre disabled:opacity-30 disabled:hover:border-rule disabled:hover:text-ink-2"
+              className="mt-5 w-full rounded border border-rule px-3 py-2 mono text-[11.5px] text-ink-2 transition-colors hover:border-[var(--color-sea)] hover:text-[var(--color-sea)] disabled:opacity-30 disabled:hover:border-rule disabled:hover:text-ink-2"
             >
               {ablated.has(node.id) ? "restore branch" : "ablate branch"}
             </button>
@@ -267,13 +267,13 @@ export function TreeExplorer() {
               <Row
                 label="solution leaves"
                 value={String(solutionLeaves)}
-                color={solutionLeaves === 0 ? "var(--color-clay)" : "var(--color-teal)"}
+                color={solutionLeaves === 0 ? "var(--color-coral)" : "var(--color-kelp)"}
               />
             </div>
             {ablated.size > 0 && (
               <button
                 onClick={() => setAblated(new Set())}
-                className="mt-4 mono text-[11px] text-ink-3 underline hover:text-ochre"
+                className="mt-4 mono text-[11px] text-ink-3 underline hover:text-[var(--color-sea)]"
               >
                 reset
               </button>
@@ -344,7 +344,7 @@ export function DepthCurve() {
           <polyline
             points={rows.map((d) => `${x(d.depth)},${y(d.success)}`).join(" ")}
             fill="none"
-            stroke={task === "crossword" ? "var(--color-teal)" : "var(--color-ochre)"}
+            stroke={task === "crossword" ? "var(--color-kelp)" : "var(--color-deep)"}
             strokeWidth="1.8"
           />
           {rows.map((d) => (
@@ -353,10 +353,10 @@ export function DepthCurve() {
                 cx={x(d.depth)}
                 cy={y(d.success)}
                 r={Math.max(3.5, Math.min(9, Math.sqrt(d.n)))}
-                fill={task === "crossword" ? "var(--color-teal)" : "var(--color-ochre)"}
+                fill={task === "crossword" ? "var(--color-kelp)" : "var(--color-deep)"}
                 fillOpacity="0.28"
               />
-              <circle cx={x(d.depth)} cy={y(d.success)} r="3" fill={task === "crossword" ? "var(--color-teal)" : "var(--color-ochre)"} />
+              <circle cx={x(d.depth)} cy={y(d.success)} r="3" fill={task === "crossword" ? "var(--color-kelp)" : "var(--color-deep)"} />
               <text x={x(d.depth)} y={H - 20} textAnchor="middle" className="mono" fontSize="9.5" fill="var(--color-ink-3)">
                 {d.depth}
               </text>
@@ -412,7 +412,7 @@ export function AblationPanel() {
                   style={{
                     left: v >= 0 ? "50%" : `${50 - pct}%`,
                     width: `${pct}%`,
-                    background: v >= 0 ? "var(--color-teal)" : "var(--color-clay)",
+                    background: v >= 0 ? "var(--color-kelp)" : "var(--color-coral)",
                     opacity: 0.8,
                   }}
                 />
@@ -437,7 +437,7 @@ export function AblationPanel() {
           <div className="space-y-2.5">
             <Row label="baseline leaves" value={r.ablation.overall.base_leaves.toFixed(4)} />
             <Row label="ablated leaves" value={r.ablation.overall.abl_leaves.toFixed(4)} />
-            <Row label="Δ leaves" value={r.ablation.overall.d_leaves.toFixed(4)} color="var(--color-teal)" />
+            <Row label="Δ leaves" value={r.ablation.overall.d_leaves.toFixed(4)} color="var(--color-kelp)" />
           </div>
         </div>
       </div>

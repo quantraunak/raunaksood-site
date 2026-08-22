@@ -52,7 +52,7 @@ function TreeSpark({ accent }: { accent: string }) {
     [1, 4], [1, 5], [3, 6], [3, 7],
   ];
   const fill = (k: string) =>
-    k === "critical" ? accent : k === "redundant" ? "var(--color-ochre)" : "var(--color-ink-3)";
+    k === "critical" ? accent : k === "redundant" ? "var(--color-deep)" : "var(--color-ink-3)";
 
   return (
     <Frame label="node utility, by category">

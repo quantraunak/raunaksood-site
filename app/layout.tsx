@@ -95,12 +95,12 @@ function SiteNav() {
   return (
     <nav className="sticky top-0 z-40 backdrop-blur-md bg-[color-mix(in_srgb,var(--color-paper)_86%,transparent)] border-b border-rule-soft">
       <div className="mx-auto flex max-w-[1080px] items-center justify-between gap-4 px-6 py-3.5 sm:px-8">
-        <Link href="/" className="serif text-[17px] hover:text-ochre transition-colors">
+        <Link href="/" className="serif text-[17px] hover:text-[var(--color-sea)] transition-colors">
           Raunak&nbsp;Sood
         </Link>
         <div className="scroll-x flex items-center gap-5 mono text-[11.5px] text-ink-2">
           {NAV.map((item) => (
-            <Link key={item.href} href={item.href} className="whitespace-nowrap hover:text-ochre transition-colors">
+            <Link key={item.href} href={item.href} className="whitespace-nowrap hover:text-[var(--color-sea)] transition-colors">
               {item.label}
             </Link>
           ))}
@@ -116,16 +116,16 @@ function SiteFooter() {
       <div className="rule flex flex-wrap items-baseline justify-between gap-4 py-8 mono text-[11.5px] text-ink-3">
         <span>© {new Date().getFullYear()} Raunak Sood · Los Altos, California</span>
         <span className="flex flex-wrap gap-5">
-          <a href="mailto:raunak.sood@gmail.com" className="hover:text-ochre transition-colors">
+          <a href="mailto:raunak.sood@gmail.com" className="hover:text-[var(--color-sea)] transition-colors">
             email
           </a>
-          <a href="https://github.com/quantraunak" className="hover:text-ochre transition-colors">
+          <a href="https://github.com/quantraunak" className="hover:text-[var(--color-sea)] transition-colors">
             github
           </a>
-          <a href="https://www.linkedin.com/in/raunak-sood" className="hover:text-ochre transition-colors">
+          <a href="https://www.linkedin.com/in/raunak-sood" className="hover:text-[var(--color-sea)] transition-colors">
             linkedin
           </a>
-          <a href="/Raunak-Sood-Resume.pdf" className="hover:text-ochre transition-colors">
+          <a href="/Raunak-Sood-Resume.pdf" className="hover:text-[var(--color-sea)] transition-colors">
             résumé
           </a>
         </span>

@@ -44,7 +44,7 @@ export function CaseHeader({
 }) {
   return (
     <header className="pt-14 pb-12 sm:pt-20">
-      <Link href="/" className="mono text-[11.5px] text-ink-3 hover:text-ochre transition-colors">
+      <Link href="/" className="mono text-[11.5px] text-ink-3 hover:text-[var(--color-sea)] transition-colors">
         ← index
       </Link>
       <div className="eyebrow mt-8">{kind}</div>
@@ -64,7 +64,7 @@ export function CaseHeader({
             <a
               key={l.href}
               href={l.href}
-              className="mono text-[12.5px] text-ochre border-b border-transparent hover:border-ochre transition-colors"
+              className="mono text-[12.5px] text-[var(--color-sea)] border-b border-transparent hover:border-[var(--color-sea)] transition-colors"
             >
               {l.label} <span className="text-[10px] opacity-60">↗</span>
             </a>
@@ -85,7 +85,7 @@ export function Callout({
   title?: string;
   children: React.ReactNode;
 }) {
-  const color = tone === "warn" ? "var(--color-clay)" : "var(--color-teal)";
+  const color = tone === "warn" ? "var(--color-coral)" : "var(--color-kelp)";
   return (
     <div className="my-7 border-l-2 pl-5" style={{ borderColor: color }}>
       {title && (
@@ -130,7 +130,7 @@ export function Table({
           {rows.map((row, r) => (
             <tr
               key={r}
-              className={highlight === r ? "bg-[var(--color-ochre-soft)]" : ""}
+              className={highlight === r ? "bg-[var(--color-accent-soft)]" : ""}
             >
               {row.map((cell, i) => (
                 <td

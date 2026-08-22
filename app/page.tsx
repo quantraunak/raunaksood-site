@@ -2,6 +2,8 @@ import Link from "next/link";
 import quant from "@/public/data/quant.json";
 import { Shell, Section } from "@/components/ui";
 import { HomeSpark } from "@/components/home-spark";
+import { Hero } from "@/components/hero";
+import { OnScroll } from "@/components/charts";
 
 const PROJECTS = [
   {
@@ -15,7 +17,7 @@ const PROJECTS = [
       { v: "2.00", l: "t-statistic" },
       { v: "59%", l: "of edge is beta" },
     ],
-    accent: "var(--color-ochre)",
+    accent: "var(--color-deep)",
   },
   {
     href: "/work/reasoning",
@@ -28,7 +30,7 @@ const PROJECTS = [
       { v: "2,235", l: "node summaries" },
       { v: "792", l: "ablation rows" },
     ],
-    accent: "var(--color-teal)",
+    accent: "var(--color-kelp)",
   },
   {
     href: "/work/melange",
@@ -41,7 +43,7 @@ const PROJECTS = [
       { v: "0", l: "backend servers" },
       { v: "30", l: "tests passing" },
     ],
-    accent: "var(--color-clay)",
+    accent: "var(--color-coral)",
   },
 ];
 
@@ -90,7 +92,9 @@ const EXPERIENCE = [
 export default function Home() {
   return (
     <Shell>
-      <header className="pt-16 pb-4 sm:pt-24">
+      <div className="relative">
+        <Hero />
+      <header className="relative pt-16 pb-4 sm:pt-28">
         <h1 className="serif text-[clamp(40px,7vw,66px)] leading-[1.02] reveal">Raunak Sood</h1>
         <p className="lede mt-6 max-w-[600px] reveal" style={{ animationDelay: "60ms" }}>
           Machine learning and quantitative research. Currently{" "}
@@ -108,20 +112,21 @@ export default function Home() {
             <a
               key={href}
               href={href}
-              className="text-ink-2 border-b border-rule pb-0.5 hover:text-ochre hover:border-ochre transition-colors"
+              className="text-ink-2 border-b border-rule pb-0.5 hover:text-[var(--color-sea)] hover:border-[var(--color-sea)] transition-colors"
             >
               {label}
             </a>
           ))}
         </div>
       </header>
+      </div>
 
       <Section eyebrow="Approach">
         <div className="prose max-w-[700px] text-[17px]">
           <p>
             I build research systems and then try to break them. The most useful thing in the
             equity work below is not its Sharpe ratio — it is the finding that{" "}
-            <strong>59% of the apparent edge was market beta</strong>, and that a headline which
+            <strong className="tide text-[1.15em] font-medium">59% of the apparent edge was market beta</strong>, and that a headline which
             moves from 0.09 to 0.49 under a random seed is a draw from a distribution rather than a
             measurement.
           </p>
@@ -135,8 +140,8 @@ export default function Home() {
       <Section eyebrow="Selected work">
         <div className="space-y-px">
           {PROJECTS.map((p, i) => (
+            <OnScroll key={p.href} delay={i * 70}>
             <Link
-              key={p.href}
               href={p.href}
               className="group block rule-soft py-9 first:border-t-0 first:pt-0 transition-colors"
             >
@@ -148,7 +153,7 @@ export default function Home() {
                       read →
                     </span>
                   </div>
-                  <h3 className="serif mt-2.5 text-[25px] group-hover:text-ochre transition-colors">
+                  <h3 className="serif mt-2.5 text-[25px] group-hover:text-[var(--color-sea)] transition-colors">
                     {p.title}
                   </h3>
                   <p className="mt-3 max-w-[600px] text-[15.5px] leading-relaxed text-ink-2">{p.blurb}</p>
@@ -166,6 +171,7 @@ export default function Home() {
                 </div>
               </div>
             </Link>
+            </OnScroll>
           ))}
         </div>
       </Section>

@@ -66,18 +66,18 @@ export default function ReasoningPage() {
                   style={{
                     background:
                       c.color === "teal"
-                        ? "var(--color-teal)"
+                        ? "var(--color-kelp)"
                         : c.color === "ochre"
-                        ? "var(--color-ochre)"
+                        ? "var(--color-deep)"
                         : c.color === "clay"
-                        ? "var(--color-clay)"
+                        ? "var(--color-coral)"
                         : "var(--color-ink-3)",
                     opacity: c.color === "muted" ? 0.35 : 1,
                   }}
                 />
                 <span className="text-[15px] font-medium">{c.label}</span>
               </div>
-              <div className="mono mt-2 text-[11.5px] text-ochre">{c.rule}</div>
+              <div className="mono mt-2 text-[11.5px] text-[var(--color-sea)]">{c.rule}</div>
               <p className="mt-2 text-[14px] leading-relaxed text-ink-2">{c.meaning}</p>
             </div>
           ))}
@@ -220,11 +220,11 @@ export default function ReasoningPage() {
                     style={{
                       color:
                         e.category === "critical"
-                          ? "var(--color-teal)"
+                          ? "var(--color-kelp)"
                           : e.category === "redundant_viable"
-                          ? "var(--color-ochre)"
+                          ? "var(--color-deep)"
                           : e.category === "misleading"
-                          ? "var(--color-clay)"
+                          ? "var(--color-coral)"
                           : "var(--color-ink-3)",
                     }}
                   >

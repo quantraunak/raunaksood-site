@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import q from "@/public/data/quant.json";
 import { Shell, Section, CaseHeader, Callout, StatRow, Table, Column } from "@/components/ui";
 import { Stat } from "@/components/charts";
-import { EquityPanel, SeedPanel, FactorPanel, DecompositionPanel, SmoothingPanel } from "@/components/quant-panels";
+import { EquityBrush, RegimePanel, SeedPanel, FactorPanel, DecompositionPanel, SmoothingPanel } from "@/components/quant-panels";
 
 export const metadata: Metadata = {
   title: "Point-in-time equity research",
@@ -67,14 +67,30 @@ export default function QuantPage() {
       </Section>
 
       <Section eyebrow="Out-of-sample" title="Equity curve, net of costs">
-        <EquityPanel />
+        <EquityBrush />
         <Column className="prose mt-8 text-[15px]">
           <p>
-            Every trading day in the window carries a return. That sounds like a low bar; the
-            previous version of this engine failed it, and the failure is the first thing the
-            rewrite had to fix.
+            Drag across the chart to select any window and the statistics recompute from the daily
+            series. It is worth doing: the headline 0.29 is an average over two regimes that have
+            almost nothing to do with each other.
+          </p>
+          <p>
+            Every trading day carries a return. That sounds like a low bar; the previous version of
+            this engine failed it, and the failure is the first thing the rewrite had to fix.
           </p>
         </Column>
+      </Section>
+
+      <Section eyebrow="Why 0.29" title="Two regimes, not one strategy">
+        <Column className="prose">
+          <p>
+            The single most useful thing to know about this backtest is that the Sharpe is not
+            uniformly poor. It is one long wound followed by a decent run.
+          </p>
+        </Column>
+        <div className="mt-9">
+          <RegimePanel />
+        </div>
       </Section>
 
       <Section eyebrow="Post-mortem" title="Six defects that manufactured an edge">
@@ -156,7 +172,7 @@ export default function QuantPage() {
             ],
           ].map(([t, d]) => (
             <li key={t} className="rule-soft pt-4 first:border-t-0 first:pt-0">
-              <div className="mono text-[12.5px] text-ochre">{t}</div>
+              <div className="mono text-[12.5px] text-[var(--color-sea)]">{t}</div>
               <p className="mt-1.5 text-[14.5px] leading-relaxed text-ink-2">{d}</p>
             </li>
           ))}

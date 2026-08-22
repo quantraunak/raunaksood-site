@@ -1,20 +1,35 @@
 @import "tailwindcss";
 
-/* ---------------------------------------------------------------- tokens */
+/* ================================================================= tokens
+   Ocean, light. Surface is a pale cool wash rather than white so the
+   figures can sit on it without a card around them; ink is deep navy
+   rather than black so nothing on the page is fully saturated.        */
 
 @theme {
-  --color-paper: #f7f5f0;
-  --color-paper-2: #f0ede5;
-  --color-paper-3: #e8e4da;
-  --color-ink: #1a1917;
-  --color-ink-2: #55514a;
-  --color-ink-3: #8a847a;
-  --color-rule: rgba(26, 25, 23, 0.11);
-  --color-rule-soft: rgba(26, 25, 23, 0.06);
-  --color-ochre: #a06d26;
-  --color-ochre-soft: rgba(160, 109, 38, 0.12);
-  --color-teal: #2f6b66;
-  --color-clay: #9c4a33;
+  --color-paper: #f2f7fa;
+  --color-paper-2: #e9f1f6;
+  --color-paper-3: #dce8f0;
+  --color-paper-4: #cfe0eb;
+
+  --color-ink: #08202f;
+  --color-ink-2: #3a5f76;
+  --color-ink-3: #7597ab;
+
+  --color-rule: rgba(8, 32, 47, 0.1);
+  --color-rule-soft: rgba(8, 32, 47, 0.055);
+
+  /* depth ramp: shallow → deep */
+  --color-shallow: #4cc7d4;
+  --color-sea: #109bb4;
+  --color-deep: #0b6d8f;
+  --color-abyss: #0a4463;
+
+  --color-kelp: #12977f;
+  --color-coral: #e4694a;
+  --color-sand: #d9a441;
+
+  --color-accent: var(--color-deep);
+  --color-accent-soft: rgba(11, 109, 143, 0.11);
 
   --font-serif: "Fraunces", "Iowan Old Style", Georgia, serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
@@ -23,22 +38,33 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-paper: #131211;
-    --color-paper-2: #1a1917;
-    --color-paper-3: #232120;
-    --color-ink: #ede9e1;
-    --color-ink-2: #aca69c;
-    --color-ink-3: #78726a;
-    --color-rule: rgba(255, 255, 255, 0.12);
-    --color-rule-soft: rgba(255, 255, 255, 0.06);
-    --color-ochre: #c9a05c;
-    --color-ochre-soft: rgba(201, 160, 92, 0.14);
-    --color-teal: #6aada6;
-    --color-clay: #d08b72;
+    --color-paper: #071722;
+    --color-paper-2: #0c2130;
+    --color-paper-3: #122d3f;
+    --color-paper-4: #1a3a4e;
+
+    --color-ink: #e2eef5;
+    --color-ink-2: #9dbccd;
+    --color-ink-3: #648499;
+
+    --color-rule: rgba(160, 205, 230, 0.16);
+    --color-rule-soft: rgba(160, 205, 230, 0.08);
+
+    --color-shallow: #6ddfe9;
+    --color-sea: #3bbdd4;
+    --color-deep: #4fb6d6;
+    --color-abyss: #8fd4e8;
+
+    --color-kelp: #3fc3a8;
+    --color-coral: #ff8f6e;
+    --color-sand: #e8bd68;
+
+    --color-accent: var(--color-deep);
+    --color-accent-soft: rgba(79, 182, 214, 0.16);
   }
 }
 
-/* --------------------------------------------------------------- base */
+/* ================================================================== base */
 
 * {
   box-sizing: border-box;
@@ -60,6 +86,7 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   font-feature-settings: "kern", "liga";
+  overflow-x: hidden;
 }
 
 a {
@@ -68,21 +95,21 @@ a {
 }
 
 ::selection {
-  background: var(--color-ochre-soft);
+  background: var(--color-accent-soft);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-ochre);
+  outline: 2px solid var(--color-sea);
   outline-offset: 3px;
-  border-radius: 2px;
+  border-radius: 3px;
 }
 
-/* --------------------------------------------------------- typography */
+/* ============================================================ typography */
 
 .serif {
   font-family: var(--font-serif);
   font-weight: 400;
-  letter-spacing: -0.018em;
+  letter-spacing: -0.02em;
 }
 
 .mono {
@@ -115,52 +142,43 @@ a {
   color: var(--color-ink);
   font-weight: 550;
 }
+.prose em {
+  font-style: italic;
+}
 .prose code {
   font-family: var(--font-mono);
   font-size: 0.86em;
   background: var(--color-paper-3);
-  padding: 0.12em 0.36em;
+  padding: 0.12em 0.38em;
   border-radius: 3px;
   color: var(--color-ink);
 }
-
-/* ------------------------------------------------------------ numerals */
 
 .tnum {
   font-variant-numeric: tabular-nums;
 }
 
-/* ------------------------------------------------------------- motion */
-
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+/* Gradient text for the one or two numbers that carry a section. */
+.tide {
+  background: linear-gradient(100deg, var(--color-sea), var(--color-abyss));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
-.reveal {
-  animation: rise 0.62s cubic-bezier(0.22, 1, 0.36, 1) both;
+/* =============================================================== surfaces */
+
+.card {
+  background: var(--color-paper-2);
+  border: 1px solid var(--color-rule-soft);
+  border-radius: 12px;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  .reveal,
-  [class*="animate-"] {
-    animation: none !important;
-    transition: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-  }
+.card-quiet {
+  background: color-mix(in srgb, var(--color-paper-2) 55%, transparent);
+  border: 1px solid var(--color-rule-soft);
+  border-radius: 12px;
 }
-
-/* --------------------------------------------------------------- rules */
 
 .rule {
   border-top: 1px solid var(--color-rule);
@@ -169,9 +187,85 @@ a {
   border-top: 1px solid var(--color-rule-soft);
 }
 
-/* Wide content must scroll inside itself, never the page. */
+/* Wide content scrolls inside itself, never the page. */
 .scroll-x {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
+}
+
+/* ================================================================ motion */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes draw {
+  from {
+    stroke-dashoffset: var(--dash, 2000);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(-2.5%, -1.5%, 0);
+  }
+}
+
+.reveal {
+  animation: rise 0.66s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Scroll-triggered: starts hidden, revealed by IntersectionObserver. */
+.onscroll {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.onscroll.in {
+  opacity: 1;
+  transform: none;
+}
+
+.draw-in {
+  stroke-dasharray: var(--dash, 2000);
+  animation: draw 1.9s cubic-bezier(0.35, 0.8, 0.35, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal,
+  .draw-in,
+  [class*="animate-"] {
+    animation: none !important;
+  }
+  .onscroll {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ================================================================= range */
+
+input[type="range"] {
+  accent-color: var(--color-sea);
 }

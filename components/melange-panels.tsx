@@ -42,7 +42,7 @@ export function Architecture() {
               className={`rounded-lg border p-5 text-left transition-colors ${
                 on ? "bg-paper-2" : "border-rule-soft hover:border-rule"
               }`}
-              style={{ borderColor: on ? "var(--color-clay)" : undefined }}
+              style={{ borderColor: on ? "var(--color-coral)" : undefined }}
             >
               <div className="flex items-center justify-between gap-4">
                 <span className="eyebrow">{l.label}</span>
@@ -128,11 +128,11 @@ export function RowLevelSecurity() {
         <div className="mt-5 flex items-center gap-2.5 rule-soft pt-4">
           <span
             className="h-2.5 w-2.5 rounded-full"
-            style={{ background: c.allowed ? "var(--color-teal)" : "var(--color-clay)" }}
+            style={{ background: c.allowed ? "var(--color-kelp)" : "var(--color-coral)" }}
           />
           <span
             className="mono text-[12px] uppercase tracking-[0.12em]"
-            style={{ color: c.allowed ? "var(--color-teal)" : "var(--color-clay)" }}
+            style={{ color: c.allowed ? "var(--color-kelp)" : "var(--color-coral)" }}
           >
             {c.allowed ? "rows returned" : "zero rows"}
           </span>
@@ -146,9 +146,9 @@ export function RowLevelSecurity() {
 /* ------------------------------------------------------------ swipe deck */
 
 const CARDS = [
-  { name: "Ana", role: "Photographer", tags: ["editorial", "35mm", "Los Angeles"], accent: "var(--color-clay)" },
-  { name: "Malik", role: "Stylist", tags: ["archive", "menswear", "NYC"], accent: "var(--color-ochre)" },
-  { name: "Yuki", role: "Model", tags: ["runway", "beauty", "Tokyo"], accent: "var(--color-teal)" },
+  { name: "Ana", role: "Photographer", tags: ["editorial", "35mm", "Los Angeles"], accent: "var(--color-coral)" },
+  { name: "Malik", role: "Stylist", tags: ["archive", "menswear", "NYC"], accent: "var(--color-deep)" },
+  { name: "Yuki", role: "Model", tags: ["runway", "beauty", "Tokyo"], accent: "var(--color-kelp)" },
 ];
 
 export function SwipeDeck() {
@@ -217,7 +217,7 @@ export function SwipeDeck() {
         <button
           onClick={() => swipe("right")}
           className="rounded-full border px-5 py-2 mono text-[11.5px] transition-colors"
-          style={{ borderColor: "var(--color-teal)", color: "var(--color-teal)" }}
+          style={{ borderColor: "var(--color-kelp)", color: "var(--color-kelp)" }}
         >
           collaborate
         </button>
