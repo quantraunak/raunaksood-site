@@ -1,12 +1,12 @@
 import Link from "next/link";
 
 export function Shell({ children }: { children: React.ReactNode }) {
-  return <div className="mx-auto max-w-[1080px] px-6 sm:px-8">{children}</div>;
+  return <div className="mx-auto w-full max-w-[1320px] px-6 sm:px-10 lg:px-14">{children}</div>;
 }
 
 /** Narrow column for reading; charts and tables break out of it deliberately. */
 export function Column({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <div className={`max-w-[720px] ${className}`}>{children}</div>;
+  return <div className={`max-w-[760px] ${className}`}>{children}</div>;
 }
 
 export function Section({

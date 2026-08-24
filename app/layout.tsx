@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
+import { SiteNav } from "@/components/site-nav";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://raunaksood.vercel.app"),
@@ -22,12 +23,6 @@ export const metadata: Metadata = {
   twitter: { card: "summary" },
   robots: { index: true, follow: true },
 };
-
-const NAV = [
-  { href: "/work/quant", label: "Equity research" },
-  { href: "/work/reasoning", label: "LLM reasoning" },
-  { href: "/work/melange", label: "Melange" },
-];
 
 const PERSON_SCHEMA = {
   "@context": "https://schema.org",
@@ -91,28 +86,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   );
 }
 
-function SiteNav() {
-  return (
-    <nav className="sticky top-0 z-40 backdrop-blur-md bg-[color-mix(in_srgb,var(--color-paper)_86%,transparent)] border-b border-rule-soft">
-      <div className="mx-auto flex max-w-[1080px] items-center justify-between gap-4 px-6 py-3.5 sm:px-8">
-        <Link href="/" className="serif text-[17px] hover:text-[var(--color-sea)] transition-colors">
-          Raunak&nbsp;Sood
-        </Link>
-        <div className="scroll-x flex items-center gap-5 mono text-[11.5px] text-ink-2">
-          {NAV.map((item) => (
-            <Link key={item.href} href={item.href} className="whitespace-nowrap hover:text-[var(--color-sea)] transition-colors">
-              {item.label}
-            </Link>
-          ))}
-        </div>
-      </div>
-    </nav>
-  );
-}
-
 function SiteFooter() {
   return (
-    <footer className="mx-auto max-w-[1080px] px-6 sm:px-8">
+    <footer className="mx-auto w-full max-w-[1320px] px-6 sm:px-10 lg:px-14">
       <div className="rule flex flex-wrap items-baseline justify-between gap-4 py-8 mono text-[11.5px] text-ink-3">
         <span>© {new Date().getFullYear()} Raunak Sood · Los Altos, California</span>
         <span className="flex flex-wrap gap-5">

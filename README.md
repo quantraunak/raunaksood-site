@@ -6,11 +6,11 @@ inherit the same colour tokens as the text.
 
 ## Data provenance
 
-`public/data/quant.json` is generated from a real backtest run directory in
-[ls-multifactor-research](https://github.com/quantraunak/ls-multifactor-research); the
-build reads it rather than restating numbers by hand. The site records which run it came
-from, so a stale figure is visible rather than silent — the previous version of this site
-published a Sharpe of 1.46 for months after that figure had been withdrawn.
+`public/data/quant.json` is generated from a backtest run directory in
+[ls-multifactor-research](https://github.com/quantraunak/ls-multifactor-research); the build
+reads it rather than restating numbers by hand, and every page that shows a figure also shows
+the run id it came from. Numbers on this site are therefore traceable to a specific run rather
+than transcribed from a notebook.
 
 `public/data/reasoning.json` transcribes the tables from the Resampled Thought Trees paper.
 

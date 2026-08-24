@@ -6,10 +6,10 @@
    rather than black so nothing on the page is fully saturated.        */
 
 @theme {
-  --color-paper: #f2f7fa;
-  --color-paper-2: #e9f1f6;
-  --color-paper-3: #dce8f0;
-  --color-paper-4: #cfe0eb;
+  --color-paper: #ffffff;
+  --color-paper-2: #f4f9fc;
+  --color-paper-3: #e7f1f7;
+  --color-paper-4: #d6e7f1;
 
   --color-ink: #08202f;
   --color-ink-2: #3a5f76;
@@ -38,7 +38,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-paper: #071722;
+    --color-paper: #05121b;
     --color-paper-2: #0c2130;
     --color-paper-3: #122d3f;
     --color-paper-4: #1a3a4e;
@@ -185,6 +185,13 @@ a {
 }
 .rule-soft {
   border-top: 1px solid var(--color-rule-soft);
+}
+
+/* Full-bleed: break a child out of its container to the viewport edge. */
+.bleed {
+  width: 100vw;
+  margin-left: 50%;
+  transform: translateX(-50%);
 }
 
 /* Wide content scrolls inside itself, never the page. */
