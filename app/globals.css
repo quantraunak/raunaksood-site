@@ -134,9 +134,11 @@ a {
 .prose p {
   color: var(--color-ink-2);
   max-width: 68ch;
+  font-size: 16.5px;
+  line-height: 1.75;
 }
 .prose p + p {
-  margin-top: 1em;
+  margin-top: 1.15em;
 }
 .prose strong {
   color: var(--color-ink);

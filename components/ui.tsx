@@ -1,12 +1,12 @@
 import Link from "next/link";
 
 export function Shell({ children }: { children: React.ReactNode }) {
-  return <div className="mx-auto w-full max-w-[1320px] px-6 sm:px-10 lg:px-14">{children}</div>;
+  return <div className="mx-auto w-full max-w-[1240px] px-7 sm:px-12 lg:px-16">{children}</div>;
 }
 
 /** Narrow column for reading; charts and tables break out of it deliberately. */
 export function Column({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <div className={`max-w-[760px] ${className}`}>{children}</div>;
+  return <div className={`max-w-[68ch] ${className}`}>{children}</div>;
 }
 
 export function Section({
@@ -21,9 +21,9 @@ export function Section({
   className?: string;
 }) {
   return (
-    <section className={`rule py-14 sm:py-16 ${className}`}>
-      {eyebrow && <div className="eyebrow mb-3">{eyebrow}</div>}
-      {title && <h2 className="serif text-[26px] sm:text-[30px] mb-7 leading-tight">{title}</h2>}
+    <section className={`rule py-16 sm:py-24 ${className}`}>
+      {eyebrow && <div className="eyebrow mb-4">{eyebrow}</div>}
+      {title && <h2 className="serif mb-9 text-[28px] leading-tight sm:text-[34px]">{title}</h2>}
       {children}
     </section>
   );
@@ -43,12 +43,12 @@ export function CaseHeader({
   links?: { href: string; label: string }[];
 }) {
   return (
-    <header className="pt-14 pb-12 sm:pt-20">
+    <header className="pb-14 pt-14 sm:pb-16 sm:pt-20">
       <Link href="/" className="mono text-[11.5px] text-ink-3 hover:text-[var(--color-sea)] transition-colors">
         ← index
       </Link>
       <div className="eyebrow mt-8">{kind}</div>
-      <h1 className="serif mt-3 text-[clamp(32px,5.4vw,50px)] leading-[1.06]">{title}</h1>
+      <h1 className="serif mt-3 text-[clamp(34px,5.6vw,58px)] leading-[1.05]">{title}</h1>
       <div className="lede prose mt-6 max-w-[680px]">{lede}</div>
       <dl className="mt-9 flex flex-wrap gap-x-10 gap-y-4">
         {meta.map((m) => (
@@ -93,7 +93,7 @@ export function Callout({
           {title}
         </div>
       )}
-      <div className="prose text-[15.5px]">{children}</div>
+      <div className="prose text-[16px] leading-[1.7]">{children}</div>
     </div>
   );
 }

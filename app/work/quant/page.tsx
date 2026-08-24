@@ -115,19 +115,19 @@ export default function QuantPage() {
             handled naively:
           </p>
         </Column>
-        <ul className="mt-5 max-w-[720px] space-y-4">
+        <ul className="mt-6 max-w-[720px] space-y-5">
           {[
             [
               "Restatements",
-              "A period is reported repeatedly as it is revised. The earliest filing is kept, because that is the number the market saw.",
+              "A period is reported many times as it is revised. The earliest filing is kept — that is the number the market saw.",
             ],
             [
               "Year-to-date reporting",
-              "Cash-flow statements are filed cumulatively and the 10-K reports the year rather than Q4. Taking “quarterly” facts at face value dropped 56 of 72 quarters of operating cash flow for Apple. Both cases are one problem — a long period sharing its start with a shorter one — solved by differencing to a fixed point.",
+              "Cash flow is filed cumulatively, and the 10-K reports the year rather than Q4. Taking “quarterly” facts at face value dropped 56 of 72 quarters of Apple’s operating cash flow.",
             ],
             [
               "Tag migration",
-              "SalesRevenueNet gave way to RevenueFromContractWithCustomerExcludingAssessedTax under ASC 606 in 2018. Selecting a single tag truncates history at the switch, so candidate tags are merged rather than chosen.",
+              "Revenue changed XBRL tags under ASC 606 in 2018. Picking one tag truncates history at the switch, so candidates are merged.",
             ],
           ].map(([t, d]) => (
             <li key={t} className="rule-soft pt-4 first:border-t-0 first:pt-0">
@@ -205,11 +205,9 @@ export default function QuantPage() {
       <Section eyebrow="Turnover" title="Smoothing buys signal and sells churn">
         <Column className="prose">
           <p>
-            The information sits mostly in fundamentals that only move when a filing lands, yet the
-            fitted score churned{" "}
-            <strong>{pct(q.smoothing[0].turnover, 0)} of the selected book every month</strong>.
-            Averaging the score over a trailing window sheds model noise rather than signal — it
-            improves IC <em>and</em> halves turnover, which is rare enough to be worth showing.
+            The information sits in fundamentals that only move when a filing lands, yet the score
+            churned <strong>{pct(q.smoothing[0].turnover, 0)} of the book every month</strong>.
+            Averaging it sheds noise rather than signal: IC improves <em>and</em> turnover halves.
           </p>
         </Column>
         <div className="mt-9">
