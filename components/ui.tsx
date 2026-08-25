@@ -1,12 +1,17 @@
 import Link from "next/link";
 
+/** Reading column. Narrow on purpose — long lines are the enemy of "easy to read". */
 export function Shell({ children }: { children: React.ReactNode }) {
-  return <div className="mx-auto w-full max-w-[1240px] px-7 sm:px-12 lg:px-16">{children}</div>;
+  return <div className="mx-auto w-full max-w-[680px] px-6 sm:px-8">{children}</div>;
 }
 
-/** Narrow column for reading; charts and tables break out of it deliberately. */
+/** Figures break out of the reading column, but never to the viewport edge. */
+export function Wide({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return <div className={`mx-auto w-full max-w-[1000px] px-6 sm:px-8 ${className}`}>{children}</div>;
+}
+
 export function Column({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <div className={`max-w-[68ch] ${className}`}>{children}</div>;
+  return <div className={className}>{children}</div>;
 }
 
 export function Section({
@@ -21,9 +26,9 @@ export function Section({
   className?: string;
 }) {
   return (
-    <section className={`rule py-16 sm:py-24 ${className}`}>
-      {eyebrow && <div className="eyebrow mb-4">{eyebrow}</div>}
-      {title && <h2 className="serif mb-9 text-[28px] leading-tight sm:text-[34px]">{title}</h2>}
+    <section className={`rule py-14 sm:py-16 ${className}`}>
+      {eyebrow && <div className="label mb-3">{eyebrow}</div>}
+      {title && <h2 className="mb-7 text-[24px] leading-snug sm:text-[27px]">{title}</h2>}
       {children}
     </section>
   );
@@ -43,30 +48,28 @@ export function CaseHeader({
   links?: { href: string; label: string }[];
 }) {
   return (
-    <header className="pb-14 pt-14 sm:pb-16 sm:pt-20">
-      <Link href="/" className="mono text-[11.5px] text-ink-3 hover:text-[var(--color-sea)] transition-colors">
-        ← index
+    <header className="pb-12 pt-14 sm:pt-20">
+      <Link href="/" className="text-[14px] text-ink-3 transition-colors hover:text-[var(--color-sea)]">
+        ← Index
       </Link>
-      <div className="eyebrow mt-8">{kind}</div>
-      <h1 className="serif mt-3 text-[clamp(34px,5.6vw,58px)] leading-[1.05]">{title}</h1>
-      <div className="lede prose mt-6 max-w-[680px]">{lede}</div>
-      <dl className="mt-9 flex flex-wrap gap-x-10 gap-y-4">
+      <div className="label mt-10">{kind}</div>
+      <h1 className="mt-3 text-[clamp(30px,4.6vw,42px)] leading-[1.12]">{title}</h1>
+      <div className="lede prose mt-5">{lede}</div>
+
+      <dl className="mt-9 grid grid-cols-2 gap-x-8 gap-y-5 sm:grid-cols-4">
         {meta.map((m) => (
           <div key={m.label}>
-            <dt className="eyebrow">{m.label}</dt>
-            <dd className="mono mt-1 text-[13px] text-ink-2">{m.value}</dd>
+            <dt className="text-[12.5px] text-ink-3">{m.label}</dt>
+            <dd className="mt-1 text-[14px] text-ink-2">{m.value}</dd>
           </div>
         ))}
       </dl>
+
       {links && links.length > 0 && (
-        <div className="mt-8 flex flex-wrap gap-5">
+        <div className="mt-8 flex flex-wrap gap-6">
           {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="mono text-[12.5px] text-[var(--color-sea)] border-b border-transparent hover:border-[var(--color-sea)] transition-colors"
-            >
-              {l.label} <span className="text-[10px] opacity-60">↗</span>
+            <a key={l.href} href={l.href} className="link text-[15px]">
+              {l.label}
             </a>
           ))}
         </div>
@@ -75,7 +78,6 @@ export function CaseHeader({
   );
 }
 
-/** A claim the reader should not skim past. */
 export function Callout({
   tone = "warn",
   title,
@@ -87,19 +89,19 @@ export function Callout({
 }) {
   const color = tone === "warn" ? "var(--color-coral)" : "var(--color-kelp)";
   return (
-    <div className="my-7 border-l-2 pl-5" style={{ borderColor: color }}>
+    <div className="my-8 rounded-lg bg-paper-2 p-6">
       {title && (
-        <div className="mono text-[11px] uppercase tracking-[0.16em] mb-2" style={{ color }}>
+        <div className="mb-2 text-[12.5px] font-medium uppercase tracking-[0.07em]" style={{ color }}>
           {title}
         </div>
       )}
-      <div className="prose text-[16px] leading-[1.7]">{children}</div>
+      <div className="prose">{children}</div>
     </div>
   );
 }
 
 export function StatRow({ children }: { children: React.ReactNode }) {
-  return <div className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 lg:grid-cols-6">{children}</div>;
+  return <div className="grid grid-cols-2 gap-x-8 gap-y-7 sm:grid-cols-3">{children}</div>;
 }
 
 export function Table({
@@ -113,13 +115,15 @@ export function Table({
 }) {
   return (
     <div className="scroll-x">
-      <table className="w-full min-w-[520px] border-collapse mono text-[12.5px] tnum">
+      <table className="w-full min-w-[480px] border-collapse text-[14px] tnum">
         <thead>
           <tr>
             {columns.map((c, i) => (
               <th
                 key={c}
-                className={`eyebrow border-b border-rule pb-2.5 font-normal ${i === 0 ? "text-left" : "text-right"}`}
+                className={`border-b border-rule pb-2.5 text-[12.5px] font-medium text-ink-3 ${
+                  i === 0 ? "text-left" : "text-right"
+                }`}
               >
                 {c}
               </th>
@@ -128,16 +132,13 @@ export function Table({
         </thead>
         <tbody>
           {rows.map((row, r) => (
-            <tr
-              key={r}
-              className={highlight === r ? "bg-[var(--color-accent-soft)]" : ""}
-            >
+            <tr key={r} className={highlight === r ? "bg-[var(--color-accent-soft)]" : ""}>
               {row.map((cell, i) => (
                 <td
                   key={i}
-                  className={`border-b border-rule-soft py-2.5 whitespace-nowrap ${
-                    i === 0 ? "text-left text-ink-2 pl-2" : "text-right pr-2"
-                  } ${highlight === r ? "text-ink" : ""}`}
+                  className={`border-b border-rule-soft py-2.5 ${
+                    i === 0 ? "pl-2 text-left text-ink-2" : "pr-2 text-right"
+                  }`}
                 >
                   {cell}
                 </td>
