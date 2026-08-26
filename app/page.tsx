@@ -1,15 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Shell } from "@/components/ui";
+import { CardVisual } from "@/components/card-visual";
 
 const PROJECTS = [
   {
     href: "/work/quant",
     title: "Equity factor research",
     plain:
-      "A stock-picking model, rebuilt from scratch after I found six bugs that had made the original results fake.",
+      "A stock-picking model, rebuilt from scratch after I found six bugs that had made the original results wrong.",
     tag: "Quantitative research · Python",
-    headline: "The old version claimed 35% a year. The real number was 1.9%.",
   },
   {
     href: "/work/reasoning",
@@ -17,7 +17,6 @@ const PROJECTS = [
     plain:
       "When an AI reasons step by step, which steps actually matter? We froze it mid-thought and re-ran the search 22,000 times to find out.",
     tag: "AI research · USC · 5 authors",
-    headline: "The model's own top-ranked next step was often a dead end.",
   },
   {
     href: "/work/melange",
@@ -25,7 +24,6 @@ const PROJECTS = [
     plain:
       "An app for photographers, models and stylists to find each other. Shipped on iPhone and the web.",
     tag: "Product · TypeScript, iOS",
-    headline: "No backend server — the database itself enforces privacy.",
   },
 ];
 
@@ -82,20 +80,18 @@ export default function Home() {
           <h2 className="label mb-9">Projects</h2>
 
           <div className="space-y-4">
-            {PROJECTS.map((p) => (
+            {PROJECTS.map((p, i) => (
               <Link
                 key={p.href}
                 href={p.href}
                 className="group block rounded-xl border border-rule p-7 transition-colors hover:border-[var(--color-sea)]"
               >
-                <div className="text-[13px] text-ink-3">{p.tag}</div>
+                <CardVisual index={i} />
+                <div className="mt-5 text-[13px] text-ink-3">{p.tag}</div>
                 <h3 className="mt-2 text-[24px] leading-snug transition-colors group-hover:text-[var(--color-sea)]">
                   {p.title}
                 </h3>
                 <p className="mt-3 text-[17.5px] leading-[1.7] text-ink-2">{p.plain}</p>
-                <p className="mt-4 text-[16px] leading-[1.6] text-[var(--color-sea)]">
-                  {p.headline}
-                </p>
                 <span className="mt-5 inline-block text-[15px] text-ink-3 transition-colors group-hover:text-[var(--color-sea)]">
                   Read more →
                 </span>

@@ -32,11 +32,9 @@
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* No bare `* { margin: 0 }` here. Tailwind's preflight already resets the
+   box model, and an unlayered rule like that outranks every layered utility
+   — it was silently cancelling mx-auto, mt-*, space-y-* across the site. */
 
 html {
   scroll-behavior: smooth;

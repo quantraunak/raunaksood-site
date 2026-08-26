@@ -19,7 +19,7 @@ export default function ReasoningPage() {
         </Link>
         <div className="label mt-10">AI research · USC · five authors</div>
         <h1 className="mt-3 text-[34px] leading-[1.15] sm:text-[42px]">
-          Which of an AI&apos;s thoughts actually matter?
+          Resampled Thought Trees
         </h1>
         <p className="mt-6 text-[19.5px] leading-[1.65] text-ink-2">
           When an AI solves a problem step by step, some steps are essential and some are wasted
@@ -60,7 +60,7 @@ export default function ReasoningPage() {
       </section>
 
       <section className="rule py-12">
-        <h2 className="text-[25px]">The main finding</h2>
+        <h2 className="text-[25px]">Main finding</h2>
         <div className="prose mt-5">
           <p>
             <strong>The AI&apos;s own confidence is a poor guide.</strong> Its top-ranked next step
@@ -75,7 +75,7 @@ export default function ReasoningPage() {
       </section>
 
       <section className="rule py-12">
-        <h2 className="text-[25px]">It depends on the puzzle</h2>
+        <h2 className="text-[25px]">Results differ by task</h2>
         <div className="prose mt-5">
           <p>
             We expected a simple rule like &ldquo;early steps matter most.&rdquo; Instead the two
@@ -86,7 +86,7 @@ export default function ReasoningPage() {
       </section>
 
       <section className="rule py-12">
-        <h2 className="text-[25px]">A subtler result</h2>
+        <h2 className="text-[25px]">A second result</h2>
         <div className="prose mt-5">
           <p>
             We also deleted branches from the tree to see what broke. Judged only on{" "}
@@ -102,7 +102,7 @@ export default function ReasoningPage() {
       </section>
 
       <section className="rule py-12">
-        <h2 className="text-[25px]">My part, and the limits</h2>
+        <h2 className="text-[25px]">Scope and limitations</h2>
         <div className="prose mt-5">
           <p>
             This was a five-author project at USC. The honest framing of the results: we controlled

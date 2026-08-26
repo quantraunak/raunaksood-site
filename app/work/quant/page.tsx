@@ -20,7 +20,7 @@ export default function QuantPage() {
         </Link>
         <div className="label mt-10">Quantitative research · Python</div>
         <h1 className="mt-3 text-[34px] leading-[1.15] sm:text-[42px]">
-          I found out my own model was wrong, and said so
+          Equity factor research
         </h1>
         <p className="mt-6 text-[19.5px] leading-[1.65] text-ink-2">
           A stock-picking model that claimed to return 35% a year. I rebuilt it from scratch, found
@@ -107,7 +107,7 @@ export default function QuantPage() {
       </section>
 
       <section className="rule py-12">
-        <h2 className="text-[25px]">What it actually earns</h2>
+        <h2 className="text-[25px]">Performance</h2>
         <GrowthChart />
         <div className="prose">
           <p>
@@ -119,7 +119,7 @@ export default function QuantPage() {
       </section>
 
       <section className="rule py-12">
-        <h2 className="text-[25px]">Most of the &ldquo;skill&rdquo; wasn&apos;t skill</h2>
+        <h2 className="text-[25px]">Skill versus market exposure</h2>
         <div className="prose mt-5">
           <p>
             This is the finding I care most about. I separated how much of the return came from
@@ -131,7 +131,7 @@ export default function QuantPage() {
       </section>
 
       <section className="rule py-12">
-        <h2 className="text-[25px]">And the score is partly luck</h2>
+        <h2 className="text-[25px]">How stable the result is</h2>
         <div className="prose mt-5">
           <p>
             Machine-learning models contain randomness. I ran the identical model six times, changing
@@ -142,7 +142,7 @@ export default function QuantPage() {
       </section>
 
       <section className="rule py-12">
-        <h2 className="text-[25px]">Why this is the interesting outcome</h2>
+        <h2 className="text-[25px]">What I took from it</h2>
         <div className="prose mt-5">
           <p>
             The easy version of this project reports 35% and moves on. The useful version finds out

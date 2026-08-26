@@ -15,17 +15,17 @@ export function SiteNav() {
 
   return (
     <nav className="sticky top-0 z-40 border-b border-rule-soft bg-[color-mix(in_srgb,var(--color-paper)_88%,transparent)] backdrop-blur-md">
-      <div className="mx-auto flex w-full max-w-[1320px] items-center justify-between gap-4 px-6 py-3.5 sm:px-10 lg:px-14">
+      <div className="mx-auto flex w-full max-w-[1100px] items-center justify-between gap-6 px-6 py-4 sm:px-8">
         {/* The home page already says the name in the hero; repeating it in the
             bar puts it on screen twice. */}
         {onHome ? (
-          <span aria-hidden className="h-2 w-2 rounded-full bg-[var(--color-sea)]" />
+          <span />
         ) : (
-          <Link href="/" className="serif text-[17px] transition-colors hover:text-[var(--color-sea)]">
+          <Link href="/" className="text-[16px] transition-colors hover:text-[var(--color-sea)]">
             Raunak&nbsp;Sood
           </Link>
         )}
-        <div className="scroll-x flex items-center gap-6 mono text-[11.5px]">
+        <div className="flex flex-wrap items-center justify-end gap-x-5 gap-y-1 text-[14px]">
           {NAV.map((item) => {
             const active = pathname === item.href;
             return (

@@ -197,16 +197,23 @@ export function BeforeAfter() {
   ];
   return (
     <Figure caption="The left column is what the original project reported. The right is what the rebuilt version produces. The gap between them is the work.">
+      <div className="grid grid-cols-[1fr] gap-x-6 sm:grid-cols-[1.1fr_0.9fr_1.2fr] sm:gap-y-0">
+        <div className="hidden sm:contents">
+          <div className="pb-2 text-[13px] text-ink-3">Measure</div>
+          <div className="pb-2 text-[13px] text-ink-3">Original</div>
+          <div className="pb-2 text-[13px] text-ink-3">Rebuilt</div>
+        </div>
+      </div>
       <div className="space-y-0">
         {rows.map(([label, before, after], i) => (
           <div
             key={label}
-            className={`grid grid-cols-1 gap-1 py-4 sm:grid-cols-[1fr_auto_auto] sm:items-baseline sm:gap-6 ${
+            className={`grid grid-cols-[1fr] gap-x-6 gap-y-1 py-4 sm:grid-cols-[1.1fr_0.9fr_1.2fr] sm:items-baseline ${
               i > 0 ? "rule-soft" : ""
             }`}
           >
             <div className="text-[16px] text-ink-2">{label}</div>
-            <div className="text-[16px] text-ink-3 line-through">{before}</div>
+            <div className="text-[15.5px] text-ink-3 line-through">{before}</div>
             <div className="text-[16px] font-medium" style={{ color: "var(--color-sea)" }}>
               {after}
             </div>
