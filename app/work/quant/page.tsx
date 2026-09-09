@@ -20,11 +20,14 @@ export default function QuantPage() {
         </Link>
         <div className="label mt-10">Quantitative research · Python</div>
         <h1 className="mt-3 text-[34px] leading-[1.15] sm:text-[42px]">
-          Equity factor research
+          Measuring how wrong a backtest can be
         </h1>
         <p className="mt-6 text-[19.5px] leading-[1.65] text-ink-2">
-          A stock-picking model that claimed to return 35% a year. I rebuilt it from scratch, found
-          six bugs that had manufactured that number, and published the real one instead: 1.9%.
+          Two ordinary data-handling mistakes inflate a stock-picking study&apos;s measured skill by
+          59% and turn four meaningless signals into statistically significant ones. I built the
+          infrastructure to measure that precisely, and found the two mistakes leave different,
+          identifiable marks — so the pattern of which results are wrong is evidence about which
+          mistake produced them.
         </p>
       </header>
 
@@ -32,23 +35,29 @@ export default function QuantPage() {
         <h2 className="text-[25px]">What the project is</h2>
         <div className="prose mt-5">
           <p>
-            A model that ranks about 500 large US companies each month, buys the ones it expects to
-            do well, and bets against the ones it expects to do badly. The aim is to make money
-            whether the market goes up or down.
+            Almost every published trading result is impossible to check. You can read the numbers
+            but not the code that produced them. This project builds a system where the code
+            <em> is</em> the variable: the same 22 signals, the same companies, the same prices, run
+            once correctly and once with a specific mistake introduced. The difference between the
+            two runs is what that mistake is worth.
           </p>
           <p>
-            I inherited a version that reported very strong results. They looked too strong, so
-            before adding anything I tried to reproduce them.
+            The vehicle is a model that ranks about 500 large US companies each month, buys the ones
+            it expects to do well and bets against the rest. It began as an inherited version
+            reporting 35% a year. Reproducing it turned up six bugs, and rebuilding it correctly
+            produced both an honest number and, more usefully, an instrument for measuring what the
+            bugs had been worth.
           </p>
         </div>
       </section>
 
       <section className="rule py-12">
-        <h2 className="text-[25px]">What was wrong</h2>
+        <h2 className="text-[25px]">The errors, and why they are hard to catch</h2>
         <div className="prose mt-5">
           <p>
-            Six separate problems, each producing output that looked completely reasonable. Two of
-            them need no finance background at all:
+            Six separate problems, none of which raised an error or produced an implausible number.
+            That is what makes them worth studying: every one produced output a reviewer would
+            accept. Two need no finance background at all.
           </p>
         </div>
 
@@ -122,9 +131,9 @@ export default function QuantPage() {
         <h2 className="text-[25px]">Skill versus market exposure</h2>
         <div className="prose mt-5">
           <p>
-            This is the finding I care most about. I separated how much of the return came from
-            genuinely picking better companies, versus simply being exposed to a rising market. The
-            answer was uncomfortable.
+            Most reported strategy returns are partly just exposure to a rising market, which any
+            index fund gives you for free. Separating the two is rarely done and easy to measure
+            once the infrastructure is correct.
           </p>
         </div>
         <BetaSplit />
@@ -142,17 +151,17 @@ export default function QuantPage() {
       </section>
 
       <section className="rule py-12">
-        <h2 className="text-[25px]">What I took from it</h2>
+        <h2 className="text-[25px]">Why the honest number is the useful one</h2>
         <div className="prose mt-5">
           <p>
-            The easy version of this project reports 35% and moves on. The useful version finds out
-            the number was an artifact, rebuilds the foundation, and publishes a smaller honest
-            figure with the evidence for why it&apos;s smaller.
+            1.9% is not the finding. It is the control condition — the number you get when nothing
+            is wrong, which is what makes it possible to price each mistake against it. Without a
+            trustworthy baseline there is nothing to measure the errors <em>with</em>.
           </p>
           <p>
-            Telling the difference between a real edge and a measurement error{" "}
-            <strong>is the job</strong>. A firm trading on these signals loses money when someone
-            can&apos;t.
+            Telling a real edge from a measurement error{" "}
+            <strong>is the job</strong>, and it is not a matter of judgement or care. It is a
+            measurement, and this project shows how to take it.
           </p>
         </div>
 
