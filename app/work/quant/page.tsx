@@ -185,6 +185,44 @@ export default function QuantPage() {
           </a>
         </div>
       </section>
+
+      <section className="rule py-12">
+        <div className="label">Paper</div>
+        <h2 className="mt-3 text-[25px]">Two Bugs, Two Fingerprints</h2>
+        <div className="prose mt-5">
+          <p>
+            Finding the six bugs raised a second question: if a wrong number looks completely
+            reasonable, what does it look like <em>specifically</em>? I measured what two of the
+            most common mistakes do to the same study, changing one thing at a time and leaving
+            everything else identical.
+          </p>
+          <p>
+            Using a company&apos;s quarterly figures on the day the quarter ended, rather than the
+            day they were actually published, inflates the measured signal by 59% and turns four
+            insignificant factors into significant ones. Building the universe from today&apos;s
+            index members rather than the historical ones does something different: it doesn&apos;t
+            uniformly inflate, it <em>relocates</em>. Illiquidity flips from negative to significantly
+            positive, and the low-volatility effect inverts.
+          </p>
+          <p>
+            The two mistakes leave different marks. They&apos;re nearly uncorrelated across the 22
+            factors, and they push value factors in opposite directions. One leaves the
+            price-and-volume factors untouched to machine precision, because those factors never
+            read a published figure at all. That means the pattern of which results are wrong is
+            evidence about which mistake produced them, which is useful when you can read
+            someone&apos;s results but not their code.
+          </p>
+          <p>
+            The paper measures both effects and sets out the four things that would need to be true
+            before that inference could be trusted. Those aren&apos;t tested yet, and the paper says
+            so.
+          </p>
+        </div>
+
+        <div className="mt-9 flex flex-wrap gap-6 text-[16px]">
+          <a href="/Two-Bugs-Two-Fingerprints.pdf" className="link">Read the paper (PDF)</a>
+        </div>
+      </section>
     </Shell>
   );
 }
