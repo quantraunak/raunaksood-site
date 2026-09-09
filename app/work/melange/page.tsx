@@ -84,8 +84,9 @@ export default function MelangePage() {
             automated tests run on every change.
           </p>
           <p>
-            <strong>Where it stands:</strong> the app builds and the submission pipeline works, but
-            it isn&apos;t in the App Store yet — screenshots are the main thing missing.
+            <strong>Where it stands:</strong> version 1.1, iOS build 10, still under active
+            development. The app builds, the submission pipeline works and the store screenshots
+            are done, but it isn&apos;t in the App Store yet.
           </p>
         </div>
 
