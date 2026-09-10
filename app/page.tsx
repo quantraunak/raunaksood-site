@@ -27,8 +27,8 @@ const PROJECTS = [
     title: "Melange",
     kind: "Product · TypeScript, iOS",
     plain:
-      "An app for photographers, models and stylists to find each other. Two clients, one Postgres, shipped on iPhone and the web.",
-    note: "Live · 17k lines",
+      "An app for photographers, models and stylists to find each other. Live on the App Store and the web, two clients against one Postgres.",
+    note: "App Store + web · 17k lines",
   },
 ];
 

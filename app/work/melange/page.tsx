@@ -21,8 +21,8 @@ export default function MelangePage() {
         <h1 className="mt-3 text-[34px] leading-[1.15] sm:text-[42px]">Melange</h1>
         <p className="mt-6 text-[19.5px] leading-[1.65] text-ink-2">
           A photographer needs a model. A model needs a stylist. Right now that happens in Instagram
-          DMs. I built an app for it — iPhone and web, one database — and the part that took the
-          thinking was deciding what each person sees first.
+          DMs. I built an app for it — on the App Store and the web, one database behind both — and
+          the part that took the thinking was deciding what each person sees first.
         </p>
       </header>
 
@@ -127,9 +127,16 @@ export default function MelangePage() {
             automated tests run on every change.
           </p>
           <p>
-            <strong>Where it stands:</strong> version 1.1, iOS build 10, still under active
-            development. The app builds, the submission pipeline works and the store screenshots
-            are done, but it isn&apos;t in the App Store yet.
+            <strong>Where it stands:</strong> 1.0 is live on the App Store. 1.1 is in Prepare for
+            Submission — iOS build 10, screenshots captured and uploading through fastlane. Nine
+            accounts and effectively no usage; the{" "}
+            <a
+              href="https://github.com/quantraunak/Melange/blob/main/docs/STATUS.md"
+              className="link"
+            >
+              status doc
+            </a>{" "}
+            says so in its first paragraph and gives the real numbers.
           </p>
         </div>
 
