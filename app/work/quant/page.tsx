@@ -230,10 +230,10 @@ export default function QuantPage() {
         </Details>
 
         <div className="mt-9 flex flex-wrap gap-6 text-[16px]">
-          <a href="https://github.com/quantraunak/ls-multifactor-research" className="link">
+          <a href="https://github.com/quantraunak/bias-fingerprints" className="link">
             Code on GitHub
           </a>
-          <a href="https://quantraunak.github.io/ls-multifactor-research/" className="link">
+          <a href="https://quantraunak.github.io/bias-fingerprints/" className="link">
             Full results dashboard
           </a>
         </div>
