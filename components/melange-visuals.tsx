@@ -149,3 +149,80 @@ export function SwipeDemo() {
     </figure>
   );
 }
+
+/* The eight weighted terms of ranked_feed_posts(), with the real coefficients
+   out of supabase/schema/05_ranking.sql. Click a term to see what it does. */
+const TERMS = [
+  { key: "recency", w: 0.22, label: "Recency", note: "1 / (1 + days / 7). A post decays to half weight in a week." },
+  { key: "vibes", w: 0.18, label: "Vibe overlap", note: "Jaccard index over the tags on your profile and the post." },
+  { key: "role", w: 0.18, label: "Role fit", note: "1.0 if the post is explicitly looking for your role, 0.55 if you simply do something different from the author, 0.1 otherwise." },
+  { key: "embed", w: 0.12, label: "Text similarity", note: "Cosine between a 128-dim embedding of your profile and one of the post." },
+  { key: "rep", w: 0.12, label: "Reputation", note: "Average review rating, from reviews that only unlock when both sides have written one." },
+  { key: "portfolio", w: 0.08, label: "Portfolio depth", note: "Images on the author's profile, capped at nine." },
+  { key: "event", w: 0.05, label: "Shared event", note: "You and the author have RSVP'd to the same upcoming event." },
+  { key: "city", w: 0.05, label: "Same city", note: "The post's location matches a city you're going to be in." },
+];
+
+export function RankingBreakdown() {
+  const [active, setActive] = useState<string | null>(null);
+  const max = Math.max(...TERMS.map((t) => t.w));
+  const shown = TERMS.find((t) => t.key === active);
+
+  return (
+    <figure className="my-10">
+      <div className="rounded-xl border border-rule p-5 sm:p-7">
+        <div className="mono mb-5 text-[11.5px] uppercase tracking-[0.12em] text-ink-3">
+          rank_score — weights that sum to 1.00
+        </div>
+
+        {TERMS.map((t) => {
+          const on = active === t.key;
+          return (
+            <button
+              key={t.key}
+              onClick={() => setActive(on ? null : t.key)}
+              aria-pressed={on}
+              className="flex w-full items-center gap-3 py-[7px] text-left"
+            >
+              <span
+                className="w-[104px] shrink-0 text-[13.5px] transition-colors sm:w-[124px]"
+                style={{ color: on ? "var(--color-ink)" : "var(--color-ink-2)" }}
+              >
+                {t.label}
+              </span>
+              <span className="relative h-[13px] flex-1 rounded-[2px] bg-paper-3">
+                <span
+                  className="absolute inset-y-0 left-0 rounded-[2px] transition-all"
+                  style={{
+                    width: `${(t.w / max) * 100}%`,
+                    background: on ? "var(--color-sea)" : "var(--color-shallow)",
+                    opacity: on ? 1 : 0.62,
+                  }}
+                />
+              </span>
+              <span className="mono w-[42px] shrink-0 text-right text-[12px] tabular-nums text-ink-3">
+                {t.w.toFixed(2)}
+              </span>
+            </button>
+          );
+        })}
+
+        <div className="mt-5 min-h-[3.2em] border-t border-rule-soft pt-4 text-[14px] leading-[1.65] text-ink-2">
+          {shown ? (
+            <>
+              <span className="font-medium text-ink">{shown.label}.</span> {shown.note}
+            </>
+          ) : (
+            <span className="text-ink-3">Pick a term.</span>
+          )}
+        </div>
+      </div>
+      <figcaption className="mt-4 text-[15.5px] leading-[1.65] text-ink-2">
+        <span className="font-medium text-ink">What to look at: </span>
+        no single term dominates. Recency is the largest at 0.22, which is deliberate — in a
+        marketplace with almost no supply, showing people the newest thing matters more than
+        showing them the best-matched thing.
+      </figcaption>
+    </figure>
+  );
+}

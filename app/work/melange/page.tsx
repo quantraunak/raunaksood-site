@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Shell } from "@/components/ui";
-import { SecurityDemo, SwipeDemo } from "@/components/melange-visuals";
+import { RankingBreakdown, SwipeDemo } from "@/components/melange-visuals";
 import { Details } from "@/components/details";
 
 export const metadata: Metadata = {
@@ -21,7 +21,8 @@ export default function MelangePage() {
         <h1 className="mt-3 text-[34px] leading-[1.15] sm:text-[42px]">Melange</h1>
         <p className="mt-6 text-[19.5px] leading-[1.65] text-ink-2">
           A photographer needs a model. A model needs a stylist. Right now that happens in Instagram
-          DMs. I built an app for it, and shipped it on both iPhone and the web.
+          DMs. I built an app for it — iPhone and web, one database — and the part that took the
+          thinking was deciding what each person sees first.
         </p>
       </header>
 
@@ -37,23 +38,64 @@ export default function MelangePage() {
       </section>
 
       <section className="rule py-12">
-        <h2 className="text-[25px]">The interesting engineering</h2>
+        <h2 className="text-[25px]">The feed is a ranking problem</h2>
         <div className="prose mt-5">
           <p>
-            Most apps have a server in the middle that decides what each user is allowed to see. This
-            one doesn&apos;t. The iPhone app and the website both talk to the database directly.
+            A matching app is only as good as the order it shows things in. With a handful of
+            posts you can show everything; past that you have to decide what someone sees first,
+            and a bad ordering kills the product before anyone notices the product.
           </p>
           <p>
-            That&apos;s only safe if the <strong>database itself</strong> knows the rules — so
-            that&apos;s where I put them. Every table checks who is asking before it returns
-            anything.
+            The whole ranker is one Postgres function. Eight weighted terms, no service to call,
+            no model to deploy — the feed is a query.
           </p>
         </div>
-        <SecurityDemo />
-        <div className="prose">
+
+        <RankingBreakdown />
+      </section>
+
+      <section className="rule py-12">
+        <h2 className="text-[25px]">Embeddings without an inference server</h2>
+        <div className="prose mt-5">
           <p>
-            The payoff: a bug in either app can&apos;t leak private messages, and a third app added
-            later inherits the same guarantees for free.
+            One of those terms compares the text of your profile against the text of a post. The
+            obvious way is to call an embedding API on every write, which means an API key, a
+            bill, a network hop in the middle of a database trigger, and a failure mode where
+            posts save but arrive unsearchable.
+          </p>
+          <p>
+            Instead the embedding is computed in SQL. Each word is hashed into one of 128 buckets,
+            the counts are L2-normalised, and similarity is a cosine between two{" "}
+            <span className="mono">REAL[]</span> columns. It&apos;s the hashing trick, which is
+            older and dumber than a neural embedding and has the property that matters here:
+            it&apos;s a pure function with no dependencies, so a trigger can maintain it on every
+            insert and update and it can never fail separately from the write.
+          </p>
+          <p>
+            It doesn&apos;t understand that &ldquo;filmmaker&rdquo; and &ldquo;cinematographer&rdquo;
+            are related, and a real embedding would. That&apos;s the trade, made deliberately: at
+            this size the recency and role terms carry the ranking anyway, and the version that
+            needs no key is the version that still runs in a year.
+          </p>
+        </div>
+      </section>
+
+      <section className="rule py-12">
+        <h2 className="text-[25px]">A hole in the storage rules</h2>
+        <div className="prose mt-5">
+          <p>
+            Auditing the schema against the live database, I found the upload policy on the media
+            bucket checked only that you were signed in — not that you were writing to your own
+            folder. Any logged-in user could have written into anyone else&apos;s path. Two more
+            buckets had been created directly against production, outside migration tracking, with
+            no ownership check at all.
+          </p>
+          <p>
+            All three now require the path to start with your own user ID, and the buckets are
+            declared in the schema file so a fresh install can&apos;t silently come up with the
+            permissive version. The interesting part isn&apos;t the fix, which is four lines. It&apos;s
+            that the schema in the repo and the database in production had quietly drifted apart,
+            and nothing would have told me.
           </p>
         </div>
       </section>
