@@ -5,9 +5,34 @@ import q from "@/public/data/quant.json";
 /* One small live figure per project card, drawn from the real data. */
 
 export function CardVisual({ index }: { index: number }) {
-  if (index === 0) return <Equity />;
+  if (index === 0) return <Invariance />;
   if (index === 1) return <Tree />;
   return <Phones />;
+}
+
+/* Most features hold at exactly zero when a source's clock moves. One does not.
+   That gap is what the tool reports. */
+function Invariance() {
+  const shifts = [0, 0, 0, 0, 0.42, 0, 0, 0, 0, 0.08, 0, 0];
+  const W = 560, H = 90, mid = 52;
+  const gap = W / shifts.length;
+  return (
+    <Frame>
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ height: 90 }} aria-hidden>
+        <line x1="0" y1={mid} x2={W} y2={mid} stroke="var(--color-rule)" strokeWidth="1.5" />
+        {shifts.map((v, i) => {
+          const x = gap * i + gap * 0.5;
+          if (v === 0) {
+            return <circle key={i} cx={x} cy={mid} r="3.5" fill="none"
+              stroke="var(--color-ink-3)" strokeWidth="1.4" strokeDasharray="2 2" />;
+          }
+          const h = v * 42;
+          return <rect key={i} x={x - 7} y={mid - h} width="14" height={h} rx="2"
+            fill="var(--color-coral)" fillOpacity="0.85" />;
+        })}
+      </svg>
+    </Frame>
+  );
 }
 
 function Equity() {

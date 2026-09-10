@@ -54,11 +54,12 @@ export default function Home() {
         <header className="pb-12 pt-12 sm:pt-16">
           <h1 className="text-[38px] leading-tight sm:text-[46px]">Raunak Sood</h1>
           <p className="mt-5 text-[19px] leading-[1.65] text-ink-2">
-            I work on machine learning and quantitative research. Right now I&apos;m doing a
-            master&apos;s in Computer Science at USC and building ML systems at an investment firm.
+            I build measurement infrastructure — the kind that tells you when a result is real
+            and when it&apos;s an artifact of how the data was put together. Master&apos;s in
+            Computer Science at USC, machine learning at an investment firm.
           </p>
           <p className="mt-4 text-[19px] leading-[1.65] text-ink-2">
-            The three projects below are the ones I&apos;d want to talk about.
+            Three things below. The first is a tool you can install.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-x-7 gap-y-3 text-[16px]">

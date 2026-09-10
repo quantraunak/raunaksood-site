@@ -59,6 +59,32 @@ export default function QuantPage() {
             answer must survive.
           </p>
         </div>
+
+        <div className="code" role="img" aria-label="leakcheck usage and output">
+{`report = lc.check(
+    compute=build_features,
+    sources={"events": events, "tickets": tickets},
+    timestamps={"events": "occurred_at", "tickets": "resolved_at"},
+    declared={"total_spend": ["events"], "avg_severity": ["tickets"]},
+)
+report.raise_for_leaks()
+
+feature                 events       tickets
+total_spend           reads it     exactly 0
+event_count           reads it     exactly 0
+tickets_resolved     exactly 0      reads it
+avg_severity         exactly 0       bypass?`}
+        </div>
+
+        <div className="prose">
+          <p>
+            That last line is a real bug. <span className="mono">avg_severity</span> filters
+            support tickets on when they were <em>opened</em> rather than when they were
+            resolved — so tickets still open at scoring time leak in, which are exactly the
+            ones that predict churn. It declares that it reads tickets, then doesn&apos;t
+            react when the ticket clock moves, because it reached around the clock entirely.
+          </p>
+        </div>
       </section>
 
       <section className="rule py-12">
