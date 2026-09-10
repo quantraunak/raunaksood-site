@@ -6,9 +6,9 @@ import { CardVisual } from "@/components/card-visual";
 const PROJECTS = [
   {
     href: "/work/quant",
-    title: "Equity factor research",
+    title: "Bias fingerprints",
     plain:
-      "A stock-picking model, rebuilt from scratch after I found six bugs that had made the original results wrong.",
+      "You can read a trading result but never its code. A way to tell which data mistake produced it, from the pattern of which signals look wrong.",
     tag: "Quantitative research · Python",
   },
   {

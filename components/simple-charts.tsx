@@ -223,3 +223,67 @@ export function BeforeAfter() {
     </Figure>
   );
 }
+
+/* -------------------------------------------------- the two bias signatures */
+
+export function Signatures() {
+  const s = q.signatures;
+  const max = Math.max(...s.rows.flatMap((r) => [Math.abs(r.dating), Math.abs(r.universe)]));
+
+  const bar = (v: number, color: string) => {
+    const w = (Math.abs(v) / max) * 50;
+    return (
+      <div className="relative h-[18px] w-full">
+        <div className="absolute left-1/2 top-0 h-full w-px bg-rule" />
+        <div
+          className="absolute top-[3px] h-[12px] rounded-[2px]"
+          style={{
+            width: `${w}%`,
+            left: v >= 0 ? "50%" : `${50 - w}%`,
+            background: v === 0 ? "transparent" : color,
+            border: v === 0 ? "1px dashed var(--color-ink-3)" : "none",
+            minWidth: v === 0 ? "10px" : undefined,
+          }}
+        />
+      </div>
+    );
+  };
+
+  return (
+    <Figure
+      caption={`The eight factors that move most. A dashed outline means the shift is exactly zero — not small, zero — because a factor built from prices alone can never read a company filing. The two columns pick out almost different signals, which is what lets you tell one mistake from the other.`}
+      note={`Shift in t-statistic from the correct baseline; the longest bar is ${max.toFixed(2)}. Correlation between the two columns across all ${s.n_factors} factors: ${s.correlation}. ${s.exact_zero_dating} factors are exactly unmoved by the dating mistake.`}
+    >
+      <div className="grid grid-cols-[1.25fr_1fr_1fr] items-center gap-x-4 text-[13px] text-ink-3">
+        <div>Signal</div>
+        <div>Wrong filing date</div>
+        <div>Wrong company list</div>
+      </div>
+      <div className="grid grid-cols-[1.25fr_1fr_1fr] items-center gap-x-4 pb-3 pt-1 text-[11.5px] text-ink-3">
+        <div />
+        <div className="flex justify-between">
+          <span>weaker</span>
+          <span>stronger</span>
+        </div>
+        <div className="flex justify-between">
+          <span>weaker</span>
+          <span>stronger</span>
+        </div>
+      </div>
+      <div>
+        {s.rows.map((r, i) => (
+          <div
+            key={r.factor}
+            className={`grid grid-cols-[1.25fr_1fr_1fr] items-center gap-x-4 py-2.5 ${
+              i > 0 ? "rule-soft" : ""
+            }`}
+          >
+            <div className="text-[14.5px] text-ink-2">{r.factor.replace(/_/g, " ")}</div>
+            {bar(r.dating, "var(--color-sea)")}
+            {bar(r.universe, "var(--color-coral)")}
+          </div>
+        ))}
+      </div>
+    </Figure>
+  );
+}

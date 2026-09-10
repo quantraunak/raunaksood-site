@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const NAV = [
-  { href: "/work/quant", label: "Equity research" },
+  { href: "/work/quant", label: "Bias fingerprints" },
   { href: "/work/reasoning", label: "LLM reasoning" },
   { href: "/work/melange", label: "Melange" },
 ];

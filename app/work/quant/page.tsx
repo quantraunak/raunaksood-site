@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import q from "@/public/data/quant.json";
 import { Shell } from "@/components/ui";
-import { GrowthChart, BetaSplit, SeedLottery, BeforeAfter } from "@/components/simple-charts";
+import { GrowthChart, BetaSplit, SeedLottery, BeforeAfter, Signatures } from "@/components/simple-charts";
 import { Details } from "@/components/details";
 
 export const metadata: Metadata = {
-  title: "Equity factor research",
+  title: "Bias fingerprints",
   description:
-    "A stock-picking model rebuilt from scratch after finding six bugs that made the original results unreproducible.",
+    "A method for checking trading research you cannot audit: measure what each data mistake does to a set of signals, then recognise that pattern in results whose code you will never see.",
 };
 
 export default function QuantPage() {
@@ -20,72 +20,186 @@ export default function QuantPage() {
         </Link>
         <div className="label mt-10">Quantitative research · Python</div>
         <h1 className="mt-3 text-[34px] leading-[1.15] sm:text-[42px]">
-          Measuring how wrong a backtest can be
+          Telling a real edge from a data mistake
         </h1>
         <p className="mt-6 text-[19.5px] leading-[1.65] text-ink-2">
-          Two ordinary data-handling mistakes inflate a stock-picking study&apos;s measured skill by
-          59% and turn four meaningless signals into statistically significant ones. I built the
-          infrastructure to measure that precisely, and found the two mistakes leave different,
-          identifiable marks — so the pattern of which results are wrong is evidence about which
-          mistake produced them.
+          Almost every trading result you can read is one you cannot check. The numbers are
+          published; the code is not. I propose a way around that: run one study twice, once
+          correctly and once with a specific mistake introduced, and record the mark the mistake
+          leaves across the signals. Different mistakes leave different marks, so the pattern of
+          which results look wrong becomes evidence about what went wrong.
         </p>
       </header>
 
       <section className="rule py-12">
-        <h2 className="text-[25px]">What the project is</h2>
+        <h2 className="text-[25px]">The idea</h2>
         <div className="prose mt-5">
           <p>
-            Almost every published trading result is impossible to check. You can read the numbers
-            but not the code that produced them. This project builds a system where the code
-            <em> is</em> the variable: the same 22 signals, the same companies, the same prices, run
-            once correctly and once with a specific mistake introduced. The difference between the
-            two runs is what that mistake is worth.
+            The standard advice about data mistakes is written for the person who owns the code:
+            date your figures correctly, build your company list correctly, check your own work.
+            That advice is useless to the reader on the other side. An investor reads a fund
+            manager&apos;s numbers. A reviewer reads a submitted paper. Neither can run anything.
           </p>
           <p>
-            The vehicle is a model that ranks about 500 large US companies each month, buys the ones
-            it expects to do well and bets against the rest. It began as an inherited version
-            reporting 35% a year. Reproducing it turned up six bugs, and rebuilding it correctly
-            produced both an honest number and, more usefully, an instrument for measuring what the
-            bugs had been worth.
+            The move is to stop thinking of a mistake as an amount of inflation and start thinking
+            of it as a <em>shape</em>. Using a company&apos;s quarterly figures a month before they
+            were published can only affect signals that read those figures — the ones built from
+            share prices alone cannot move at all. Building your company list from today&apos;s
+            index members instead of the historical ones tilts everything toward small companies
+            that later grew big. Those two mistakes damage different signals, in different
+            directions, and the damage is a property of the mistake rather than of the study.
+          </p>
+          <p>
+            So you measure the shape once, on a pipeline you control, and then look for it in
+            results you cannot audit. I call the shapes fingerprints.
           </p>
         </div>
       </section>
 
       <section className="rule py-12">
-        <h2 className="text-[25px]">The errors, and why they are hard to catch</h2>
+        <h2 className="text-[25px]">The two fingerprints</h2>
         <div className="prose mt-5">
           <p>
-            Six separate problems, none of which raised an error or produced an implausible number.
-            That is what makes them worth studying: every one produced output a reviewer would
-            accept. Two need no finance background at all.
+            Same 22 signals, same companies, same prices, same test window. One run correct, one run
+            with a single mistake introduced. The difference between the two runs is the
+            fingerprint.
           </p>
         </div>
 
-        <div className="mt-7 space-y-4">
-          <div className="rounded-xl bg-paper-2 p-6">
-            <h3 className="text-[18px]">A third of the calendar was missing</h3>
-            <p className="mt-2.5 text-[16.5px] leading-[1.7] text-ink-2">
-              The code traded on the last day of each month. When the 31st fell on a Saturday it
-              found no trading data, skipped that month — and skipped the month&apos;s profit and
-              loss with it.{" "}
-              <strong className="text-ink">578 of 1,971 days simply weren&apos;t there.</strong> The
-              results were an average over whichever days happened to survive.
-            </p>
-          </div>
+        <Signatures />
 
-          <div className="rounded-xl bg-paper-2 p-6">
-            <h3 className="text-[18px]">It only knew about companies that survived</h3>
-            <p className="mt-2.5 text-[16.5px] leading-[1.7] text-ink-2">
-              The test used today&apos;s list of large companies and applied it to the past decade.
-              Every company that went bankrupt or was taken over was invisible — like judging a
-              doctor&apos;s record after removing the patients who died.
-            </p>
-          </div>
+        <div className="prose">
+          <p>
+            <strong>Wrong filing date</strong> — using a company&apos;s Q1 figures on the day the
+            quarter ended rather than the day they were published — inflates measured skill by 59%
+            and pushes four meaningless signals over the line into statistical significance. It
+            leaves the eleven price-only signals untouched to machine precision, which is the single
+            most useful fact here: a result that leans on those signals cannot have come from this
+            mistake, no matter what else is true.
+          </p>
+          <p>
+            <strong>Wrong company list</strong> does something else entirely. Average skill goes{" "}
+            <em>down</em>, not up, so nothing about the headline looks improved. Underneath,
+            illiquidity flips from meaningless to strongly significant and the low-volatility effect
+            inverts. The reason is that today&apos;s index contains companies that were small and
+            obscure a decade ago and grew into it, so a backtest on that list rewards being small
+            and obscure. It is a description of a company on its way up, read backwards.
+          </p>
+          <p>
+            The two fingerprints are nearly uncorrelated and push value signals in opposite
+            directions, so one table cannot be explained by both.
+          </p>
+        </div>
+      </section>
+
+      <section className="rule py-12">
+        <h2 className="text-[25px]">What would make it a test</h2>
+        <div className="prose mt-5">
+          <p>
+            Measuring the fingerprints is not the same as being able to use them, and the method
+            says so in advance. Four things have to hold, in order: the fingerprints have to be
+            stable across time periods and company samples rather than artifacts of one window;
+            each has to come with an error bar; the two have to stay distinguishable once realistic
+            noise is added; and only then may the method report anything, as a probability rather
+            than a verdict.
+          </p>
+          <p>
+            The third step is usually where a project like this dies, because it needs labelled
+            examples and nobody labels their own mistakes. Here they are free: the mistaken versions
+            are produced by the same pipeline, so thousands of them can be generated on demand.
+            That is the property that makes the rest of it possible for one person.
+          </p>
+          <p>
+            Those four steps have not been run. A diagnostic that announces an answer without a
+            calibrated sense of how often it is wrong is worse than no diagnostic, so the method
+            reports nothing until they have.
+          </p>
+        </div>
+      </section>
+
+      <section className="rule py-12">
+        <div className="label">Paper</div>
+        <h2 className="mt-3 text-[25px]">Bias Fingerprints</h2>
+        <div className="prose mt-5">
+          <p>
+            The paper sets out the framework — the generator, the fingerprint, the statistical model
+            that separates the fingerprint from a study&apos;s genuine skill, and the four-step
+            validation protocol — then measures the two fingerprints above and reports the geometry
+            of the pair.
+          </p>
+        </div>
+        <div className="mt-9 flex flex-wrap gap-6 text-[16px]">
+          <a href="/Bias-Fingerprints.pdf" className="link">Read the paper (PDF)</a>
+        </div>
+      </section>
+
+      <section className="rule py-12">
+        <h2 className="text-[25px]">The instrument</h2>
+        <div className="prose mt-5">
+          <p>
+            None of this works without a pipeline that is correct on the dimension being studied,
+            because the correct run is what everything else is measured against. That instrument is
+            a model ranking about 500 large US companies each month, buying the ones it expects to
+            do well and betting against the rest, built on records of which companies were in the
+            index on any past date — including ones that no longer exist — and on government filings
+            dated to the day they were published.
+          </p>
         </div>
 
-        <Details summary="The other four bugs, in detail">
+        <GrowthChart />
+
+        <div className="prose">
+          <p>
+            The five bad years aren&apos;t a mistake. The model buys cheap, unglamorous companies,
+            and 2014 to 2018 was the worst stretch for that approach in modern history.
+          </p>
+          <p>
+            1.9% a year is not a finding, and it is not meant to be one. It is the control
+            condition: the number you get when nothing is wrong, which is what makes it possible to
+            price each mistake against it.
+          </p>
+        </div>
+      </section>
+
+      <section className="rule py-12">
+        <h2 className="text-[25px]">Two things worth knowing about any backtest</h2>
+        <div className="prose mt-5">
+          <p>
+            Building the instrument produced two results that have nothing to do with this
+            particular model. The first: most reported strategy returns are partly just exposure to
+            a rising market, which an index fund gives you for free. Here 59% of the apparent edge
+            turns out to be exactly that.
+          </p>
+        </div>
+        <BetaSplit />
+        <div className="prose">
+          <p>
+            The second: machine-learning models contain randomness. Running the identical model six
+            times, changing only that internal randomness, moves the headline score by a factor of
+            five while the underlying signal barely moves. A single reported score is a draw from
+            that spread, not a measurement of it.
+          </p>
+        </div>
+        <SeedLottery />
+      </section>
+
+      <section className="rule py-12">
+        <h2 className="text-[25px]">Where the instrument came from</h2>
+        <div className="prose mt-5">
+          <p>
+            The pipeline began as an inherited version reporting 35% a year. Reproducing it turned
+            up six separate problems, none of which raised an error or produced an implausible
+            number, which is what made them worth studying: every one produced output a reviewer
+            would accept. Rebuilding it correctly is what produced the instrument, and cataloguing
+            the six is what suggested the question the framework answers.
+          </p>
+        </div>
+
+        <BeforeAfter />
+
+        <Details summary="The six problems, in detail">
           <ol className="space-y-5">
-            {q.bugs.slice(2).map((b) => (
+            {q.bugs.map((b) => (
               <li key={b.n}>
                 <div className="text-[16.5px] font-medium">{b.title}</div>
                 <p className="mt-1.5 text-[16px] leading-[1.7] text-ink-2">{b.detail}</p>
@@ -94,76 +208,6 @@ export default function QuantPage() {
             ))}
           </ol>
         </Details>
-      </section>
-
-      <section className="rule py-12">
-        <h2 className="text-[25px]">What I rebuilt</h2>
-        <div className="prose mt-5">
-          <p>
-            I threw out the data and started again. The new version knows which companies were in the
-            index on any given past date — including ones that no longer exist — and pulls each
-            company&apos;s financial statements from government filings,{" "}
-            <strong>dated to the day they were actually published</strong> rather than the day the
-            quarter ended.
-          </p>
-          <p>
-            That detail matters more than it sounds. A company&apos;s Q1 results aren&apos;t public
-            until May; using them in April is the most common way to accidentally cheat.
-          </p>
-        </div>
-
-        <BeforeAfter />
-      </section>
-
-      <section className="rule py-12">
-        <h2 className="text-[25px]">Performance</h2>
-        <GrowthChart />
-        <div className="prose">
-          <p>
-            The five bad years aren&apos;t a mistake. The model buys cheap, unglamorous companies,
-            and 2014 to 2018 was the worst stretch for that approach in modern history. A reasonable
-            strategy living through an unreasonable decade.
-          </p>
-        </div>
-      </section>
-
-      <section className="rule py-12">
-        <h2 className="text-[25px]">Skill versus market exposure</h2>
-        <div className="prose mt-5">
-          <p>
-            Most reported strategy returns are partly just exposure to a rising market, which any
-            index fund gives you for free. Separating the two is rarely done and easy to measure
-            once the infrastructure is correct.
-          </p>
-        </div>
-        <BetaSplit />
-      </section>
-
-      <section className="rule py-12">
-        <h2 className="text-[25px]">How stable the result is</h2>
-        <div className="prose mt-5">
-          <p>
-            Machine-learning models contain randomness. I ran the identical model six times, changing
-            only that internal randomness, to see how much the headline score moved.
-          </p>
-        </div>
-        <SeedLottery />
-      </section>
-
-      <section className="rule py-12">
-        <h2 className="text-[25px]">Why the honest number is the useful one</h2>
-        <div className="prose mt-5">
-          <p>
-            1.9% is not the finding. It is the control condition — the number you get when nothing
-            is wrong, which is what makes it possible to price each mistake against it. Without a
-            trustworthy baseline there is nothing to measure the errors <em>with</em>.
-          </p>
-          <p>
-            Telling a real edge from a measurement error{" "}
-            <strong>is the job</strong>, and it is not a matter of judgement or care. It is a
-            measurement, and this project shows how to take it.
-          </p>
-        </div>
 
         <Details summary="Technical detail, for readers who want it">
           <div className="prose">
@@ -192,44 +236,6 @@ export default function QuantPage() {
           <a href="https://quantraunak.github.io/ls-multifactor-research/" className="link">
             Full results dashboard
           </a>
-        </div>
-      </section>
-
-      <section className="rule py-12">
-        <div className="label">Paper</div>
-        <h2 className="mt-3 text-[25px]">Two Bugs, Two Fingerprints</h2>
-        <div className="prose mt-5">
-          <p>
-            Finding the six bugs raised a second question: if a wrong number looks completely
-            reasonable, what does it look like <em>specifically</em>? I measured what two of the
-            most common mistakes do to the same study, changing one thing at a time and leaving
-            everything else identical.
-          </p>
-          <p>
-            Using a company&apos;s quarterly figures on the day the quarter ended, rather than the
-            day they were actually published, inflates the measured signal by 59% and turns four
-            insignificant factors into significant ones. Building the universe from today&apos;s
-            index members rather than the historical ones does something different: it doesn&apos;t
-            uniformly inflate, it <em>relocates</em>. Illiquidity flips from negative to significantly
-            positive, and the low-volatility effect inverts.
-          </p>
-          <p>
-            The two mistakes leave different marks. They&apos;re nearly uncorrelated across the 22
-            factors, and they push value factors in opposite directions. One leaves the
-            price-and-volume factors untouched to machine precision, because those factors never
-            read a published figure at all. That means the pattern of which results are wrong is
-            evidence about which mistake produced them, which is useful when you can read
-            someone&apos;s results but not their code.
-          </p>
-          <p>
-            The paper measures both effects and sets out the four things that would need to be true
-            before that inference could be trusted. Those aren&apos;t tested yet, and the paper says
-            so.
-          </p>
-        </div>
-
-        <div className="mt-9 flex flex-wrap gap-6 text-[16px]">
-          <a href="/Two-Bugs-Two-Fingerprints.pdf" className="link">Read the paper (PDF)</a>
         </div>
       </section>
     </Shell>

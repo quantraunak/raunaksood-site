@@ -7429,5 +7429,52 @@
   -0.001777
  ],
  "daily_start": "2014-01-31",
- "daily_end": "2026-07-31"
+ "daily_end": "2026-07-31",
+ "signatures": {
+  "correlation": -0.088,
+  "n_factors": 22,
+  "exact_zero_dating": 11,
+  "rows": [
+   {
+    "factor": "amihud_illiquidity",
+    "dating": 0.0,
+    "universe": 3.91
+   },
+   {
+    "factor": "turnover_1m",
+    "dating": -0.1,
+    "universe": -2.05
+   },
+   {
+    "factor": "idio_vol_60d",
+    "dating": 0.0,
+    "universe": -2.02
+   },
+   {
+    "factor": "operating_margin",
+    "dating": 0.35,
+    "universe": -1.88
+   },
+   {
+    "factor": "accruals",
+    "dating": 1.77,
+    "universe": 0.02
+   },
+   {
+    "factor": "vol_60d",
+    "dating": 0.0,
+    "universe": -1.41
+   },
+   {
+    "factor": "earnings_yield",
+    "dating": 0.98,
+    "universe": -1.28
+   },
+   {
+    "factor": "roe",
+    "dating": 1.07,
+    "universe": -1.24
+   }
+  ]
+ }
 }
