@@ -7,7 +7,7 @@ import { Details } from "@/components/details";
 export const metadata: Metadata = {
   title: "Melange",
   description:
-    "An app for creative people to find collaborators, shipped on iPhone and web, with privacy enforced by the database itself.",
+    "An app for creative people to find collaborators. Shipped on iPhone and web against one Postgres, with the feed ranked by a query and matches deduplicated by the database.",
 };
 
 export default function MelangePage() {
@@ -27,11 +27,12 @@ export default function MelangePage() {
       </header>
 
       <section className="rule py-12">
-        <h2 className="text-[25px]">How it works</h2>
+        <h2 className="text-[25px]">What a match actually is</h2>
         <div className="prose mt-5">
           <p>
-            Post what you&apos;re working on. Swipe through other people&apos;s projects. When you
-            both say yes, a chat opens and you plan the shoot.
+            Post what you&apos;re working on, swipe through other people&apos;s projects, and when
+            you both say yes a chat opens. That&apos;s the product. Underneath, a match is a row
+            that neither app is allowed to decide on its own.
           </p>
         </div>
         <SwipeDemo />

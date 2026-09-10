@@ -73,78 +73,137 @@ const CARDS = [
   { name: "Yuki", role: "Model", color: "var(--color-kelp)" },
 ];
 
-export function SwipeDemo() {
-  const [i, setI] = useState(0);
-  const [gone, setGone] = useState<"l" | "r" | null>(null);
-  const [likes, setLikes] = useState(0);
+/* The swipe loop, from the database's side. Two independent clients, one match
+   row, and the pair canonicalised so (A,B) and (B,A) cannot both exist.
+   Mirrors mobile/src/lib/db.ts and the UNIQUE(user1_id, user2_id) on matches. */
 
-  const go = (d: "l" | "r") => {
-    setGone(d);
-    if (d === "r") setLikes((n) => n + 1);
-    setTimeout(() => {
-      setI((n) => (n + 1) % CARDS.length);
-      setGone(null);
-    }, 240);
+const ME = { name: "You", id: "a41f…" };
+const THEM = { name: "Ana", id: "7c02…" };
+
+export function SwipeDemo() {
+  const [mine, setMine] = useState(false);
+  const [theirs, setTheirs] = useState(false);
+  const [raced, setRaced] = useState(false);
+
+  const matched = mine && theirs;
+  // Sorted, exactly as the client does before inserting.
+  const lower = ME.id < THEM.id ? ME : THEM;
+  const upper = ME.id < THEM.id ? THEM : ME;
+
+  const reset = () => {
+    setMine(false);
+    setTheirs(false);
+    setRaced(false);
   };
 
   return (
     <figure className="my-10">
-      <div className="flex flex-col items-center rounded-xl border border-rule p-7">
-        <div className="relative h-[250px] w-[190px]">
-          {[2, 1, 0].map((off) => {
-            const c = CARDS[(i + off) % CARDS.length];
-            const top = off === 0;
-            return (
-              <div
-                key={`${c.name}-${off}`}
-                className="absolute inset-0 rounded-2xl border border-rule bg-white p-4"
+      <div className="rounded-xl border border-rule p-5 sm:p-7">
+        <div className="grid grid-cols-2 gap-4">
+          {[
+            { who: ME, on: mine, set: setMine, sub: "iPhone" },
+            { who: THEM, on: theirs, set: setTheirs, sub: "Web" },
+          ].map(({ who, on, set, sub }) => (
+            <div key={who.name} className="rounded-lg border border-rule-soft p-4">
+              <div className="flex items-baseline justify-between">
+                <span className="text-[15px]">{who.name}</span>
+                <span className="mono text-[11px] text-ink-3">{sub}</span>
+              </div>
+              <div className="mono mt-1 text-[11px] text-ink-3">user_id {who.id}</div>
+              <button
+                onClick={() => set(!on)}
+                aria-pressed={on}
+                className="mt-3 w-full rounded-full border px-3 py-1.5 text-[13.5px] transition-colors"
                 style={{
-                  transitionDuration: "240ms",
-                  transitionProperty: "transform, opacity",
-                  transform: top
-                    ? gone === "l"
-                      ? "translateX(-130%) rotate(-14deg)"
-                      : gone === "r"
-                      ? "translateX(130%) rotate(14deg)"
-                      : "none"
-                    : `translateY(${off * 8}px) scale(${1 - off * 0.04})`,
-                  opacity: top && gone ? 0 : 1 - off * 0.3,
-                  zIndex: 3 - off,
+                  borderColor: on ? "var(--color-kelp)" : "var(--color-rule)",
+                  color: on ? "var(--color-kelp)" : "var(--color-ink-2)",
                 }}
               >
-                <div className="h-[140px] w-full rounded-xl" style={{ background: c.color, opacity: 0.16 }} />
-                <div className="mt-3 text-[17px]">{c.name}</div>
-                <div className="text-[14px] text-ink-3">{c.role}</div>
-              </div>
-            );
-          })}
+                {on ? "swiped right ✓" : "swipe right"}
+              </button>
+            </div>
+          ))}
         </div>
 
-        <div className="mt-6 flex gap-3">
+        <div className="mono mt-6 mb-2 text-[11.5px] uppercase tracking-[0.12em] text-ink-3">
+          public.matches
+        </div>
+        <div className="overflow-x-auto rounded-lg bg-paper-2 p-4">
+          <table className="mono w-full min-w-[300px] text-left text-[11.5px]">
+            <thead className="text-ink-3">
+              <tr>
+                <th className="pb-2 font-medium">user1_id</th>
+                <th className="pb-2 font-medium">user2_id</th>
+              </tr>
+            </thead>
+            <tbody>
+              {matched ? (
+                <tr style={{ color: "var(--color-kelp)" }}>
+                  <td className="pt-1">{lower.id}</td>
+                  <td className="pt-1">{upper.id}</td>
+                </tr>
+              ) : (
+                <tr className="text-ink-3">
+                  <td className="pt-1" colSpan={2}>
+                    (0 rows) — one right swipe is not a match
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        {matched && (
+          <div className="mt-4 text-[13.5px] leading-[1.65] text-ink-2">
+            The pair is <strong className="text-ink">sorted before it&apos;s written</strong>, so
+            the lower id is always <span className="mono">user1_id</span>. Without that,{" "}
+            <span className="mono">(you, Ana)</span> and <span className="mono">(Ana, you)</span>{" "}
+            are two different rows and the unique constraint never fires.
+          </div>
+        )}
+
+        <div className="mt-5 flex flex-wrap gap-3 border-t border-rule-soft pt-4">
           <button
-            type="button"
-            onClick={() => go("l")}
-            className="rounded-full border border-rule px-6 py-2.5 text-[15px] text-ink-2 transition-colors hover:border-ink-3"
+            onClick={() => {
+              setMine(true);
+              setTheirs(true);
+              setRaced(true);
+            }}
+            className="rounded-full border border-rule px-3 py-1.5 text-[13px] text-ink-2 transition-colors hover:border-[var(--color-sea)] hover:text-[var(--color-sea)]"
           >
-            Pass
+            Both swipe at the same instant
           </button>
           <button
-            type="button"
-            onClick={() => go("r")}
-            className="rounded-full border px-6 py-2.5 text-[15px] transition-colors"
-            style={{ borderColor: "var(--color-kelp)", color: "var(--color-kelp)" }}
+            onClick={reset}
+            className="rounded-full px-3 py-1.5 text-[13px] text-ink-3 transition-colors hover:text-ink"
           >
-            Interested
+            Reset
           </button>
         </div>
-        <div className="mt-4 text-[14px] text-ink-3">
-          {likes === 0 ? "Try it" : `${likes} liked — a match needs both people to say yes`}
-        </div>
+
+        {raced && (
+          <div className="mt-4 rounded-lg bg-paper-2 p-4 text-[13px] leading-[1.7]">
+            <div className="mono text-ink-2">
+              client A → INSERT … <span style={{ color: "var(--color-kelp)" }}>ok</span>
+              <br />
+              client B → INSERT …{" "}
+              <span style={{ color: "var(--color-coral)" }}>23505 unique_violation</span>
+              <br />
+              client B → SELECT … <span style={{ color: "var(--color-kelp)" }}>same row</span>
+            </div>
+            <p className="mt-3 text-ink-2">
+              Both people can swipe in the same instant, and both clients then try to create the
+              match. Rather than locking, the insert is allowed to fail: the loser catches the
+              unique violation and reads back the row the winner wrote. The database arbitrates,
+              and a conflict is treated as success.
+            </p>
+          </div>
+        )}
       </div>
       <figcaption className="mt-4 text-[15.5px] leading-[1.65] text-ink-2">
         <span className="font-medium text-ink">What to look at: </span>
-        the core loop of the app, working. Swipe through people, and when two people both say yes, a
-        chat opens.
+        a match isn&apos;t a thing either app decides. It&apos;s a row that can only exist when
+        both swipes do, written in a canonical order so it can only exist once.
       </figcaption>
     </figure>
   );
