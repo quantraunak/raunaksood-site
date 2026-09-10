@@ -4,6 +4,7 @@ import q from "@/public/data/quant.json";
 import { Shell } from "@/components/ui";
 import { GrowthChart, BetaSplit, SeedLottery, BeforeAfter, Signatures } from "@/components/simple-charts";
 import { Details } from "@/components/details";
+import { LeakDemo } from "@/components/leak-demo";
 
 export const metadata: Metadata = {
   title: "leakcheck",
@@ -35,6 +36,14 @@ export default function QuantPage() {
           </a>
         </div>
       </header>
+
+      <section className="rule py-12">
+        <LeakDemo />
+        <p className="mt-3 text-[13px] leading-[1.6] text-ink-3">
+          Move the clock on one data source. Anything that shifts had a dependency on it that
+          nobody declared.
+        </p>
+      </section>
 
       <section className="rule py-12">
         <h2 className="text-[25px]">The trick</h2>

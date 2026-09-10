@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Shell } from "@/components/ui";
 import { CardVisual } from "@/components/card-visual";
-import { LeakDemo } from "@/components/leak-demo";
 import { Reveal } from "@/components/reveal";
 
 const PROJECTS = [
@@ -56,19 +55,22 @@ export default function Home() {
     <Shell>
       <header className="pt-16 pb-14 sm:pt-24">
         <Reveal>
-          <div className="tech text-ink-3">Raunak Sood</div>
-          <h1 className="mt-5 max-w-[26rem] text-[clamp(30px,5.4vw,44px)] leading-[1.08] tracking-[-0.03em]">
-            I find the bug that makes your results look good.
+          <h1 className="text-[clamp(34px,6vw,52px)] leading-[1.05] tracking-[-0.03em]">
+            Raunak Sood
           </h1>
           <p className="lede mt-6 max-w-[33rem]">
-            Measurement infrastructure — the kind that tells you when a result is real, and when
-            it&apos;s an artifact of how the data was put together.
+            I&apos;m a master&apos;s student in Computer Science at USC, working on machine
+            learning at Innovius Capital. Before that: two summers of ML at QIAGEN, data science
+            at Precanto and York, and an economics degree at Santa Clara, where I played Division
+            I tennis.
           </p>
-          <p className="mt-3.5 text-[15px] leading-[1.7] text-ink-3">
-            M.S. Computer Science at USC. Machine learning at Innovius Capital.
+          <p className="mt-4 max-w-[33rem] text-[16px] leading-[1.7] text-ink-2">
+            I like problems where the hard part is knowing whether the answer is real — building
+            the data and evaluation underneath a model, not just the model. Graduating May 2027
+            and looking for machine learning and AI engineering roles.
           </p>
 
-          <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2.5 text-[15px]">
+          <div className="mt-9 flex flex-wrap gap-x-6 gap-y-2.5 text-[15px]">
             {LINKS.map(([href, label]) => (
               <a key={href} href={href} className="link">
                 {label}
@@ -76,22 +78,27 @@ export default function Home() {
             ))}
           </div>
         </Reveal>
-
-        <Reveal delay={120} className="mt-14">
-          <LeakDemo />
-          <p className="mt-3 text-[13px] leading-[1.6] text-ink-3">
-            Live output from{" "}
-            <Link href="/work/quant" className="link">
-              leakcheck
-            </Link>
-            . Move the clock on one data source; anything that shifts had a dependency on it that
-            nobody declared.
-          </p>
-        </Reveal>
       </header>
 
+      <section className="border-t border-rule pt-11 pb-2">
+        <div className="label">Experience</div>
+        <Reveal>
+          <ul className="mt-4">
+            {WORK.map(([org, role, when]) => (
+              <li key={org + when} className="border-b border-rule-soft py-4 last:border-0">
+                <div className="flex items-baseline justify-between gap-4">
+                  <div className="text-[17px] leading-snug">{org}</div>
+                  <div className="mono shrink-0 text-[12.5px] text-ink-3">{when}</div>
+                </div>
+                <div className="mt-0.5 text-[15px] text-ink-3">{role}</div>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+      </section>
+
       <section className="border-t border-rule pt-11">
-        <div className="label">Selected work</div>
+        <div className="label">Things I&apos;ve built</div>
 
         <div className="mt-2">
           {PROJECTS.map((p, i) => (
@@ -132,21 +139,6 @@ export default function Home() {
       <section className="pt-12 pb-24">
         <div className="grid gap-x-12 gap-y-12 sm:grid-cols-2">
           <div>
-            <h2 className="label mb-1">Experience</h2>
-            <ul>
-              {WORK.map(([org, role, when]) => (
-                <li key={org + when} className="border-b border-rule-soft py-4 last:border-0">
-                  <div className="flex items-baseline justify-between gap-4">
-                    <div className="text-[16.5px] leading-snug">{org}</div>
-                    <div className="mono shrink-0 text-[12.5px] text-ink-3">{when}</div>
-                  </div>
-                  <div className="mt-0.5 text-[14.5px] text-ink-3">{role}</div>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
             <h2 className="label mb-1">Education</h2>
             <ul>
               {SCHOOL.map(([org, role, when]) => (
@@ -159,12 +151,23 @@ export default function Home() {
                 </li>
               ))}
             </ul>
+          </div>
 
-            <h2 className="label mb-3 mt-10">Tools</h2>
+          <div>
+            <h2 className="label mb-3">Tools</h2>
             <p className="mono text-[13px] leading-[2] text-ink-2">
               Python · PyTorch · LightGBM · pandas · SQL
               <br />
               TypeScript · React · Next.js · Postgres · AWS
+            </p>
+
+            <h2 className="label mb-3 mt-10">Elsewhere</h2>
+            <p className="text-[15px] leading-[1.9] text-ink-2">
+              <a href="https://github.com/quantraunak" className="link">GitHub</a>
+              {" · "}
+              <a href="https://www.linkedin.com/in/raunak-sood" className="link">LinkedIn</a>
+              {" · "}
+              <a href="mailto:raunak.sood@gmail.com" className="link">raunak.sood@gmail.com</a>
             </p>
           </div>
         </div>
