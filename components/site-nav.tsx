@@ -21,11 +21,11 @@ export function SiteNav() {
         {onHome ? (
           <span />
         ) : (
-          <Link href="/" className="text-[16px] transition-colors hover:text-[var(--color-sea)]">
+          <Link href="/" className="tech text-ink-2 transition-colors hover:text-[var(--color-sea)]">
             Raunak&nbsp;Sood
           </Link>
         )}
-        <div className="flex flex-wrap items-center justify-end gap-x-5 gap-y-1 text-[14px]">
+        <div className="flex flex-wrap items-center justify-end gap-x-6 gap-y-1">
           {NAV.map((item) => {
             const active = pathname === item.href;
             return (
@@ -33,8 +33,8 @@ export function SiteNav() {
                 key={item.href}
                 href={item.href}
                 aria-current={active ? "page" : undefined}
-                className={`whitespace-nowrap transition-colors ${
-                  active ? "text-[var(--color-sea)]" : "text-ink-2 hover:text-[var(--color-sea)]"
+                className={`tech whitespace-nowrap transition-colors ${
+                  active ? "text-[var(--color-sea)]" : "text-ink-3 hover:text-[var(--color-sea)]"
                 }`}
               >
                 {item.label}

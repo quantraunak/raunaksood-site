@@ -1,29 +1,33 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Shell } from "@/components/ui";
 import { CardVisual } from "@/components/card-visual";
+import { LeakDemo } from "@/components/leak-demo";
+import { Reveal } from "@/components/reveal";
 
 const PROJECTS = [
   {
     href: "/work/quant",
     title: "leakcheck",
+    kind: "Open source · Python",
     plain:
       "A model that reads tomorrow's data scores brilliantly and fails in production. This finds it, by changing something your code shouldn't notice and seeing what moves.",
-    tag: "Open source · Python",
+    note: "pip install leakcheck",
   },
   {
     href: "/work/reasoning",
     title: "Resampled Thought Trees",
+    kind: "AI research · USC · 5 authors",
     plain:
       "When an AI reasons step by step, which steps actually matter? We froze it mid-thought and re-ran the search 22,000 times to find out.",
-    tag: "AI research · USC · 5 authors",
+    note: "Paper · 280 logged search trees",
   },
   {
     href: "/work/melange",
     title: "Melange",
+    kind: "Product · TypeScript, iOS",
     plain:
-      "An app for photographers, models and stylists to find each other. Shipped on iPhone and the web.",
-    tag: "Product · TypeScript, iOS",
+      "An app for photographers, models and stylists to find each other. Two clients, one Postgres, shipped on iPhone and the web.",
+    note: "Live · 17k lines",
   },
 ];
 
@@ -40,109 +44,131 @@ const SCHOOL: [string, string, string][] = [
   ["Santa Clara University", "B.S. Economics · Division I tennis", "2020 — 24"],
 ];
 
+const LINKS: [string, string][] = [
+  ["mailto:raunak.sood@gmail.com", "Email"],
+  ["/Raunak-Sood-Resume.pdf", "Résumé"],
+  ["https://github.com/quantraunak", "GitHub"],
+  ["https://www.linkedin.com/in/raunak-sood", "LinkedIn"],
+];
+
 export default function Home() {
   return (
-    <>
-      {/* ------------------------------------------------------------ photo */}
-      <div className="relative h-[38svh] min-h-[240px] w-full sm:h-[46svh]">
-        <Image src="/ocean.jpg" alt="" fill priority sizes="100vw" className="object-cover" />
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-white" />
-      </div>
-
-      <Shell>
-        {/* ------------------------------------------------------------ me */}
-        <header className="pb-12 pt-12 sm:pt-16">
-          <h1 className="text-[38px] leading-tight sm:text-[46px]">Raunak Sood</h1>
-          <p className="mt-5 text-[19px] leading-[1.65] text-ink-2">
-            I build measurement infrastructure — the kind that tells you when a result is real
-            and when it&apos;s an artifact of how the data was put together. Master&apos;s in
-            Computer Science at USC, machine learning at an investment firm.
+    <Shell>
+      <header className="pt-16 pb-14 sm:pt-24">
+        <Reveal>
+          <div className="tech text-ink-3">Raunak Sood</div>
+          <h1 className="mt-5 max-w-[26rem] text-[clamp(30px,5.4vw,44px)] leading-[1.08] tracking-[-0.03em]">
+            I find the bug that makes your results look good.
+          </h1>
+          <p className="lede mt-6 max-w-[33rem]">
+            Measurement infrastructure — the kind that tells you when a result is real, and when
+            it&apos;s an artifact of how the data was put together.
           </p>
-          <p className="mt-4 text-[19px] leading-[1.65] text-ink-2">
-            Three things below. The first is a tool you can install.
+          <p className="mt-3.5 text-[15px] leading-[1.7] text-ink-3">
+            M.S. Computer Science at USC. Machine learning at Innovius Capital.
           </p>
 
-          <div className="mt-8 flex flex-wrap gap-x-7 gap-y-3 text-[16px]">
-            {[
-              ["mailto:raunak.sood@gmail.com", "Email"],
-              ["/Raunak-Sood-Resume.pdf", "Résumé (PDF)"],
-              ["https://github.com/quantraunak", "GitHub"],
-              ["https://www.linkedin.com/in/raunak-sood", "LinkedIn"],
-            ].map(([href, label]) => (
+          <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2.5 text-[15px]">
+            {LINKS.map(([href, label]) => (
               <a key={href} href={href} className="link">
                 {label}
               </a>
             ))}
           </div>
-        </header>
+        </Reveal>
 
-        {/* ------------------------------------------------------ projects */}
-        <section className="rule py-14">
-          <h2 className="label mb-9">Projects</h2>
-
-          <div className="space-y-4">
-            {PROJECTS.map((p, i) => (
-              <Link
-                key={p.href}
-                href={p.href}
-                className="group block rounded-xl border border-rule p-7 transition-colors hover:border-[var(--color-sea)]"
-              >
-                <CardVisual index={i} />
-                <div className="mt-5 text-[13px] text-ink-3">{p.tag}</div>
-                <h3 className="mt-2 text-[24px] leading-snug transition-colors group-hover:text-[var(--color-sea)]">
-                  {p.title}
-                </h3>
-                <p className="mt-3 text-[17.5px] leading-[1.7] text-ink-2">{p.plain}</p>
-                <span className="mt-5 inline-block text-[15px] text-ink-3 transition-colors group-hover:text-[var(--color-sea)]">
-                  Read more →
-                </span>
-              </Link>
-            ))}
-          </div>
-        </section>
-
-        {/* -------------------------------------------------------- resume */}
-        <section className="rule py-14">
-          <h2 className="label mb-9">Experience</h2>
-          <ul>
-            {WORK.map(([org, role, when]) => (
-              <li
-                key={org + when}
-                className="rule-soft flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 py-5 first:border-t-0 first:pt-0"
-              >
-                <div>
-                  <div className="text-[18px]">{org}</div>
-                  <div className="mt-1 text-[16px] text-ink-3">{role}</div>
-                </div>
-                <div className="text-[15px] tnum text-ink-3">{when}</div>
-              </li>
-            ))}
-          </ul>
-
-          <h2 className="label mb-9 mt-14">Education</h2>
-          <ul>
-            {SCHOOL.map(([org, role, when]) => (
-              <li
-                key={org}
-                className="rule-soft flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 py-5 first:border-t-0 first:pt-0"
-              >
-                <div>
-                  <div className="text-[18px]">{org}</div>
-                  <div className="mt-1 text-[16px] text-ink-3">{role}</div>
-                </div>
-                <div className="text-[15px] tnum text-ink-3">{when}</div>
-              </li>
-            ))}
-          </ul>
-
-          <h2 className="label mb-6 mt-14">Tools</h2>
-          <p className="text-[17px] leading-[1.9] text-ink-2">
-            Python, PyTorch, LightGBM, scikit-learn, pandas, SQL, R
-            <br />
-            TypeScript, React, Next.js, Postgres, Docker, AWS
+        <Reveal delay={120} className="mt-14">
+          <LeakDemo />
+          <p className="mt-3 text-[13px] leading-[1.6] text-ink-3">
+            Live output from{" "}
+            <Link href="/work/quant" className="link">
+              leakcheck
+            </Link>
+            . Move the clock on one data source; anything that shifts had a dependency on it that
+            nobody declared.
           </p>
-        </section>
-      </Shell>
-    </>
+        </Reveal>
+      </header>
+
+      <section className="border-t border-rule pt-11">
+        <div className="label">Selected work</div>
+
+        <div className="mt-2">
+          {PROJECTS.map((p, i) => (
+            <Reveal key={p.href} delay={i * 70}>
+            <Link href={p.href} className="group block border-b border-rule-soft py-10">
+              <div className="flex items-baseline gap-4">
+                <span className="mono text-[13px] text-ink-3">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h2 className="text-[26px] leading-tight tracking-[-0.02em] transition-colors group-hover:text-[var(--color-sea)] sm:text-[29px]">
+                  {p.title}
+                </h2>
+              </div>
+
+              <div className="mt-4 pl-0 sm:pl-[2.1rem]">
+                <CardVisual index={i} />
+                <p className="mt-5 max-w-[33rem] text-[17px] leading-[1.7] text-ink-2">
+                  {p.plain}
+                </p>
+                <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12.5px] text-ink-3">
+                  <span className="mono">{p.note}</span>
+                  <span aria-hidden>·</span>
+                  <span>{p.kind}</span>
+                  <span
+                    aria-hidden
+                    className="ml-auto text-ink-3 opacity-0 transition-opacity group-hover:opacity-100"
+                  >
+                    Read →
+                  </span>
+                </div>
+              </div>
+            </Link>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      <section className="pt-12 pb-24">
+        <div className="grid gap-x-12 gap-y-12 sm:grid-cols-2">
+          <div>
+            <h2 className="label mb-1">Experience</h2>
+            <ul>
+              {WORK.map(([org, role, when]) => (
+                <li key={org + when} className="border-b border-rule-soft py-4 last:border-0">
+                  <div className="flex items-baseline justify-between gap-4">
+                    <div className="text-[16.5px] leading-snug">{org}</div>
+                    <div className="mono shrink-0 text-[12.5px] text-ink-3">{when}</div>
+                  </div>
+                  <div className="mt-0.5 text-[14.5px] text-ink-3">{role}</div>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h2 className="label mb-1">Education</h2>
+            <ul>
+              {SCHOOL.map(([org, role, when]) => (
+                <li key={org} className="border-b border-rule-soft py-4 last:border-0">
+                  <div className="flex items-baseline justify-between gap-4">
+                    <div className="text-[16.5px] leading-snug">{org}</div>
+                    <div className="mono shrink-0 text-[12.5px] text-ink-3">{when}</div>
+                  </div>
+                  <div className="mt-0.5 text-[14.5px] text-ink-3">{role}</div>
+                </li>
+              ))}
+            </ul>
+
+            <h2 className="label mb-3 mt-10">Tools</h2>
+            <p className="mono text-[13px] leading-[2] text-ink-2">
+              Python · PyTorch · LightGBM · pandas · SQL
+              <br />
+              TypeScript · React · Next.js · Postgres · AWS
+            </p>
+          </div>
+        </div>
+      </section>
+    </Shell>
   );
 }

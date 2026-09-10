@@ -3,6 +3,11 @@ import Link from "next/link";
 import "./globals.css";
 import { SiteNav } from "@/components/site-nav";
 
+export const viewport = {
+  themeColor: "#08090b",
+  colorScheme: "dark" as const,
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://raunaksood.vercel.app"),
   title: {

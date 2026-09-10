@@ -81,7 +81,7 @@ function Phones() {
       <svg viewBox="0 0 560 90" className="w-full" style={{ height: 90 }} aria-hidden>
         {[0, 1, 2].map((i) => (
           <g key={i} transform={`translate(${210 + i * 48}, 10) rotate(${(i - 1) * 5} 35 35)`}>
-            <rect width="70" height="70" rx="9" fill="#fff" stroke="var(--color-rule)" strokeWidth="1.5" />
+            <rect width="70" height="70" rx="9" fill="var(--color-paper-3)" stroke="var(--color-rule)" strokeWidth="1.5" />
             <rect x="10" y="10" width="50" height="32" rx="4" fill="var(--color-coral)" fillOpacity={0.18 + i * 0.08} />
             <rect x="10" y="48" width="34" height="4" rx="2" fill="var(--color-ink-3)" opacity="0.4" />
             <rect x="10" y="57" width="22" height="4" rx="2" fill="var(--color-ink-3)" opacity="0.25" />
@@ -93,5 +93,5 @@ function Phones() {
 }
 
 function Frame({ children }: { children: React.ReactNode }) {
-  return <div className="overflow-hidden rounded-lg bg-paper-2 px-4 py-3">{children}</div>;
+  return <div className="overflow-hidden rounded-lg border border-rule-soft bg-paper-2 px-5 py-4">{children}</div>;
 }

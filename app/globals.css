@@ -1,31 +1,30 @@
 @import "tailwindcss";
 
-/* White, always. The site previously followed the OS colour scheme, so it
-   rendered dark navy for anyone whose machine was in dark mode. */
+/* Dark, always. One ground, one accent, hairline rules. */
 
 @theme {
-  --color-paper: #ffffff;
-  --color-paper-2: #fafbfc;
-  --color-paper-3: #f2f5f7;
-  --color-paper-4: #e9eef1;
+  --color-paper: #08090b;
+  --color-paper-2: #0e1013;
+  --color-paper-3: #14171b;
+  --color-paper-4: #1c2026;
 
-  --color-ink: #10161c;
-  --color-ink-2: #4a5763;
-  --color-ink-3: #8b98a5;
+  --color-ink: #eceef1;
+  --color-ink-2: #9aa4b0;
+  --color-ink-3: #626c78;
 
-  --color-rule: #e7ebee;
-  --color-rule-soft: #f0f3f5;
+  --color-rule: rgba(255, 255, 255, 0.085);
+  --color-rule-soft: rgba(255, 255, 255, 0.05);
 
-  --color-shallow: #4bb6cc;
-  --color-sea: #0f7d99;
-  --color-deep: #0b6180;
-  --color-abyss: #084a63;
-  --color-kelp: #12866f;
-  --color-coral: #c9553a;
-  --color-sand: #b8860b;
+  --color-shallow: #7de8ff;
+  --color-sea: #48d5f0;
+  --color-deep: #22b6d6;
+  --color-abyss: #0e7f9c;
+  --color-kelp: #3ddba6;
+  --color-coral: #ff6a45;
+  --color-sand: #e8b64c;
 
   --color-accent: var(--color-sea);
-  --color-accent-soft: #e6f2f6;
+  --color-accent-soft: rgba(72, 213, 240, 0.12);
 
   --font-serif: "Fraunces", "Iowan Old Style", Georgia, serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
@@ -39,11 +38,12 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
-  background: #fff;
+  background: #08090b;
+  color-scheme: dark;
 }
 
 body {
-  background: #fff;
+  background: #08090b;
   color: var(--color-ink);
   font-family: var(--font-sans);
   font-size: 17px;
@@ -59,7 +59,8 @@ a {
 }
 
 ::selection {
-  background: #d8eef4;
+  background: rgba(72, 213, 240, 0.28);
+  color: #fff;
 }
 
 :focus-visible {
@@ -138,7 +139,7 @@ h3 {
 }
 
 .card {
-  background: #fff;
+  background: var(--color-paper-2);
   border: 1px solid var(--color-rule);
   border-radius: 10px;
 }
@@ -233,4 +234,69 @@ input[type="range"] {
 .link:hover {
   color: var(--color-deep);
   text-decoration-color: currentColor;
+}
+
+/* ------------------------------------------------------------- reveal */
+
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    filter: blur(9px);
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+  }
+}
+
+.reveal {
+  opacity: 0;
+}
+.reveal.is-in {
+  animation: reveal-in 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal.is-in {
+    opacity: 1;
+    animation: none;
+    filter: none;
+    transform: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Hairline rules framing the reading column, the way a technical drawing
+   frames its sheet. */
+.framed {
+  position: relative;
+}
+.framed::before,
+.framed::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--color-rule);
+  pointer-events: none;
+}
+.framed::before {
+  left: 0;
+}
+.framed::after {
+  right: 0;
+}
+
+.tech {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 11.5px;
+  font-weight: 500;
 }
