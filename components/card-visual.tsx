@@ -112,29 +112,3 @@ function Phones() {
 function Frame({ children }: { children: React.ReactNode }) {
   return <div className="overflow-hidden rounded-lg border border-rule-soft bg-paper-2 px-5 py-4">{children}</div>;
 }
-
-/* Hero plate. A registration mark on a measurement grid — a made thing rather
-   than a stock photograph, and it says what the work is about. */
-export function Plate() {
-  const rule = "var(--color-rule)";
-  return (
-    <div className="plate">
-      <svg viewBox="0 0 320 400" className="absolute inset-0 h-full w-full" aria-hidden>
-        {Array.from({ length: 15 }, (_, i) => (
-          <line key={`h${i}`} x1="0" y1={i * 28 + 14} x2="320" y2={i * 28 + 14} stroke={rule} strokeWidth="1" />
-        ))}
-        {Array.from({ length: 12 }, (_, i) => (
-          <line key={`v${i}`} x1={i * 28 + 10} y1="0" x2={i * 28 + 10} y2="400" stroke={rule} strokeWidth="1" />
-        ))}
-        <circle cx="160" cy="200" r="86" fill="var(--color-sea)" />
-        <circle cx="160" cy="200" r="86" fill="none" stroke="var(--color-abyss)" strokeWidth="1" />
-        <line x1="160" y1="72" x2="160" y2="328" stroke="var(--color-paper)" strokeWidth="1" strokeOpacity="0.55" />
-        <line x1="32" y1="200" x2="288" y2="200" stroke="var(--color-paper)" strokeWidth="1" strokeOpacity="0.55" />
-        <circle cx="160" cy="200" r="4" fill="var(--color-paper)" />
-        <text x="20" y="386" fontSize="9.5" fill="var(--color-ink-3)" fontFamily="var(--font-mono)" letterSpacing="1.4">
-          LOS ALTOS · CA
-        </text>
-      </svg>
-    </div>
-  );
-}

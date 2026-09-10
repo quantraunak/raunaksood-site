@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { existsSync } from "node:fs";
 import path from "node:path";
-import { CardVisual, Plate } from "@/components/card-visual";
+import { CardVisual } from "@/components/card-visual";
 import { Reveal } from "@/components/reveal";
 
 const PROJECTS = [
@@ -63,16 +63,22 @@ export default function Home() {
     <>
       <header className="px-6 pt-16 pb-16 sm:px-10 sm:pt-24">
         <Reveal>
-          <div className="grid items-start gap-10 sm:grid-cols-[minmax(0,1fr)_270px] sm:gap-16">
+          <div
+            className={
+              PORTRAIT
+                ? "grid items-start gap-10 sm:grid-cols-[minmax(0,1fr)_240px] sm:gap-16"
+                : ""
+            }
+          >
             <div>
               <h1 className="display">Raunak Sood</h1>
-              <p className="mt-8 max-w-[34rem] text-[19px] leading-[1.6] text-ink-2">
+              <p className="mt-8 max-w-[36rem] text-[19px] leading-[1.6] text-ink-2">
                 Master&apos;s student in Computer Science at USC. Machine learning intern at
                 Innovius Capital. Previously two summers at QIAGEN, plus Precanto and York
                 University. Undergrad in economics at Santa Clara, where I played Division I
                 tennis.
               </p>
-              <p className="mt-4 max-w-[34rem] text-[16px] leading-[1.7] text-ink-3">
+              <p className="mt-4 max-w-[36rem] text-[16px] leading-[1.7] text-ink-3">
                 Graduating May 2027. Looking for machine learning and AI engineering roles.
               </p>
 
@@ -85,22 +91,20 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="hidden sm:block">
-              {PORTRAIT ? (
+            {PORTRAIT && (
+              <div className="hidden sm:block">
                 <div className="plate">
                   <Image
                     src={`/${PORTRAIT}`}
                     alt="Raunak Sood"
                     fill
-                    sizes="270px"
+                    sizes="240px"
                     priority
                     className="object-cover"
                   />
                 </div>
-              ) : (
-                <Plate />
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </Reveal>
       </header>
