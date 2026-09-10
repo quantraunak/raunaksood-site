@@ -6,9 +6,9 @@ import { GrowthChart, BetaSplit, SeedLottery, BeforeAfter, Signatures } from "@/
 import { Details } from "@/components/details";
 
 export const metadata: Metadata = {
-  title: "Bias fingerprints",
+  title: "leakcheck",
   description:
-    "A method for checking trading research you cannot audit: measure what each data mistake does to a set of signals, then recognise that pattern in results whose code you will never see.",
+    "Temporal leakage never throws an error and always improves your metrics. leakcheck finds it by changing something your features must be invariant to and reporting whatever moved.",
 };
 
 export default function QuantPage() {
@@ -18,51 +18,90 @@ export default function QuantPage() {
         <Link href="/" className="text-[15px] text-ink-3 transition-colors hover:text-[var(--color-sea)]">
           ← Back
         </Link>
-        <div className="label mt-10">Quantitative research · Python</div>
+        <div className="label mt-10">Open source · Python</div>
         <h1 className="mt-3 text-[34px] leading-[1.15] sm:text-[42px]">
-          Telling a real edge from a data mistake
+          Finding the bug that makes your model look good
         </h1>
         <p className="mt-6 text-[19.5px] leading-[1.65] text-ink-2">
-          Almost every trading result you can read is one you cannot check. The numbers are
-          published; the code is not. I propose a way around that: run one study twice, once
-          correctly and once with a specific mistake introduced, and record the mark the mistake
-          leaves across the signals. Different mistakes leave different marks, so the pattern of
-          which results look wrong becomes evidence about what went wrong.
+          If a model gets to see data that didn&apos;t exist yet, it scores brilliantly in
+          testing and fails the moment it&apos;s real. Nothing crashes. No number looks
+          strange. <strong>leakcheck</strong> catches it without needing to know the right
+          answer — it changes something your code shouldn&apos;t be able to notice, runs it
+          again, and reports whatever moved.
         </p>
+        <div className="mt-7 flex flex-wrap gap-6 text-[16px]">
+          <a href="https://github.com/quantraunak/leakcheck" className="link">
+            leakcheck on GitHub
+          </a>
+        </div>
       </header>
 
       <section className="rule py-12">
-        <h2 className="text-[25px]">The idea</h2>
+        <h2 className="text-[25px]">The trick</h2>
         <div className="prose mt-5">
           <p>
-            The standard advice about data mistakes is written for the person who owns the code:
-            date your figures correctly, build your company list correctly, check your own work.
-            That advice is useless to the reader on the other side. An investor reads a fund
-            manager&apos;s numbers. A reviewer reads a submitted paper. Neither can run anything.
+            Some of your features can&apos;t possibly depend on when a particular table
+            arrived. A feature built only from daily prices cannot care what day an earnings
+            report was published. That&apos;s not a guess about the code — it&apos;s
+            arithmetic.
           </p>
           <p>
-            The move is to stop thinking of a mistake as an amount of inflation and start thinking
-            of it as a <em>shape</em>. Using a company&apos;s quarterly figures a month before they
-            were published can only affect signals that read those figures — the ones built from
-            share prices alone cannot move at all. Building your company list from today&apos;s
-            index members instead of the historical ones tilts everything toward small companies
-            that later grew big. Those two mistakes damage different signals, in different
-            directions, and the damage is a property of the mistake rather than of the study.
+            So: push that table&apos;s arrival date a month later and run everything again.
+            The features that genuinely can&apos;t see it return <em>identical</em> numbers.
+            Not close — identical, to the last decimal, because they got the same arrays
+            through the same code. Anything that moves has a connection to that table you
+            didn&apos;t know about. And in a system that predicts the future, an unknown
+            connection to <em>when data arrived</em> is exactly the bug you&apos;re looking
+            for.
           </p>
           <p>
-            So you measure the shape once, on a pipeline you control, and then look for it in
-            results you cannot audit. I call the shapes fingerprints.
+            You never need to know the correct answer. You only need to know one change the
+            answer must survive.
           </p>
         </div>
       </section>
 
       <section className="rule py-12">
-        <h2 className="text-[25px]">The two fingerprints</h2>
+        <h2 className="text-[25px]">It caught a real one</h2>
         <div className="prose mt-5">
           <p>
-            Same 22 signals, same companies, same prices, same test window. One run correct, one run
-            with a single mistake introduced. The difference between the two runs is the
-            fingerprint.
+            In the project this came out of, a signal called{" "}
+            <span className="mono">turnover_1m</span> was filed under &ldquo;built from
+            prices and trading volume.&rdquo; It lives in a file called{" "}
+            <span className="mono">price.py</span>. Every person who looked at it agreed.
+          </p>
+          <p>
+            It divides by shares outstanding — a number that comes off a company filing. So
+            it was quietly reading regulatory data while sitting in the group that
+            supposedly couldn&apos;t. Nobody found that by reading the code. The test found
+            it, because it was the one member of its group that moved when the filing
+            calendar shifted and eleven others held at exactly zero.
+          </p>
+        </div>
+      </section>
+
+      <section className="rule py-12">
+        <h2 className="text-[25px]">Where the idea came from</h2>
+        <div className="prose mt-5">
+          <p>
+            This started as a question about stock-picking research, where the same bug has
+            a name: using a company&apos;s quarterly figures on the day the quarter ended
+            rather than the day they were actually published. Roughly, betting on a game
+            with tomorrow&apos;s newspaper.
+          </p>
+          <p>
+            I measured what that costs. Take 22 stock-picking rules, run them on identical
+            data once correctly and once with the mistake introduced, and compare. Measured
+            skill went up 59%, and four rules that were worthless crossed the line into
+            statistically significant. But it only touched the eleven rules that read
+            company filings. The other eleven use nothing but prices, and they came back
+            identical to the last decimal.
+          </p>
+          <p>
+            That block of exact zeros is the whole method. It is what turns &ldquo;this
+            number changed a bit&rdquo; into &ldquo;this feature has a dependency it should
+            not have,&rdquo; and it is what <span className="mono">leakcheck</span>{" "}
+            generalises out of finance.
           </p>
         </div>
 
@@ -70,49 +109,11 @@ export default function QuantPage() {
 
         <div className="prose">
           <p>
-            <strong>Wrong filing date</strong> — using a company&apos;s Q1 figures on the day the
-            quarter ended rather than the day they were published — inflates measured skill by 59%
-            and pushes four meaningless signals over the line into statistical significance. It
-            leaves the eleven price-only signals untouched to machine precision, which is the single
-            most useful fact here: a result that leans on those signals cannot have come from this
-            mistake, no matter what else is true.
-          </p>
-          <p>
-            <strong>Wrong company list</strong> does something else entirely. Average skill goes{" "}
-            <em>down</em>, not up, so nothing about the headline looks improved. Underneath,
-            illiquidity flips from meaningless to strongly significant and the low-volatility effect
-            inverts. The reason is that today&apos;s index contains companies that were small and
-            obscure a decade ago and grew into it, so a backtest on that list rewards being small
-            and obscure. It is a description of a company on its way up, read backwards.
-          </p>
-          <p>
-            The two fingerprints are nearly uncorrelated and push value signals in opposite
-            directions, so one table cannot be explained by both.
-          </p>
-        </div>
-      </section>
-
-      <section className="rule py-12">
-        <h2 className="text-[25px]">What would make it a test</h2>
-        <div className="prose mt-5">
-          <p>
-            Measuring the fingerprints is not the same as being able to use them, and the method
-            says so in advance. Four things have to hold, in order: the fingerprints have to be
-            stable across time periods and company samples rather than artifacts of one window;
-            each has to come with an error bar; the two have to stay distinguishable once realistic
-            noise is added; and only then may the method report anything, as a probability rather
-            than a verdict.
-          </p>
-          <p>
-            The third step is usually where a project like this dies, because it needs labelled
-            examples and nobody labels their own mistakes. Here they are free: the mistaken versions
-            are produced by the same pipeline, so thousands of them can be generated on demand.
-            That is the property that makes the rest of it possible for one person.
-          </p>
-          <p>
-            Those four steps have not been run. A diagnostic that announces an answer without a
-            calibrated sense of how often it is wrong is worse than no diagnostic, so the method
-            reports nothing until they have.
+            The chart shows a second mistake alongside the first: building your test from
+            today&apos;s list of big companies and running it backwards, which quietly fills
+            your sample with firms that were small a decade ago and then grew. It damages a
+            completely different set of rules, in a different direction — which is a finding
+            in its own right, and the subject of the paper below.
           </p>
         </div>
       </section>
@@ -122,10 +123,11 @@ export default function QuantPage() {
         <h2 className="mt-3 text-[25px]">Bias Fingerprints</h2>
         <div className="prose mt-5">
           <p>
-            The paper sets out the framework — the generator, the fingerprint, the statistical model
-            that separates the fingerprint from a study&apos;s genuine skill, and the four-step
-            validation protocol — then measures the two fingerprints above and reports the geometry
-            of the pair.
+            A write-up of the measurements above: what each mistake does to 22 stock-picking
+            rules, why one of them doesn&apos;t inflate results at all but rearranges which
+            rules look good, and a proposal for reading the damage backwards to identify
+            which mistake a study contains. That last part is set out and explicitly not yet
+            validated.
           </p>
         </div>
         <div className="mt-9 flex flex-wrap gap-6 text-[16px]">
@@ -134,11 +136,11 @@ export default function QuantPage() {
       </section>
 
       <section className="rule py-12">
-        <h2 className="text-[25px]">The instrument</h2>
+        <h2 className="text-[25px]">The pipeline underneath</h2>
         <div className="prose mt-5">
           <p>
             None of this works without a pipeline that is correct on the dimension being studied,
-            because the correct run is what everything else is measured against. That instrument is
+            because the correct run is what everything else is measured against. That is
             a model ranking about 500 large US companies each month, buying the ones it expects to
             do well and betting against the rest, built on records of which companies were in the
             index on any past date — including ones that no longer exist — and on government filings
@@ -184,14 +186,14 @@ export default function QuantPage() {
       </section>
 
       <section className="rule py-12">
-        <h2 className="text-[25px]">Where the instrument came from</h2>
+        <h2 className="text-[25px]">How the pipeline got built</h2>
         <div className="prose mt-5">
           <p>
             The pipeline began as an inherited version reporting 35% a year. Reproducing it turned
             up six separate problems, none of which raised an error or produced an implausible
-            number, which is what made them worth studying: every one produced output a reviewer
-            would accept. Rebuilding it correctly is what produced the instrument, and cataloguing
-            the six is what suggested the question the framework answers.
+            number — which is what made them worth studying, and what eventually turned into{" "}
+            <span className="mono">leakcheck</span>. Every one produced output a reviewer would
+            accept.
           </p>
         </div>
 

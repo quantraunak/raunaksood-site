@@ -6,10 +6,10 @@ import { CardVisual } from "@/components/card-visual";
 const PROJECTS = [
   {
     href: "/work/quant",
-    title: "Bias fingerprints",
+    title: "leakcheck",
     plain:
-      "You can read a trading result but never its code. A way to tell which data mistake produced it, from the pattern of which signals look wrong.",
-    tag: "Quantitative research · Python",
+      "A model that reads tomorrow's data scores brilliantly and fails in production. This finds it, by changing something your code shouldn't notice and seeing what moves.",
+    tag: "Open source · Python",
   },
   {
     href: "/work/reasoning",
