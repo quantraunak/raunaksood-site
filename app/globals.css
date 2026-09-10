@@ -1,30 +1,30 @@
 @import "tailwindcss";
 
-/* Dark, always. One ground, one accent, hairline rules. */
+/* Light, always. Warm paper, near-black ink, one accent. */
 
 @theme {
-  --color-paper: #08090b;
-  --color-paper-2: #0e1013;
-  --color-paper-3: #14171b;
-  --color-paper-4: #1c2026;
+  --color-paper: #ffffff;
+  --color-paper-2: #fbfbfa;
+  --color-paper-3: #f4f4f2;
+  --color-paper-4: #e8e8e5;
 
-  --color-ink: #eceef1;
-  --color-ink-2: #9aa4b0;
-  --color-ink-3: #626c78;
+  --color-ink: #16181c;
+  --color-ink-2: #4c5257;
+  --color-ink-3: #8b9199;
 
-  --color-rule: rgba(255, 255, 255, 0.085);
-  --color-rule-soft: rgba(255, 255, 255, 0.05);
+  --color-rule: #e6e6e3;
+  --color-rule-soft: #f0f0ee;
 
-  --color-shallow: #7de8ff;
-  --color-sea: #48d5f0;
-  --color-deep: #22b6d6;
-  --color-abyss: #0e7f9c;
-  --color-kelp: #3ddba6;
-  --color-coral: #ff6a45;
-  --color-sand: #e8b64c;
+  --color-shallow: #6fb4c8;
+  --color-sea: #10657f;
+  --color-deep: #0a4d63;
+  --color-abyss: #073a4c;
+  --color-kelp: #147a63;
+  --color-coral: #c2482c;
+  --color-sand: #a97c1c;
 
   --color-accent: var(--color-sea);
-  --color-accent-soft: rgba(72, 213, 240, 0.12);
+  --color-accent-soft: #eaf3f6;
 
   --font-serif: "Fraunces", "Iowan Old Style", Georgia, serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
@@ -38,12 +38,11 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
-  background: #08090b;
-  color-scheme: dark;
+  background: #fff;
 }
 
 body {
-  background: #08090b;
+  background: #fff;
   color: var(--color-ink);
   font-family: var(--font-sans);
   font-size: 17px;
@@ -59,8 +58,7 @@ a {
 }
 
 ::selection {
-  background: rgba(72, 213, 240, 0.28);
-  color: #fff;
+  background: #d6e8ee;
 }
 
 :focus-visible {

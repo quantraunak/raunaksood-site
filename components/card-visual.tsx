@@ -75,18 +75,35 @@ function Tree() {
   );
 }
 
+/* Two clients, one database. The interesting thing about this app is the shape,
+   not that it has screens. */
 function Phones() {
+  const ink = "var(--color-ink-3)";
+  const line = "var(--color-rule)";
   return (
     <Frame>
-      <svg viewBox="0 0 560 90" className="w-full" style={{ height: 90 }} aria-hidden>
-        {[0, 1, 2].map((i) => (
-          <g key={i} transform={`translate(${210 + i * 48}, 10) rotate(${(i - 1) * 5} 35 35)`}>
-            <rect width="70" height="70" rx="9" fill="var(--color-paper-3)" stroke="var(--color-rule)" strokeWidth="1.5" />
-            <rect x="10" y="10" width="50" height="32" rx="4" fill="var(--color-coral)" fillOpacity={0.18 + i * 0.08} />
-            <rect x="10" y="48" width="34" height="4" rx="2" fill="var(--color-ink-3)" opacity="0.4" />
-            <rect x="10" y="57" width="22" height="4" rx="2" fill="var(--color-ink-3)" opacity="0.25" />
-          </g>
-        ))}
+      <svg viewBox="0 0 560 108" className="w-full" style={{ height: 108 }} aria-hidden>
+        {/* iOS client */}
+        <rect x="150" y="6" width="42" height="62" rx="7" fill="none" stroke={ink} strokeWidth="1.4" />
+        <rect x="157" y="15" width="28" height="34" rx="3" fill="var(--color-coral)" fillOpacity="0.14" />
+        <line x1="161" y1="56" x2="181" y2="56" stroke={line} strokeWidth="2.5" strokeLinecap="round" />
+
+        {/* web client */}
+        <rect x="330" y="10" width="84" height="54" rx="6" fill="none" stroke={ink} strokeWidth="1.4" />
+        <line x1="330" y1="23" x2="414" y2="23" stroke={ink} strokeWidth="1.2" />
+        <circle cx="338" cy="16.5" r="2" fill={ink} />
+        <rect x="339" y="32" width="30" height="22" rx="3" fill="var(--color-coral)" fillOpacity="0.14" />
+        <line x1="377" y1="34" x2="405" y2="34" stroke={line} strokeWidth="2.5" strokeLinecap="round" />
+        <line x1="377" y1="42" x2="399" y2="42" stroke={line} strokeWidth="2.5" strokeLinecap="round" />
+
+        {/* both down to one database */}
+        <path d="M171 68 L171 82 Q171 88 177 88 L275 88" fill="none" stroke={line} strokeWidth="1.3" />
+        <path d="M372 64 L372 82 Q372 88 366 88 L285 88" fill="none" stroke={line} strokeWidth="1.3" />
+        <ellipse cx="280" cy="88" rx="17" ry="5.5" fill="none" stroke={ink} strokeWidth="1.4" />
+        <path d="M263 88 L263 99 Q263 104 280 104 Q297 104 297 99 L297 88" fill="none" stroke={ink} strokeWidth="1.4" />
+
+        <text x="171" y="80" textAnchor="middle" fontSize="7.5" fill={ink} fontFamily="var(--font-mono)">iOS</text>
+        <text x="372" y="77" textAnchor="middle" fontSize="7.5" fill={ink} fontFamily="var(--font-mono)">WEB</text>
       </svg>
     </Frame>
   );

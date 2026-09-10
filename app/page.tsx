@@ -59,15 +59,12 @@ export default function Home() {
             Raunak Sood
           </h1>
           <p className="lede mt-6 max-w-[33rem]">
-            I&apos;m a master&apos;s student in Computer Science at USC, working on machine
-            learning at Innovius Capital. Before that: two summers of ML at QIAGEN, data science
-            at Precanto and York, and an economics degree at Santa Clara, where I played Division
-            I tennis.
+            Master&apos;s student in Computer Science at USC. Machine learning intern at Innovius
+            Capital. Previously two summers at QIAGEN, plus Precanto and York University.
+            Undergrad in economics at Santa Clara, where I played Division I tennis.
           </p>
           <p className="mt-4 max-w-[33rem] text-[16px] leading-[1.7] text-ink-2">
-            I like problems where the hard part is knowing whether the answer is real — building
-            the data and evaluation underneath a model, not just the model. Graduating May 2027
-            and looking for machine learning and AI engineering roles.
+            Graduating May 2027. Looking for machine learning and AI engineering roles.
           </p>
 
           <div className="mt-9 flex flex-wrap gap-x-6 gap-y-2.5 text-[15px]">

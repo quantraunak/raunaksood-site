@@ -4,8 +4,8 @@ import "./globals.css";
 import { SiteNav } from "@/components/site-nav";
 
 export const viewport = {
-  themeColor: "#08090b",
-  colorScheme: "dark" as const,
+  themeColor: "#ffffff",
+  colorScheme: "light" as const,
 };
 
 export const metadata: Metadata = {
