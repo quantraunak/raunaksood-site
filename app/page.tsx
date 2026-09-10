@@ -1,6 +1,8 @@
 import Link from "next/link";
-import { Shell } from "@/components/ui";
-import { CardVisual } from "@/components/card-visual";
+import Image from "next/image";
+import { existsSync } from "node:fs";
+import path from "node:path";
+import { CardVisual, Plate } from "@/components/card-visual";
 import { Reveal } from "@/components/reveal";
 
 const PROJECTS = [
@@ -50,34 +52,60 @@ const LINKS: [string, string][] = [
   ["https://www.linkedin.com/in/raunak-sood", "LinkedIn"],
 ];
 
+/* Drop a portrait at public/portrait.jpg and it replaces the drawn plate.
+   Checked at build time so there is no broken-image state either way. */
+const PORTRAIT = ["portrait.jpg", "portrait.jpeg", "portrait.png"].find((f) =>
+  existsSync(path.join(process.cwd(), "public", f)),
+);
+
 export default function Home() {
   return (
-    <Shell>
-      <header className="pt-16 pb-14 sm:pt-24">
+    <>
+      <header className="px-6 pt-16 pb-16 sm:px-10 sm:pt-24">
         <Reveal>
-          <h1 className="text-[clamp(34px,6vw,52px)] leading-[1.05] tracking-[-0.03em]">
-            Raunak Sood
-          </h1>
-          <p className="lede mt-6 max-w-[33rem]">
-            Master&apos;s student in Computer Science at USC. Machine learning intern at Innovius
-            Capital. Previously two summers at QIAGEN, plus Precanto and York University.
-            Undergrad in economics at Santa Clara, where I played Division I tennis.
-          </p>
-          <p className="mt-4 max-w-[33rem] text-[16px] leading-[1.7] text-ink-2">
-            Graduating May 2027. Looking for machine learning and AI engineering roles.
-          </p>
+          <div className="grid items-start gap-10 sm:grid-cols-[minmax(0,1fr)_270px] sm:gap-16">
+            <div>
+              <h1 className="display">Raunak Sood</h1>
+              <p className="mt-8 max-w-[34rem] text-[19px] leading-[1.6] text-ink-2">
+                Master&apos;s student in Computer Science at USC. Machine learning intern at
+                Innovius Capital. Previously two summers at QIAGEN, plus Precanto and York
+                University. Undergrad in economics at Santa Clara, where I played Division I
+                tennis.
+              </p>
+              <p className="mt-4 max-w-[34rem] text-[16px] leading-[1.7] text-ink-3">
+                Graduating May 2027. Looking for machine learning and AI engineering roles.
+              </p>
 
-          <div className="mt-9 flex flex-wrap gap-x-6 gap-y-2.5 text-[15px]">
-            {LINKS.map(([href, label]) => (
-              <a key={href} href={href} className="link">
-                {label}
-              </a>
-            ))}
+              <div className="mt-9 flex flex-wrap gap-x-6 gap-y-2.5 text-[15px]">
+                {LINKS.map(([href, label]) => (
+                  <a key={href} href={href} className="link">
+                    {label}
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <div className="hidden sm:block">
+              {PORTRAIT ? (
+                <div className="plate">
+                  <Image
+                    src={`/${PORTRAIT}`}
+                    alt="Raunak Sood"
+                    fill
+                    sizes="270px"
+                    priority
+                    className="object-cover"
+                  />
+                </div>
+              ) : (
+                <Plate />
+              )}
+            </div>
           </div>
         </Reveal>
       </header>
 
-      <section className="border-t border-rule pt-11 pb-2">
+      <section className="border-t border-rule px-6 pt-11 pb-2 sm:px-10">
         <div className="label">Experience</div>
         <Reveal>
           <ul className="mt-4">
@@ -94,7 +122,7 @@ export default function Home() {
         </Reveal>
       </section>
 
-      <section className="border-t border-rule pt-11">
+      <section className="border-t border-rule px-6 pt-11 sm:px-10">
         <div className="label">Things I&apos;ve built</div>
 
         <div className="mt-2">
@@ -133,7 +161,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="pt-12 pb-24">
+      <section className="px-6 pt-12 pb-20 sm:px-10">
         <div className="grid gap-x-12 gap-y-12 sm:grid-cols-2">
           <div>
             <h2 className="label mb-1">Education</h2>
@@ -169,6 +197,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-    </Shell>
+    </>
   );
 }

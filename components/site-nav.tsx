@@ -14,12 +14,12 @@ export function SiteNav() {
   const onHome = pathname === "/";
 
   return (
-    <nav className="sticky top-0 z-40 border-b border-rule-soft bg-[color-mix(in_srgb,var(--color-paper)_88%,transparent)] backdrop-blur-md">
-      <div className="mx-auto flex w-full max-w-[1100px] items-center justify-between gap-6 px-6 py-4 sm:px-8">
+    <nav className="border-b border-rule-soft">
+      <div className="flex w-full items-center justify-between gap-6 px-6 py-4 sm:px-10">
         {/* The home page already says the name in the hero; repeating it in the
             bar puts it on screen twice. */}
         {onHome ? (
-          <span />
+          <span className="tech text-ink-3">Raunak Sood</span>
         ) : (
           <Link href="/" className="tech text-ink-2 transition-colors hover:text-[var(--color-sea)]">
             Raunak&nbsp;Sood

@@ -4,7 +4,7 @@ import "./globals.css";
 import { SiteNav } from "@/components/site-nav";
 
 export const viewport = {
-  themeColor: "#ffffff",
+  themeColor: "#eceae5",
   colorScheme: "light" as const,
 };
 
@@ -83,9 +83,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to content
         </a>
-        <SiteNav />
-        <main id="main">{children}</main>
-        <SiteFooter />
+        <div className="mx-auto w-full max-w-[1180px] px-0 sm:px-8 lg:px-10">
+          <div className="sheet mt-0 sm:mt-8">
+            <SiteNav />
+            <main id="main">{children}</main>
+          </div>
+          <SiteFooter />
+        </div>
       </body>
     </html>
   );
