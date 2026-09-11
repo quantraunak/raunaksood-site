@@ -8,11 +8,11 @@ import { Reveal } from "@/components/reveal";
 const PROJECTS = [
   {
     href: "/work/quant",
-    title: "leakcheck",
+    title: "leakprobe",
     kind: "Open source · Python",
     plain:
       "A model that reads tomorrow's data scores brilliantly and fails in production. This finds it, by changing something your code shouldn't notice and seeing what moves.",
-    note: "pip install leakcheck",
+    note: "pip install leakprobe",
   },
   {
     href: "/work/reasoning",

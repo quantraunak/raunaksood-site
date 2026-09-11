@@ -54,7 +54,7 @@ export function LeakDemo() {
   return (
     <div className="border border-rule bg-paper-2">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-rule px-5 py-3">
-        <span className="tech text-ink-3">leakcheck · filings source</span>
+        <span className="tech text-ink-3">leakprobe · filings source</span>
         <span className="tech text-ink-3">
           clock <span className="text-[var(--color-sea)]">+{days}d</span>
         </span>

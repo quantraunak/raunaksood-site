@@ -7,9 +7,9 @@ import { Details } from "@/components/details";
 import { LeakDemo } from "@/components/leak-demo";
 
 export const metadata: Metadata = {
-  title: "leakcheck",
+  title: "leakprobe",
   description:
-    "Temporal leakage never throws an error and always improves your metrics. leakcheck finds it by changing something your features must be invariant to and reporting whatever moved.",
+    "Temporal leakage never throws an error and always improves your metrics. leakprobe finds it by changing something your features must be invariant to and reporting whatever moved.",
 };
 
 export default function QuantPage() {
@@ -26,13 +26,13 @@ export default function QuantPage() {
         <p className="mt-6 text-[19.5px] leading-[1.65] text-ink-2">
           If a model gets to see data that didn&apos;t exist yet, it scores brilliantly in
           testing and fails the moment it&apos;s real. Nothing crashes. No number looks
-          strange. <strong>leakcheck</strong> catches it without needing to know the right
+          strange. <strong>leakprobe</strong> catches it without needing to know the right
           answer — it changes something your code shouldn&apos;t be able to notice, runs it
           again, and reports whatever moved.
         </p>
         <div className="mt-7 flex flex-wrap gap-6 text-[16px]">
-          <a href="https://github.com/quantraunak/leakcheck" className="link">
-            leakcheck on GitHub
+          <a href="https://github.com/quantraunak/leakprobe" className="link">
+            leakprobe on GitHub
           </a>
         </div>
       </header>
@@ -69,8 +69,8 @@ export default function QuantPage() {
           </p>
         </div>
 
-        <div className="code" role="img" aria-label="leakcheck usage and output">
-{`report = lc.check(
+        <div className="code" role="img" aria-label="leakprobe usage and output">
+{`report = lp.check(
     compute=build_features,
     sources={"events": events, "tickets": tickets},
     timestamps={"events": "occurred_at", "tickets": "resolved_at"},
@@ -135,7 +135,7 @@ avg_severity         exactly 0       bypass?`}
           <p>
             That block of exact zeros is the whole method. It is what turns &ldquo;this
             number changed a bit&rdquo; into &ldquo;this feature has a dependency it should
-            not have,&rdquo; and it is what <span className="mono">leakcheck</span>{" "}
+            not have,&rdquo; and it is what <span className="mono">leakprobe</span>{" "}
             generalises out of finance.
           </p>
         </div>
@@ -227,7 +227,7 @@ avg_severity         exactly 0       bypass?`}
             The pipeline began as an inherited version reporting 35% a year. Reproducing it turned
             up six separate problems, none of which raised an error or produced an implausible
             number — which is what made them worth studying, and what eventually turned into{" "}
-            <span className="mono">leakcheck</span>. Every one produced output a reviewer would
+            <span className="mono">leakprobe</span>. Every one produced output a reviewer would
             accept.
           </p>
         </div>
