@@ -32,6 +32,15 @@ const PROJECTS = [
   },
 ];
 
+const WRITING: [string, string, string, string][] = [
+  [
+    "/writing/testing-for-leakage",
+    "Testing for leakage without knowing the right answer",
+    "A factor that looked price-only divided by shares outstanding and inflated mean IC by 59%. Then I benchmarked the detector I built for it against five public datasets, and it caught six of nine.",
+    "Sep 2026",
+  ],
+];
+
 const WORK: [string, string, string][] = [
   ["Innovius Capital", "Machine Learning Intern", "2026 —"],
   ["QIAGEN, Redwood City", "Machine Learning Intern", "2025"],
@@ -163,6 +172,25 @@ export default function Home() {
             </Reveal>
           ))}
         </div>
+      </section>
+
+      <section className="border-t border-rule px-6 pt-11 sm:px-10">
+        <h2 className="label mb-1">Writing</h2>
+        <ul>
+          {WRITING.map(([href, title, blurb, when]) => (
+            <li key={href} className="border-b border-rule-soft py-4 last:border-0">
+              <Link href={href} className="group block">
+                <div className="flex items-baseline justify-between gap-4">
+                  <div className="text-[16.5px] leading-snug transition-colors group-hover:text-[var(--color-sea)]">
+                    {title}
+                  </div>
+                  <div className="mono shrink-0 text-[12.5px] text-ink-3">{when}</div>
+                </div>
+                <div className="mt-1 text-[14.5px] leading-[1.6] text-ink-3">{blurb}</div>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section className="px-6 pt-12 pb-20 sm:px-10">
