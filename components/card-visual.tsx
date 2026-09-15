@@ -7,6 +7,8 @@ import q from "@/public/data/quant.json";
 export function CardVisual({ index }: { index: number }) {
   if (index === 0) return <Invariance />;
   if (index === 1) return <Tree />;
+  if (index === 2) return <Crossover />;
+  if (index === 3) return <Coverage />;
   return <Phones />;
 }
 
@@ -70,6 +72,76 @@ function Tree() {
             fill={dead.has(i) ? "var(--color-paper-3)" : "var(--color-kelp)"}
             fillOpacity={dead.has(i) ? 1 : 0.85} />
         ))}
+      </svg>
+    </Frame>
+  );
+}
+
+
+/* The whole cardinality result in one shape: two decoding arms, measured on the
+   same documents, crossing between k=1 and k=4. Unconstrained starts ahead and
+   ends behind. Numbers are the measured recalls. */
+function Crossover() {
+  const ks = [1, 4, 16];
+  const constrained = [0.44, 0.64, 0.554];
+  const unconstrained = [0.64, 0.53, 0.426];
+  const W = 560, H = 90, padL = 26, padR = 96, top = 12, bot = 74;
+  const x = (i: number) => padL + (i / (ks.length - 1)) * (W - padL - padR);
+  const y = (v: number) => bot - ((v - 0.38) / 0.30) * (bot - top);
+  const path = (vals: number[]) =>
+    vals.map((v, i) => `${i === 0 ? "M" : "L"}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join("");
+  return (
+    <Frame>
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ height: 90 }} aria-hidden>
+        <line x1={padL} y1={bot + 6} x2={W - padR} y2={bot + 6} stroke="var(--color-rule)" strokeWidth="1.2" />
+        {ks.map((k, i) => (
+          <text key={k} x={x(i)} y={H - 4} textAnchor="middle" fontSize="8"
+            fill="var(--color-ink-3)" fontFamily="var(--font-mono)">{`k=${k}`}</text>
+        ))}
+        <path d={path(constrained)} fill="none" stroke="var(--color-sea)" strokeWidth="2.2"
+          vectorEffect="non-scaling-stroke" strokeLinejoin="round" />
+        <path d={path(unconstrained)} fill="none" stroke="var(--color-coral)" strokeWidth="2.2"
+          vectorEffect="non-scaling-stroke" strokeLinejoin="round" strokeDasharray="5 3" />
+        {constrained.map((v, i) => <circle key={`c${i}`} cx={x(i)} cy={y(v)} r="3.2" fill="var(--color-sea)" />)}
+        {unconstrained.map((v, i) => <circle key={`u${i}`} cx={x(i)} cy={y(v)} r="3.2" fill="var(--color-coral)" />)}
+        <text x={W - padR + 10} y={y(constrained[2]) + 3} fontSize="8.5" fill="var(--color-sea)"
+          fontFamily="var(--font-mono)">schema</text>
+        <text x={W - padR + 10} y={y(unconstrained[2]) + 3} fontSize="8.5" fill="var(--color-coral)"
+          fontFamily="var(--font-mono)">free</text>
+      </svg>
+    </Frame>
+  );
+}
+
+/* Why the study stopped. Each dot is a name in the tradable cross-section on a
+   given date; the filled ones are the names the extracted graph actually covers.
+   27 of roughly 420. */
+function Coverage() {
+  const cols = 42, rows = 10, covered = 27;
+  const W = 560, H = 90, padX = 8, padY = 8;
+  const dx = (W - padX * 2) / (cols - 1);
+  const dy = (H - padY * 2 - 14) / (rows - 1);
+  const dots = [];
+  let filled = 0;
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const n = r * cols + c;
+      const on = n % 15 === 3 && filled < covered;
+      if (on) filled += 1;
+      dots.push(
+        <circle key={n} cx={padX + c * dx} cy={padY + r * dy} r={on ? 2.6 : 1.5}
+          fill={on ? "var(--color-coral)" : "var(--color-rule)"}
+          fillOpacity={on ? 0.9 : 1} />
+      );
+    }
+  }
+  return (
+    <Frame>
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ height: 90 }} aria-hidden>
+        {dots}
+        <text x={padX} y={H - 1} fontSize="8.5" fill="var(--color-ink-3)" fontFamily="var(--font-mono)">
+          27 covered of ~420 tradable · 6.4%
+        </text>
       </svg>
     </Frame>
   );
