@@ -26,9 +26,22 @@ export default function QuantPage() {
         <p className="mt-6 text-[19.5px] leading-[1.65] text-ink-2">
           If a model gets to see data that didn&apos;t exist yet, it scores brilliantly in
           testing and fails the moment it&apos;s real. Nothing crashes. No number looks
-          strange. <strong>leakprobe</strong> catches it without needing to know the right
-          answer — it changes something your code shouldn&apos;t be able to notice, runs it
-          again, and reports whatever moved.
+          strange.
+        </p>
+        <p className="mt-5 text-[17px] leading-[1.7] text-ink-2">
+          <strong>leakprobe</strong> works like this. You hand it the function that builds
+          your features, the tables it reads from, and one line per feature naming which
+          tables that feature is <em>allowed</em> to read. It then makes a change your code
+          should be blind to — pushing one table&apos;s timestamps three weeks later, so
+          rows that were visible no longer are — and runs your function again.
+        </p>
+        <p className="mt-4 text-[17px] leading-[1.7] text-ink-2">
+          A feature that genuinely cannot read that table gets identical inputs through
+          identical code and returns <strong>bit-identical numbers</strong>: its difference
+          is <span className="mono">0.0</span>, not <span className="mono">1e-15</span>. So
+          any movement at all is proof of a dependency nobody declared. You never need to
+          know what the correct value was, which is the point — if you knew that, you
+          wouldn&apos;t have the bug.
         </p>
         <div className="mt-7 flex flex-wrap gap-6 text-[16px]">
           <a href="https://github.com/quantraunak/leakprobe" className="link">

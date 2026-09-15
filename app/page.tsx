@@ -11,7 +11,7 @@ const PROJECTS = [
     title: "leakprobe",
     kind: "Open source · Python",
     plain:
-      "A model that reads tomorrow's data scores brilliantly and fails in production. This finds it, by changing something your code shouldn't notice and seeing what moves.",
+      "You say which tables each feature is allowed to read. It makes a change your code should be blind to \u2014 pushing one table's timestamps three weeks later \u2014 and re-runs. Anything that moves was reading something it shouldn't.",
     note: "pip install leakprobe",
   },
   {
