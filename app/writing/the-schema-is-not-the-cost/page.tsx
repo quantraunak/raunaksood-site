@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Shell, Section } from "@/components/ui";
+import { CardinalityDemo } from "@/components/cardinality-demo";
+import { CrossoverFigure, DilutionFigure } from "@/components/cardinality-figures";
 
 export const metadata: Metadata = {
   title: "The schema is not the cost",
@@ -25,6 +27,10 @@ export default function SchemaPage() {
           and found the opposite.
         </p>
       </header>
+
+      <div className="pb-4">
+        <CardinalityDemo />
+      </div>
 
       <Section>
         <div className="prose">
@@ -105,12 +111,7 @@ export default function SchemaPage() {
           </p>
         </div>
 
-        <div className="code mt-7" role="img" aria-label="recall against filler length at constant k">
-{`filler          recall
- 1,500 chars     0.667
- 4,000 chars     0.583
-14,000 chars     0.417`}
-        </div>
+        <DilutionFigure />
 
         <div className="prose mt-7">
           <p>
@@ -142,13 +143,10 @@ export default function SchemaPage() {
           </p>
         </div>
 
-        <div className="code mt-7" role="img" aria-label="recall by k for both decoding arms">
-{`k     constrained   unconstrained
- 1        0.440          0.640
- 4        0.640          0.530
-16        0.554          0.426
+        <CrossoverFigure />
 
-pre-registered test: drop >= 0.15 and p < 0.05
+        <div className="code" role="img" aria-label="the pre-registered test result">
+{`pre-registered: drop >= 0.15 AND p < 0.05
 
 unconstrained   drop +0.214   p = 0.011   rejects
 constrained     drop -0.114   p = 0.73    nothing`}
