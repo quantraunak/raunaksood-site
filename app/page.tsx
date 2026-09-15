@@ -23,6 +23,22 @@ const PROJECTS = [
     note: "Paper · 280 logged search trees",
   },
   {
+    href: "https://github.com/quantraunak/cardinality-eval",
+    title: "cardinality-eval",
+    kind: "LLM evaluation · Python",
+    plain:
+      "Does an extractor get worse as the number of things to find grows? Yes — but only without a JSON schema. The grammar everyone suspects of costing accuracy turns out to be what prevents the loss.",
+    note: "0.214 recall lost unconstrained, none constrained",
+  },
+  {
+    href: "https://github.com/quantraunak/filing-links",
+    title: "filing-links",
+    kind: "Information extraction · Python",
+    plain:
+      "A dated map of which companies name which others in their 10-Ks, released with its own coverage ceiling attached. The pre-registered gate fired and the study stopped.",
+    note: "27 names/date · the gate fired",
+  },
+  {
     href: "/work/melange",
     title: "Melange",
     kind: "Product · TypeScript, iOS",
@@ -87,6 +103,12 @@ export default function Home() {
                 University. Undergrad in economics at Santa Clara, where I played Division I
                 tennis.
               </p>
+              <p className="mt-4 max-w-[36rem] text-[19px] leading-[1.6] text-ink-2">
+                I work on measurement — the controls, gates and benchmarks that separate a
+                real result from an artifact of how the data was assembled. Most of the
+                projects below ended in a null or an inverted finding. Each one says so,
+                with the reason attached.
+              </p>
               <p className="mt-4 max-w-[36rem] text-[16px] leading-[1.7] text-ink-3">
                 Graduating May 2027. Looking for machine learning and AI engineering roles.
               </p>
@@ -141,7 +163,11 @@ export default function Home() {
         <div className="mt-2">
           {PROJECTS.map((p, i) => (
             <Reveal key={p.href} delay={i * 70}>
-            <Link href={p.href} className="group block border-b border-rule-soft py-10">
+            <Link
+              href={p.href}
+              {...(p.href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})}
+              className="group block border-b border-rule-soft py-10"
+            >
               <div className="flex items-baseline gap-4">
                 <span className="mono text-[13px] text-ink-3">
                   {String(i + 1).padStart(2, "0")}
