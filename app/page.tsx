@@ -63,12 +63,49 @@ const WRITING: [string, string, string, string][] = [
   ],
 ];
 
-const WORK: [string, string, string][] = [
-  ["Innovius Capital", "Machine Learning Intern", "2026 —"],
-  ["QIAGEN, Redwood City", "Machine Learning Intern", "2025"],
-  ["QIAGEN, Düsseldorf", "Data Science & Treasury", "2024"],
-  ["Precanto", "Data Science & Product", "2023"],
-  ["York University, Toronto", "Data Science", "2023"],
+const WORK: [string, string, string, string][] = [
+  [
+    "Innovius Capital",
+    "Machine Learning Engineer",
+    "2026 —",
+    "Replaced chance-level PCA company scoring with a supervised CatBoost and LLM ranker, raising P@20 from 0.20 to 0.90. Built the 14k-company point-in-time training set, where a label-leakage fix moved AUC 0.62 to 0.66.",
+  ],
+  [
+    "QIAGEN, Redwood City",
+    "Machine Learning Intern",
+    "2025",
+    "GraphRAG system explaining disease target pathways to scientists, and a fine-tuned LLM for gene-variant lookup that cut research time 70%.",
+  ],
+  [
+    "Chapman University",
+    "Machine Learning Researcher",
+    "2024 —",
+    "Functional analysis and stochastic processes at graduate level; transport equations and white-noise space for stochastic modelling.",
+  ],
+  [
+    "QIAGEN, Düsseldorf",
+    "Data Science & Global Treasury",
+    "2024",
+    "LangChain RAG chatbot over financial dashboards, halving internal query time. FX analysis on $10M+ of transactions, trading on Bloomberg.",
+  ],
+  [
+    "York University, Toronto",
+    "Data Science",
+    "2023",
+    "Topic modelling on earnings calls to measure incumbent investment firms' attention to financial technology, and what drives its adoption.",
+  ],
+  [
+    "Precanto",
+    "Data Science & Product",
+    "2023",
+    "Time-series headcount forecasting across several companies, and automated validation of the predictive payroll tax engine, 90% faster.",
+  ],
+  [
+    "Greenfield Research Partners",
+    "Private Equity Research Associate",
+    "2023",
+    "Sourced 100+ real-estate acquisition targets, identifying five deals worth $50M+. LBO modelling and comparables for exit multiples.",
+  ],
 ];
 
 const SCHOOL: [string, string, string][] = [
@@ -144,13 +181,16 @@ export default function Home() {
         <div className="label">Experience</div>
         <Reveal>
           <ul className="mt-4">
-            {WORK.map(([org, role, when]) => (
-              <li key={org + when} className="border-b border-rule-soft py-4 last:border-0">
+            {WORK.map(([org, role, when, detail]) => (
+              <li key={org + when} className="border-b border-rule-soft py-5 last:border-0">
                 <div className="flex items-baseline justify-between gap-4">
                   <div className="text-[17px] leading-snug">{org}</div>
                   <div className="mono shrink-0 text-[12.5px] text-ink-3">{when}</div>
                 </div>
                 <div className="mt-0.5 text-[15px] text-ink-3">{role}</div>
+                <p className="mt-2 max-w-[44rem] text-[14.5px] leading-[1.6] text-ink-2">
+                  {detail}
+                </p>
               </li>
             ))}
           </ul>
