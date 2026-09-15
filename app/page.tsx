@@ -110,7 +110,7 @@ export default function Home() {
                 tennis.
               </p>
               <p className="mt-4 max-w-[36rem] text-[16px] leading-[1.7] text-ink-3">
-                Graduating May 2027. Looking for machine learning and AI engineering roles.
+                Graduating May 2027.
               </p>
 
               <div className="mt-9 flex flex-wrap gap-x-6 gap-y-2.5 text-[15px]">
