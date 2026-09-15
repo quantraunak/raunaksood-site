@@ -50,6 +50,12 @@ const PROJECTS = [
 
 const WRITING: [string, string, string, string][] = [
   [
+    "/writing/the-schema-is-not-the-cost",
+    "The schema is not the cost",
+    "Constrained decoding is supposed to cost you accuracy. On extraction recall as the number of items grows, it is the only thing holding recall up. The instrument failed its own sanity check four times before it found that.",
+    "Sep 2026",
+  ],
+  [
     "/writing/testing-for-leakage",
     "Testing for leakage without knowing the right answer",
     "A factor that looked price-only divided by shares outstanding and inflated mean IC by 59%. Then I benchmarked the detector I built for it against five public datasets, and it caught six of nine.",
