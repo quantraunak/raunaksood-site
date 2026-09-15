@@ -103,12 +103,6 @@ export default function Home() {
                 University. Undergrad in economics at Santa Clara, where I played Division I
                 tennis.
               </p>
-              <p className="mt-4 max-w-[36rem] text-[19px] leading-[1.6] text-ink-2">
-                I work on measurement — the controls, gates and benchmarks that separate a
-                real result from an artifact of how the data was assembled. Most of the
-                projects below ended in a null or an inverted finding. Each one says so,
-                with the reason attached.
-              </p>
               <p className="mt-4 max-w-[36rem] text-[16px] leading-[1.7] text-ink-3">
                 Graduating May 2027. Looking for machine learning and AI engineering roles.
               </p>
