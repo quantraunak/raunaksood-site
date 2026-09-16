@@ -23,7 +23,7 @@ const PROJECTS = [
     note: "Paper · 280 logged search trees",
   },
   {
-    href: "https://github.com/quantraunak/cardinality-eval",
+    href: "/work/cardinality",
     title: "cardinality-eval",
     kind: "LLM evaluation · Python",
     plain:
@@ -31,7 +31,7 @@ const PROJECTS = [
     note: "0.214 recall lost unconstrained, none constrained",
   },
   {
-    href: "https://github.com/quantraunak/filing-links",
+    href: "/work/filings",
     title: "filing-links",
     kind: "Information extraction · Python",
     plain:
