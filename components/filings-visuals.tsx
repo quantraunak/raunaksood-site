@@ -19,11 +19,11 @@ function useInView<T extends Element>() {
    ones are the companies the extracted graph actually says something about. */
 export function CoverageFigure() {
   const { ref, seen } = useInView<HTMLDivElement>();
-  const cols = 30, rows = 14, total = cols * rows, covered = 27;
+  const cols = 30, rows = 14, total = cols * rows, covered = 47;
   const dots: React.ReactElement[] = [];
   let filled = 0;
   for (let n = 0; n < total; n++) {
-    const on = n % 15 === 7 && filled < covered;
+    const on = n % 9 === 4 && filled < covered;
     if (on) filled += 1;
     dots.push(
       <div
@@ -47,18 +47,19 @@ export function CoverageFigure() {
         <div className="mono mt-5 flex flex-wrap items-center gap-x-5 gap-y-1 text-[12px] text-ink-3">
           <span className="flex items-center gap-2">
             <span className="inline-block h-2 w-2 rounded-full" style={{ background: "var(--color-coral)" }} />
-            27 covered
+            47 covered
           </span>
           <span className="flex items-center gap-2">
             <span className="inline-block h-2 w-2 rounded-full" style={{ background: "var(--color-rule)" }} />
-            ~420 tradable
+            ~403 tradable
           </span>
-          <span>6.4%</span>
+          <span>9.5%</span>
         </div>
       </div>
       <figcaption className="mt-3 text-[13px] leading-[1.6] text-ink-3">
         Companies the graph can say something about on a typical day, against every company
-        trading that day. A return test needs roughly 145 lit dots to say anything. This is 27.
+        trading that day. The supplier arm took this from 27 to 47. A return test needs
+        roughly 97 to see effects the size the literature reports.
       </figcaption>
     </figure>
   );

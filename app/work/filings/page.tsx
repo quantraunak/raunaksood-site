@@ -21,10 +21,10 @@ export default function FilingsPage() {
           A map of who buys from whom, and why it stops short
         </h1>
         <p className="mt-6 text-[19.5px] leading-[1.65] text-ink-2">
-          Companies name each other in their annual filings. I extracted 5,461 of those
+          Companies name each other in their annual filings. I extracted 10,382 of those
           relationships with a model running on my laptop, built the graph, and then found it
           was too thin to answer the question I built it for. The reason turned out to be the
-          interesting part.
+          interesting part, and acting on it nearly doubled the graph without closing the gap.
         </p>
         <div className="mt-7 flex flex-wrap gap-6 text-[16px]">
           <a href="https://github.com/quantraunak/filing-links" className="link">
@@ -61,8 +61,8 @@ export default function FilingsPage() {
         <h2 className="text-[25px]">What I built</h2>
         <div className="prose mt-5">
           <p>
-            1,989 filings from S&amp;P 500 companies, run through a 30-billion-parameter model
-            on a laptop over about 22 hours. No API spend. Each extracted relationship survives
+            3,298 filings, run through a 30-billion-parameter model on a laptop over about
+            27 hours across two passes. No API spend. Each extracted relationship survives
             only if its supporting quote appears literally in the filing, which throws out
             anything the model invented.
           </p>
@@ -80,22 +80,25 @@ export default function FilingsPage() {
         <CoverageFigure />
         <div className="prose">
           <p>
-            1,185 relationships across 125 companies — which sounds like a lot until you ask
-            how many companies it covers <em>on any given day</em>. The answer is 27, out of
-            roughly 420 trading. The test I built this for needs about 145.
+            2,572 relationships across 220 companies — which sounds like a lot until you ask
+            how many companies it covers <em>on any given day</em>. The answer is 47, out of
+            roughly 403 trading. The test I built this for needs about 97 to see effects the
+            size the literature actually reports.
           </p>
           <p>
-            At 27, the statistical bar the test would have to clear is roughly double the size
-            of the effect published research reports. It would run. It just wouldn&apos;t mean
-            anything. So I didn&apos;t run it.
+            At 47, the bar the test would have to clear is IC 0.024, and published effects sit
+            near 0.010 to 0.020. It would run. It still wouldn&apos;t mean anything. So I
+            didn&apos;t run it.
           </p>
           <p>
             Four explanations for the shortfall occurred to me, and I tested each against data
             I already had before changing anything: that the name-matching had broken, that
             valid claims were being silently discarded, that the cheaper model had collapsed,
             and that coverage saturates so more filings wouldn&apos;t help. All four were
-            wrong. Coverage grows in a straight line with the number of filings — ten times
-            the filings gives almost exactly ten times the coverage.
+            wrong. Coverage grows in a straight line with the number of filings, which I have
+            now measured twice — ten times the filings gave almost exactly ten times the
+            coverage the first time, and running a second corpus 1.7&times; the size moved it
+            1.7&times; again.
           </p>
         </div>
       </section>
@@ -116,10 +119,29 @@ export default function FilingsPage() {
             it&apos;s a property of the filings rather than of the extractor.
           </p>
           <p>
-            The design lesson follows directly: this graph is built from the{" "}
-            <strong>supplier</strong> side. Small companies naming their large customers is
-            what the law compels. 2,261 filings from 181 such companies are already downloaded
-            and screened in the repository, waiting.
+            The design lesson follows directly: this graph should be built from the{" "}
+            <strong>supplier</strong> side, because small companies naming their large
+            customers is what the law compels. So I ran it.
+          </p>
+          <p>
+            First a check that decided whether it was worth doing at all: none of those 181
+            companies were in the price panel, because the panel is built from index
+            membership. A company with no share price contributes a relationship but never a
+            testable observation. Fetching prices and applying the same screens left 105 that
+            are genuinely tradable.
+          </p>
+          <p>
+            Extracting their 1,322 filings confirmed the prediction. They yield 5.9
+            relationships per productive filing against 5.0 for the large caps, at an
+            unchanged resolution rate, and coverage went from 27 names per day to{" "}
+            <strong>47</strong>.
+          </p>
+          <p>
+            And it still wasn&apos;t enough. That is the honest end of this study: the reason
+            for the shortfall was right, acting on it nearly doubled the graph, and the bar
+            was further away than the gain. Getting to 97 would need roughly 6,800 filings
+            against the 3,298 that exist, from companies not yet downloaded. That is a
+            different project, not a continuation of this one.
           </p>
         </div>
       </section>
