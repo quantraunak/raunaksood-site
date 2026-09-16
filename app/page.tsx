@@ -36,7 +36,7 @@ const PROJECTS = [
     kind: "Information extraction · Python",
     plain:
       "A dated map of which companies name which others in their 10-Ks, released with its own coverage ceiling attached. The pre-registered gate fired and the study stopped.",
-    note: "27 names/date · the gate fired",
+    note: "47 names/date · the gate fired twice",
   },
   {
     href: "/work/melange",
