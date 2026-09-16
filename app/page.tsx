@@ -212,42 +212,31 @@ export default function Home() {
         </Reveal>
       </section>
 
-      <section className="border-t border-rule px-6 pt-11 sm:px-10">
+      <section className="border-t border-rule px-6 pt-11 pb-6 sm:px-10">
         <div className="label">Things I&apos;ve built</div>
-
-        <div className="mt-2">
+        <div className="mt-6 grid gap-x-8 gap-y-12 sm:grid-cols-2">
           {PROJECTS.map((p, i) => (
-            <Reveal key={p.href} delay={i * 70}>
+            <Reveal key={p.href} delay={i * 60}>
             <Link
               href={p.href}
               {...(p.href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})}
-              className="group block border-b border-rule-soft py-10"
+              className="group block transition-transform duration-300 ease-out hover:-translate-y-1"
             >
-              <div className="flex items-baseline gap-4">
-                <span className="mono text-[13px] text-ink-3">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <h2 className="text-[26px] leading-tight tracking-[-0.02em] transition-colors group-hover:text-[var(--color-sea)] sm:text-[29px]">
+              <CardVisual index={i} height={220} />
+              <div className="mt-5 flex items-baseline gap-3">
+                <span className="mono text-[12px] text-ink-3">{String(i + 1).padStart(2, "0")}</span>
+                <h2 className="text-[22px] leading-tight tracking-[-0.02em] transition-colors group-hover:text-[var(--color-sea)] sm:text-[24px]">
                   {p.title}
                 </h2>
               </div>
-
-              <div className="mt-4 pl-0 sm:pl-[2.1rem]">
-                <CardVisual index={i} />
-                <p className="mt-5 max-w-[33rem] text-[17px] leading-[1.7] text-ink-2">
-                  {p.plain}
-                </p>
-                <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12.5px] text-ink-3">
-                  <span className="mono">{p.note}</span>
-                  <span aria-hidden>·</span>
-                  <span>{p.kind}</span>
-                  <span
-                    aria-hidden
-                    className="ml-auto text-ink-3 opacity-0 transition-opacity group-hover:opacity-100"
-                  >
-                    Read →
-                  </span>
-                </div>
+              <p className="mt-2.5 text-[15.5px] leading-[1.65] text-ink-2">
+                {p.plain}
+              </p>
+              <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12.5px] text-ink-3">
+                <span className="mono">{p.note}</span>
+                <span aria-hidden>·</span>
+                <span>{p.kind}</span>
+                <span aria-hidden className="ml-auto opacity-0 transition-opacity group-hover:opacity-100">Read →</span>
               </div>
             </Link>
             </Reveal>
