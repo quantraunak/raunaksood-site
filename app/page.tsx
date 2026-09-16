@@ -48,6 +48,21 @@ const PROJECTS = [
   },
 ];
 
+const PAPERS: [string, string, string, string][] = [
+  [
+    "/papers/bias-fingerprints.pdf",
+    "Bias Fingerprints: Diagnosing Data-Handling Errors from the Cross-Section of Reported Factor Performance",
+    "A period-end join inflates mean IC by 59% and manufactures four spurious t-statistics; a survivorship-conditioned universe relocates rather than inflates. Running the validation protocol shows one of the two signatures is diagnosable from outside and one is not, and the geometry says which in advance.",
+    "q-fin.ST · 14pp",
+  ],
+  [
+    "/papers/cardinality.pdf",
+    "Constrained Decoding Prevents Cardinality Degradation in Structured Extraction",
+    "Extraction recall falls 0.214 with the number of items to emit under free generation and not at all under a JSON schema, on the same documents. The grammar is the mitigation, not the cost.",
+    "cs.CL · 5pp",
+  ],
+];
+
 const WRITING: [string, string, string, string][] = [
   [
     "/writing/the-schema-is-not-the-cost",
@@ -238,6 +253,25 @@ export default function Home() {
             </Reveal>
           ))}
         </div>
+      </section>
+
+      <section className="border-t border-rule px-6 pt-11 sm:px-10">
+        <h2 className="label mb-1">Papers</h2>
+        <ul>
+          {PAPERS.map(([href, title, blurb, meta]) => (
+            <li key={href} className="border-b border-rule-soft py-4 last:border-0">
+              <a href={href} target="_blank" rel="noreferrer" className="group block">
+                <div className="flex items-baseline justify-between gap-4">
+                  <div className="text-[16.5px] leading-snug transition-colors group-hover:text-[var(--color-sea)]">
+                    {title}
+                  </div>
+                  <div className="mono shrink-0 text-[12.5px] text-ink-3">{meta}</div>
+                </div>
+                <div className="mt-1 text-[14.5px] leading-[1.6] text-ink-3">{blurb}</div>
+              </a>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section className="border-t border-rule px-6 pt-11 sm:px-10">
