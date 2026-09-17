@@ -192,25 +192,6 @@ export default function Home() {
         </Reveal>
       </header>
 
-      <section className="border-t border-rule px-6 pt-11 pb-2 sm:px-10">
-        <div className="label">Experience</div>
-        <Reveal>
-          <ul className="mt-4">
-            {WORK.map(([org, role, when, detail]) => (
-              <li key={org + when} className="border-b border-rule-soft py-5 last:border-0">
-                <div className="flex items-baseline justify-between gap-4">
-                  <div className="text-[17px] leading-snug">{org}</div>
-                  <div className="mono shrink-0 text-[12.5px] text-ink-3">{when}</div>
-                </div>
-                <div className="mt-0.5 text-[15px] text-ink-3">{role}</div>
-                <p className="mt-2 max-w-[44rem] text-[14.5px] leading-[1.6] text-ink-2">
-                  {detail}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </Reveal>
-      </section>
 
       <section className="border-t border-rule px-6 pt-11 pb-6 sm:px-10">
         <div className="label">Things I&apos;ve built</div>
@@ -280,6 +261,23 @@ export default function Home() {
             </li>
           ))}
         </ul>
+      </section>
+
+      <section className="border-t border-rule px-6 pt-11 pb-2 sm:px-10">
+        <div className="label">Experience</div>
+        <Reveal>
+          <ul className="mt-4">
+            {WORK.map(([org, role, when]) => (
+              <li key={org + when} className="border-b border-rule-soft py-3.5 last:border-0">
+                <div className="flex items-baseline justify-between gap-4">
+                  <div className="text-[17px] leading-snug">{org}</div>
+                  <div className="mono shrink-0 text-[12.5px] text-ink-3">{when}</div>
+                </div>
+                <div className="mt-0.5 text-[15px] text-ink-3">{role}</div>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
       </section>
 
       <section className="px-6 pt-12 pb-20 sm:px-10">
