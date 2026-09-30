@@ -40,6 +40,11 @@ export default function LeakagePage() {
             <strong>Shares outstanding comes from a 10-Q.</strong>
           </p>
           <p>
+            Vendors ship it in the daily price file next to close and volume, because you need
+            it for market cap, which is how it passes as market data. But the number only
+            changes when the company reports it, four times a year, on filing dates.
+          </p>
+          <p>
             So <span className="mono">turnover_1m</span> sat in the price-only block,
             inheriting the filing calendar through its denominator. Nothing raised. No number
             looked implausible. The factor behaved, the backtest behaved, and the only symptom
