@@ -9,7 +9,7 @@ const NAV = [
   { href: "/work/filings", label: "filing-links" },
   { href: "/work/reasoning", label: "LLM reasoning" },
   { href: "/work/melange", label: "Melange" },
-  { href: "/writing/testing-for-leakage", label: "Writing" },
+  { href: "/writing", label: "Writing" },
 ];
 
 export function SiteNav() {
@@ -30,7 +30,7 @@ export function SiteNav() {
         )}
         <div className="flex flex-wrap items-center justify-end gap-x-6 gap-y-1">
           {NAV.map((item) => {
-            const active = pathname === item.href;
+            const active = pathname === item.href || (item.href === "/writing" && pathname.startsWith("/writing/"));
             return (
               <Link
                 key={item.href}
