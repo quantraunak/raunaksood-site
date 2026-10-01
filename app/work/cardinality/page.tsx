@@ -33,6 +33,9 @@ export default function CardinalityPage() {
           <Link href="/writing/the-schema-is-not-the-cost" className="link">
             Full write-up
           </Link>
+          <a href="/papers/cardinality.pdf" className="link">
+            Paper (PDF)
+          </a>
         </div>
       </header>
 

@@ -59,7 +59,7 @@ const PAPERS: [string, string, string, string][] = [
     "/papers/cardinality.pdf",
     "Constrained Decoding Prevents Cardinality Degradation in Structured Extraction",
     "Extraction recall falls 0.214 with the number of items to emit under free generation and not at all under a JSON schema, on the same documents. The grammar is the mitigation, not the cost.",
-    "cs.CL · 5pp",
+    "cs.CL · 6pp",
   ],
 ];
 
