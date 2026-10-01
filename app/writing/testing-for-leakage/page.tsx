@@ -40,9 +40,10 @@ export default function LeakagePage() {
             <strong>Shares outstanding comes from a 10-Q.</strong>
           </p>
           <p>
-            Vendors ship it in the daily price file next to close and volume, because you need
-            it for market cap, which is how it passes as market data. But the number only
-            changes when the company reports it, four times a year, on filing dates.
+            In vendor data it ships in the price file next to close and volume, which is where
+            the habit of calling it market data comes from. In my pipeline it came out of the
+            filings, in the same table as book value and earnings, and I never checked, because
+            the function lived in <span className="mono">price.py</span>.
           </p>
           <p>
             So <span className="mono">turnover_1m</span> sat in the price-only block,
