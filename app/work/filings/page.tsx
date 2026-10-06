@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Shell } from "@/components/ui";
 import { CoverageFigure, AsymmetryFigure } from "@/components/filings-visuals";
+import { Contribution } from "@/components/contribution";
 
 export const metadata: Metadata = {
   title: "filing-links",
@@ -26,6 +27,10 @@ export default function FilingsPage() {
           was too thin to answer the question I built it for. The reason turned out to be the
           interesting part, and acting on it nearly doubled the graph without closing the gap.
         </p>
+        <Contribution
+          proposed="A dated map of who buys from whom, extracted from 10-K text by a model on a laptop, every edge quoting the sentence it came from, built so that a backtest on it never sees tomorrow's knowledge."
+          result="2,572 edges over 220 firms, covering 47 names on a typical day. The return test needs 97, so the study stopped at the coverage report. The shortfall traces to disclosure law: a company must name customers above 10% of revenue and never its suppliers, so the S&P 500 side of the graph is the silent side. Building from the supplier side nearly doubled coverage, as predicted, and still fell short."
+        />
         <div className="mt-7 flex flex-wrap gap-6 text-[16px]">
           <a href="https://github.com/quantraunak/filing-links" className="link">
             filing-links on GitHub
@@ -80,8 +85,11 @@ export default function FilingsPage() {
         <CoverageFigure />
         <div className="prose">
           <p>
-            2,572 relationships across 220 companies — which sounds like a lot until you ask
-            how many companies it covers <em>on any given day</em>. The answer is 47, out of
+            10,382 validated claims become 2,572 dated relationships between listed companies,
+            across 220 source firms. Only about a third of the claims name a counterparty that
+            resolves to a traded ticker; the rest name private companies, subsidiaries or
+            governments. 2,572 sounds like a lot until you ask how many companies it covers{" "}
+            <em>on any given day</em>. The answer is 47, out of
             roughly 403 trading. The test I built this for needs about 97 to see effects the
             size the literature actually reports.
           </p>
@@ -95,7 +103,9 @@ export default function FilingsPage() {
             I already had before changing anything: that the name-matching had broken, that
             valid claims were being silently discarded, that the cheaper model had collapsed,
             and that coverage saturates so more filings wouldn&apos;t help. All four were
-            wrong. Coverage grows in a straight line with the number of filings, which I have
+            wrong. One explanation I did not test: the two-thirds of claims lost at name
+            resolution. That is a larger loss than the disclosure asymmetry below, and
+            whether a better resolver would move coverage is an open question. Coverage grows in a straight line with the number of filings, which I have
             now measured twice — ten times the filings gave almost exactly ten times the
             coverage the first time, and running a second corpus 1.7&times; the size moved it
             1.7&times; again.
@@ -114,9 +124,10 @@ export default function FilingsPage() {
           <p>
             So disclosure is lopsided by law, and extracting the S&amp;P 500 means extracting
             the side of every relationship that isn&apos;t obliged to speak. Large companies
-            rarely name who they buy from. That also explains why roughly 45% of the filings
-            name nobody at all — a rate that held steady across two different models, so
-            it&apos;s a property of the filings rather than of the extractor.
+            rarely name who they buy from. That also explains why roughly half of the filings
+            name nobody at all (45% in the full corpus, 54 to 55% in the model comparison), a
+            rate that held steady across two different models, so it&apos;s a property of the
+            filings rather than of the extractor.
           </p>
           <p>
             The design lesson follows directly: this graph should be built from the{" "}

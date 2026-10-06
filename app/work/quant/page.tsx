@@ -5,6 +5,7 @@ import { Shell } from "@/components/ui";
 import { GrowthChart, BetaSplit, SeedLottery, BeforeAfter, Signatures } from "@/components/simple-charts";
 import { Details } from "@/components/details";
 import { LeakDemo } from "@/components/leak-demo";
+import { Contribution } from "@/components/contribution";
 
 export const metadata: Metadata = {
   title: "leakprobe",
@@ -43,6 +44,10 @@ export default function QuantPage() {
           know what the correct value was, which is the point — if you knew that, you
           wouldn&apos;t have the bug.
         </p>
+        <Contribution
+          proposed="Test a feature pipeline for data leakage without knowing the right answers: declare which tables each feature may read, change something the code must be blind to, and treat any movement as proof of an undeclared dependency. Behind it, bias fingerprinting: each data-handling mistake in a stock-picking study leaves a fixed pattern of shifts across 22 standard signals, so a published results table can be read backwards to say which mistake it contains."
+          result="The test found a real leak that had inflated a stock-picking result by 59%. Released as pip install leakprobe; on five public datasets it catches 8 of 9 planted leaks with no false alarms, and the one it misses is invisible to it by construction. The fingerprint paper shows a dating mistake inflates and a survivorship mistake rearranges, and that only the second is identifiable from outside."
+        />
         <div className="mt-7 flex flex-wrap gap-6 text-[16px]">
           <a href="https://github.com/quantraunak/leakprobe" className="link">
             leakprobe on GitHub
@@ -173,9 +178,12 @@ avg_severity         exactly 0       bypass?`}
           <p>
             A write-up of the measurements above: what each mistake does to 22 stock-picking
             rules, why one of them doesn&apos;t inflate results at all but rearranges which
-            rules look good, and a proposal for reading the damage backwards to identify
-            which mistake a study contains. That last part is set out and explicitly not yet
-            validated.
+            rules look good, and a method for reading the damage backwards to identify
+            which mistake a study contains. The method&apos;s validation protocol has been run:
+            the universe mistake is identifiable from a results table alone, 99% of the time
+            in simulation, and the dating mistake is not, which the geometry predicts. The
+            gate statistics were recomputed in October 2026 after a unit mismatch was found;
+            the verdicts did not change, the numbers did, and the paper says so.
           </p>
         </div>
         <div className="mt-9 flex flex-wrap gap-6 text-[16px]">
@@ -191,8 +199,10 @@ avg_severity         exactly 0       bypass?`}
             because the correct run is what everything else is measured against. That is
             a model ranking about 500 large US companies each month, buying the ones it expects to
             do well and betting against the rest, built on records of which companies were in the
-            index on any past date — including ones that no longer exist — and on government filings
-            dated to the day they were published.
+            index on any past date, including ones that have since left it, and on government
+            filings dated to the day they were published. One known gap: the price history
+            comes from a free source that drops companies after they delist, so the baseline
+            is itself partly survivorship-filtered. The paper says so.
           </p>
         </div>
 

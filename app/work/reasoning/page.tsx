@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Shell } from "@/components/ui";
 import { MoveExplorer, TaskShapes } from "@/components/reasoning-visuals";
 import { Details } from "@/components/details";
+import { Contribution } from "@/components/contribution";
 
 export const metadata: Metadata = {
   title: "Resampled Thought Trees",
@@ -25,6 +26,11 @@ export default function ReasoningPage() {
           When an AI solves a problem step by step, some steps are essential and some are wasted
           effort. Nobody could tell which was which. We built a way to measure it.
         </p>
+        <Contribution
+          proposed="Score each intermediate step of an AI's search by freezing the search at that step and re-running it ten times. The share of re-runs that still reach the answer is the step's real value, independent of how promising the AI said it looked."
+          result="A per-step map over 22,350 re-runs on two puzzle types. The AI's top-ranked move reaches a solution 16% of the time; moves it ranked lower reach one about 40% of the time. Deleting branches rarely changed whether a puzzle was solved but removed most of the routes to the solution, a loss that pass/fail scoring cannot see."
+          role="A five-author course project at USC, built and run collaboratively by the five co-authors. The repository linked below mirrors the team's release and adds the paper."
+        />
       </header>
 
       <section className="rule py-12">
@@ -63,9 +69,12 @@ export default function ReasoningPage() {
         <h2 className="text-[25px]">Main finding</h2>
         <div className="prose mt-5">
           <p>
-            <strong>The AI&apos;s own confidence is a poor guide.</strong> Its top-ranked next step
-            was frequently a dead end, while options it ranked last turned out to be the ones that
-            reliably worked.
+            <strong>The AI&apos;s own confidence is a weak guide.</strong> Across 200 Game24
+            puzzles, the move it ranked first reached a solution 16% of the time. The moves it
+            ranked second, third and fourth each reached one about 40% of the time. Part of
+            that gap is tree depth rather than rank, since top-ranked moves are followed deeper
+            where every state is harder, and the paper says so; within the first move alone the
+            difference is small.
           </p>
           <p>
             That matters practically: these systems decide what to explore using exactly that
@@ -108,6 +117,11 @@ export default function ReasoningPage() {
             This was a five-author project at USC. The honest framing of the results: we controlled
             the AI&apos;s options rather than letting it generate freely, which makes the measurement
             much cleaner but means the findings describe this setup rather than every AI system.
+            Two more limits. At temperature zero the re-runs are deterministic, so those scores
+            can only be 0 or 100%; the numbers above are from the temperature 0.2 run. And the
+            idea of re-running from a partial state to value it is shared with Monte Carlo tree
+            search rollouts and with process-reward labelling; the contribution here is the
+            per-step taxonomy and the ablation check, not the resampling itself.
           </p>
         </div>
 

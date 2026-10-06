@@ -14,14 +14,16 @@ function Figure({ caption, children }: { caption: string; children: React.ReactN
   );
 }
 
-/* Click a first move and see how often the AI actually solves the puzzle
-   from there. The rank-1 move is a dead end; the rank-4 move always works. */
+/* Click a first move and see how often the AI actually solves the puzzle from
+   there. Numbers are read from the logged run: puzzle "1 1 13 13", llama3.2,
+   temperature 0.2, ten re-runs per move
+   (logs/analysis_100p_final/game24_root_ablation_100p_temps_0_0_0_2_merged.csv). */
 
 const MOVES = [
-  { label: "1 + 1 = 2", rank: 1, success: 0, note: "The AI's own first choice. It never leads to an answer." },
-  { label: "11 − 1 = 10", rank: 2, success: 0, note: "Also a dead end." },
-  { label: "11 × 1 = 11", rank: 3, success: 4, note: "Works about 40% of the time." },
-  { label: "11 + 11 = 22", rank: 4, success: 10, note: "The AI ranked this last. It works every single time." },
+  { label: "1 × 1 = 1", rank: 1, success: 0, note: "The AI's own first choice. None of the ten re-runs reached 24." },
+  { label: "13 + 13 = 26", rank: 2, success: 10, note: "Ranked second. All ten re-runs solved it." },
+  { label: "13 − 1 = 12", rank: 3, success: 8, note: "Eight of ten." },
+  { label: "13 − 13 = 0", rank: 4, success: 0, note: "A dead end, and ranked last, so here the ranking was right." },
 ];
 
 export function MoveExplorer() {
@@ -29,9 +31,9 @@ export function MoveExplorer() {
   const m = MOVES[pick];
 
   return (
-    <Figure caption="The AI ranked these four opening moves from best to worst. Click each one to see how often it actually reaches the right answer. Its top choice never works; its last choice always does.">
+    <Figure caption="The AI ranked these four opening moves from best to worst. Click each one to see how often ten re-runs from that move reached the right answer. Here its top choice never works and its second choice always does. One puzzle, real logged numbers; the pattern across all 200 puzzles is below.">
       <div className="text-[15px] text-ink-3">
-        Puzzle: make 24 from the numbers <span className="text-ink">1, 1, 11, 11</span>
+        Puzzle: make 24 from the numbers <span className="text-ink">1, 1, 13, 13</span>
       </div>
 
       <div className="mt-5 space-y-2.5">

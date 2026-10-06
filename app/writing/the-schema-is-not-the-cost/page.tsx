@@ -87,7 +87,7 @@ export default function SchemaPage() {
             and free.
           </p>
           <p>
-            That is the design. Getting it to work took five attempts, and the four failures
+            That is the design. Getting it to work took five attempts, and the failures
             are more instructive than the design is. I set a sanity gate first: at{" "}
             <span className="mono">k=1</span>, recall must clear 0.80. One needle, from a
             sentence the extractor itself produced in the wild.
@@ -139,7 +139,12 @@ export default function SchemaPage() {
         <div className="prose">
           <p>
             <span className="mono">qwen3:14b</span>, 32k context, 75 matched documents per
-            arm, zero truncations.
+            arm (25 at each of k = 1, 4, 16), zero truncations. One caveat first: the k=1 gate
+            above was never met. The final run came in at 0.440 constrained and 0.640
+            unconstrained against the 0.80 I had set, and the pre-registration said to abandon
+            the constructed design at that point. I ran the comparison anyway. So the absolute
+            levels describe the instrument, not the model, and only the between-arm contrast
+            on identical documents is readable.
           </p>
         </div>
 
@@ -156,19 +161,30 @@ constrained     drop -0.114   p = 0.73    nothing`}
           <p>
             Paired on the same documents, unconstrained leads by 0.200 at{" "}
             <span className="mono">k=1</span> and trails by 0.128 at{" "}
-            <span className="mono">k=16</span> (p = 0.005). The crossover is the effect.
+            <span className="mono">k=16</span>. The interaction test, which I did not
+            pre-specify and ran after a reviewer asked for it, puts the gap at −0.082 per
+            doubling of k (p = 0.006).
           </p>
           <p>
             <strong>
-              So the cardinality effect is real, and the grammar is what prevents it.
-            </strong>
+              So the cardinality effect is real under free generation, and the grammar is
+              not the cost.
+            </strong>{" "}
+            Whether the grammar is the cure is weaker than I first wrote. The interaction is
+            carried by k=1, where the constrained arm returns an empty list on 13 of 25
+            documents. Remove those and the slope is zero (p = 0.79): above one item, both
+            arms lose recall at about the same rate.
           </p>
           <p>
-            The emission counts give it away. At <span className="mono">k=16</span> the
-            constrained arm emits 9.4 items of the 16 available; the unconstrained arm emits
-            7.2. Precision is identical at 0.946 and 0.948, so this is not a quality
-            tradeoff. Left to decide when to stop, the model stops early. A schema takes that
-            decision away, because a half-filled array is not a valid parse.
+            The emission counts show where the arms differ. At <span className="mono">k=16</span>{" "}
+            the constrained arm emits 9.4 items of the 16 available; the unconstrained arm
+            emits 7.2. Precision is identical at 0.946 and 0.948, so this is not a quality
+            tradeoff. The arms differ in where the model stops. An earlier version of this
+            post said a half-filled array is not a valid parse, so the schema forces the model
+            on. That is false: the schema is a bare list with no minimum length, the grammar
+            allows closing the array after any element, and the constrained arm does stop
+            early. Why the schema shifts the stopping point is not established. The experiment
+            that would test it, a minimum item count in the schema, has not been run.
           </p>
           <p>
             That also kills a number I believed earlier in the week. On a 30B
@@ -186,9 +202,10 @@ constrained     drop -0.114   p = 0.73    nothing`}
         <div className="prose">
           <p>
             For anyone shipping structured extraction: the schema is not the thing costing
-            you recall at high item counts. It is the thing holding recall up. If you have
-            been considering free-form generation with post-hoc parsing to escape grammar
-            masking, measure the item-count axis before you switch.
+            you recall at high item counts. On this model it may be what holds recall up, but
+            that rests on 25 documents per level and one model family. If you have been
+            considering free-form generation with post-hoc parsing to escape grammar masking,
+            measure the item-count axis before you switch.
           </p>
           <p>
             For anyone evaluating extraction: a single F1 over a benchmark whose{" "}
@@ -203,6 +220,15 @@ constrained     drop -0.114   p = 0.73    nothing`}
             unfalsified. Writing down what you have not ruled out is not the same as ruling
             it out, and the gap between those two things was, in this case, the entire
             finding.
+          </p>
+          <p>
+            One more correction to the record. The pre-registration originally specified a
+            different second factor, model size against think/no-think. The think factor
+            proved inert on September 11 and was replaced by constrained-vs-unconstrained
+            decoding before the unconstrained arm was run; the rejection rule did not change.
+            The repository&apos;s first commit contains both the pre-registration and the
+            results, so the ordering rests on the document&apos;s own dated amendments, not
+            on commit history.
           </p>
           <p>
             Code, pre-registration, evaluation set and all 450 raw model responses:{" "}

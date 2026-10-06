@@ -230,10 +230,22 @@ S5   a z-score whose mean and deviation come from all of time`}
 S1  missing cutoff filter                         3/3
 S2  undeclared source read                        2/2
 S3  outcome leakage, later clock                  2/2
-S4  outcome read under the event's clock          1/1
+S4  outcome read under the event's clock          0/1
 S5  statistic over all of time                    1/1
 
 correct pipelines flagged                         0/5`}
+        </div>
+
+        <div className="prose mt-7">
+          <p>
+            Eight of nine. The miss is S4, and it is a miss by construction rather than a
+            bug. When the outcome sits in the same row as the event, under the event&apos;s
+            own timestamp, moving that clock moves the leaked feature exactly as it moves a
+            legitimate one. No invariant is violated, so there is nothing for the probe to
+            see. An earlier version of this table showed S4 as caught; that case had been
+            built as a copy of S3 and did not test what its name said. The benchmark now
+            builds the real thing and reports the miss.
+          </p>
         </div>
       </Section>
 

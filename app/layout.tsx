@@ -34,7 +34,7 @@ const PERSON_SCHEMA = {
   "@type": "Person",
   name: "Raunak Sood",
   url: "https://raunaksood.vercel.app/",
-  jobTitle: "Machine Learning Engineer & Quantitative Researcher",
+  jobTitle: "Machine Learning Intern & Quantitative Researcher",
   email: "mailto:raunak.sood@gmail.com",
   address: {
     "@type": "PostalAddress",

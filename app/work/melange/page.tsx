@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Shell } from "@/components/ui";
 import { RankingBreakdown, SwipeDemo } from "@/components/melange-visuals";
 import { Details } from "@/components/details";
+import { Contribution } from "@/components/contribution";
 
 export const metadata: Metadata = {
   title: "Melange",
@@ -24,6 +25,10 @@ export default function MelangePage() {
           DMs. I built an app for it — on the App Store and the web, one database behind both — and
           the part that took the thinking was deciding what each person sees first.
         </p>
+        <Contribution
+          proposed="A two-sided matching app for creative collaborators, iOS and web on one Postgres, where a match exists only when both people said yes and the feed order is a single database query."
+          result="Shipped and live on the App Store and the web. Mutual consent has been enforced inside the database since October 2026, after a review found it enforced only in the client. Usage so far is test accounts, and the repository's status file says so."
+        />
       </header>
 
       <section className="rule py-12">

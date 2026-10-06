@@ -3,11 +3,12 @@ import Link from "next/link";
 import { Shell } from "@/components/ui";
 import { CardinalityDemo } from "@/components/cardinality-demo";
 import { CrossoverFigure, DilutionFigure } from "@/components/cardinality-figures";
+import { Contribution } from "@/components/contribution";
 
 export const metadata: Metadata = {
   title: "cardinality-eval",
   description:
-    "Does an extractor get worse as the number of things to find grows? Yes, but only without a JSON schema. The grammar everyone suspects of costing accuracy is what prevents the loss.",
+    "Does an extractor get worse as the number of things to find grows? In a one-model pilot, yes under free generation and not under a JSON schema. The gap rests on the shortest lists, so the schema is not the cost, and whether it is the cure is open.",
 };
 
 export default function CardinalityPage() {
@@ -22,10 +23,14 @@ export default function CardinalityPage() {
           The schema is not the cost
         </h1>
         <p className="mt-6 text-[19.5px] leading-[1.65] text-ink-2">
-          Ask a model to pull ten things out of a document instead of one, and it finds a
-          smaller share of them. Unless you make it fill in a form, in which case it
-          doesn&apos;t.
+          Ask a model to pull sixteen things out of a document instead of one, and it finds a
+          smaller share of them. Make it fill in a form and, on this model, it doesn&apos;t.
+          Whether that is the form doing the work, or the shortest lists, is the open question.
         </p>
+        <Contribution
+          proposed="A way to measure how extraction recall changes with the number of items, with no annotators: build the documents yourself from verbatim filing sentences, so the number of items is exact and the answer key is free. And a constraint every such study inherits: item count, item density and document length cannot all be held fixed, so each design picks two and should say which."
+          result="A pilot on one model, 25 documents per level. Free-form recall falls 0.214 from 1 to 16 items (p = 0.011) and schema-constrained recall does not (p = 0.73). The gap between arms is carried by the one-item documents, where the constrained arm returns an empty list on 13 of 25; without those it vanishes. So the schema is not what costs recall on long lists. Whether it is what holds recall up is not settled at this scale."
+        />
         <div className="mt-7 flex flex-wrap gap-6 text-[16px]">
           <a href="https://github.com/quantraunak/cardinality-eval" className="link">
             cardinality-eval on GitHub
@@ -87,8 +92,8 @@ export default function CardinalityPage() {
           <CardinalityDemo />
         </div>
         <p className="mt-3 text-[13px] leading-[1.6] text-ink-3">
-          Every number is measured. The three stops are the three levels actually run, 75
-          documents each, with nothing interpolated between them.
+          Every number is measured. The three stops are the three levels actually run, 25
+          documents each and 75 per arm, with nothing interpolated between them.
         </p>
       </section>
 
@@ -96,8 +101,8 @@ export default function CardinalityPage() {
         <h2 className="text-[25px]">What I found</h2>
         <div className="prose mt-5">
           <p>
-            Recall does fall as the list grows — but only when the model is writing freely.
-            Under a schema, on the same documents, it doesn&apos;t fall at all.
+            Under the rule I fixed in advance, recall falls as the list grows when the model is
+            writing freely, and does not under a schema, on the same documents.
           </p>
         </div>
 
@@ -111,11 +116,22 @@ export default function CardinalityPage() {
             <strong>nothing</strong> — recall actually rises, p = 0.73.
           </p>
           <p>
-            The reason is visible in how many items each one emits. At sixteen available, the
-            schema produces 9.4 and free generation produces 7.2, at the same precision. Left
-            to decide when to stop, the model stops early, and stops earlier the longer the
-            list gets. A schema takes that decision away, because a half-filled array
-            isn&apos;t valid JSON, so it keeps going.
+            The difference sits in how many items each one emits. At sixteen available, the
+            schema produces 9.4 and free generation produces 7.2, at the same precision. The
+            arms differ in where the model stops, not in what it finds. An earlier version of
+            this page said a half-filled array isn&apos;t valid JSON so the schema forces the
+            model on. That was wrong: the schema is a plain list with no minimum length, so the
+            grammar lets the model close the list after any item, and the constrained arm does
+            stop early, returning nothing at all on 13 of the 25 one-item documents. Why the
+            schema shifts the stopping point is not established. The experiment that would
+            test it, a minimum-length rule in the schema, has not been run.
+          </p>
+          <p>
+            The test the paper did not run at first is the one that matters: does the gap
+            between arms actually grow with the list? It does, by 0.082 per doubling of the
+            list (p = 0.006). But drop the one-item documents where the schema returned
+            nothing and the slope is zero (p = 0.79). Above one item, both arms lose recall at
+            about the same rate. The relative claim stands on the shortest lists.
           </p>
         </div>
       </section>
@@ -145,6 +161,13 @@ export default function CardinalityPage() {
             sentence in a haystack nothing like the ones the model actually sees.
           </p>
           <p>
+            The check was never passed. The final run came in at 44% under the schema and 64%
+            without it, against the 80% I had set, and my own pre-registration said to abandon
+            the constructed design at that point. I ran the comparison anyway, and the paper
+            says so. The consequence is that the absolute numbers describe the instrument, not
+            the model, and only the comparison between arms on identical documents is readable.
+          </p>
+          <p>
             That also surfaced a constraint worth stating. The number of items, how densely
             they&apos;re packed, and how long the document is are not three independent
             knobs — fix any two and the third follows. So every study of this kind picks two
@@ -159,10 +182,11 @@ export default function CardinalityPage() {
         <div className="prose mt-5">
           <p>
             If you run structured extraction in production, the schema is not what&apos;s
-            costing you recall on long lists. It&apos;s what&apos;s holding recall up. Anyone
-            considering free-form generation with post-hoc parsing to escape grammar masking
-            should measure this axis first — on this model the trade goes the wrong way, and
-            it costs nothing in tokens to find out.
+            costing you recall on long lists. On this model it may be what holds recall up,
+            but that rests on 25 documents per level and one model, and the next run needs a
+            hundred per level and more than one model family before it is a recommendation.
+            Anyone considering free-form generation with post-hoc parsing to escape grammar
+            masking should measure this axis first; it costs nothing in tokens to find out.
           </p>
           <p>
             And the thing I&apos;d keep: I had the alternative explanation written down, in my

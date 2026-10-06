@@ -11,40 +11,50 @@ const PROJECTS = [
     href: "/work/quant",
     title: "leakprobe",
     kind: "Open source · Python",
-    plain:
-      "You say which tables each feature is allowed to read. It makes a change your code should be blind to \u2014 pushing one table's timestamps three weeks later \u2014 and re-runs. Anything that moves was reading something it shouldn't.",
+    proposed:
+      "A test for data leakage that needs no answer key. You say which tables each feature may read; it changes something the code must be blind to, like one table's timestamps, and re-runs. Anything that moves was reading something it shouldn't.",
+    result:
+      "A real leak found this way had inflated a stock-picking result by 59%. Released on PyPI; on five public datasets it catches 8 of 9 planted leaks with no false alarms, and the ninth is invisible to it by construction.",
     note: "pip install leakprobe",
   },
   {
     href: "/work/reasoning",
     title: "Resampled Thought Trees",
     kind: "AI research · USC · 5 authors",
-    plain:
-      "When an AI reasons step by step, which steps actually matter? We froze it mid-thought and re-ran the search 22,000 times to find out.",
+    proposed:
+      "Score each step of an AI's reasoning by freezing the search there and re-running it ten times. The share of re-runs that still succeed is what the step was worth.",
+    result:
+      "A per-step map over 22,350 re-runs. The AI's top-ranked move led to a solution 16% of the time; lower-ranked ones about 40%. A five-author course project, built and run collaboratively.",
     note: "Paper · 280 logged search trees",
   },
   {
     href: "/work/cardinality",
     title: "cardinality-eval",
     kind: "LLM evaluation · Python",
-    plain:
-      "Does an extractor get worse as the number of things to find grows? Yes — but only without a JSON schema. The grammar everyone suspects of costing accuracy turns out to be what prevents the loss.",
+    proposed:
+      "Measure how extraction recall changes with the number of items to find by building the documents from verbatim sentences, so the answer key is exact and free.",
+    result:
+      "In a one-model pilot, free-form recall falls 0.214 from 1 to 16 items and schema-constrained recall does not. The gap rests on the shortest lists, so the schema is not the cost; whether it is the cure is open.",
     note: "0.214 recall lost unconstrained, none constrained",
   },
   {
     href: "/work/filings",
     title: "filing-links",
     kind: "Information extraction · Python",
-    plain:
-      "A dated map of which companies name which others in their 10-Ks, released with its own coverage ceiling attached. The pre-registered gate fired and the study stopped.",
+    proposed:
+      "A dated map of which companies name which others in their 10-Ks, every edge quoting its sentence, built with a model on a laptop.",
+    result:
+      "2,572 relationships over 220 firms, released with its coverage ceiling attached: 47 names per day against the 97 the return test needs. The reason is disclosure law, which makes customers speak and suppliers silent.",
     note: "47 names/date · the gate fired twice",
   },
   {
     href: "/work/melange",
     title: "Melange",
     kind: "Product · TypeScript, iOS",
-    plain:
-      "An app for photographers, models and stylists to find each other. Live on the App Store and the web, two clients against one Postgres.",
+    proposed:
+      "An app for photographers, models and stylists to find each other: swipe, match only when both say yes, then talk.",
+    result:
+      "Live on the App Store and the web, two clients against one Postgres, with the feed ranked by a query and mutual consent enforced by the database. No real user base yet.",
     note: "App Store + web · 17k lines",
   },
 ];
@@ -53,7 +63,7 @@ const PROJECTS = [
 const WORK: [string, string, string, string][] = [
   [
     "Innovius Capital",
-    "Machine Learning Engineer",
+    "Machine Learning Intern",
     "2026 —",
     "Replaced chance-level PCA company scoring with a supervised CatBoost and LLM ranker, raising P@20 from 0.20 to 0.90. Built the 14k-company point-in-time training set, where a label-leakage fix moved AUC 0.62 to 0.66.",
   ],
@@ -65,7 +75,7 @@ const WORK: [string, string, string, string][] = [
   ],
   [
     "Chapman University",
-    "Machine Learning Researcher",
+    "Mathematics Research",
     "2024 —",
     "Functional analysis and stochastic processes at graduate level; transport equations and white-noise space for stochastic modelling.",
   ],
@@ -183,7 +193,11 @@ export default function Home() {
                 </h2>
               </div>
               <p className="mt-2.5 text-[15.5px] leading-[1.65] text-ink-2">
-                {p.plain}
+                {p.proposed}
+              </p>
+              <p className="mt-2 text-[15px] leading-[1.65] text-ink-2">
+                <span className="font-medium text-ink">Result. </span>
+                {p.result}
               </p>
               <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12.5px] text-ink-3">
                 <span className="mono">{p.note}</span>
