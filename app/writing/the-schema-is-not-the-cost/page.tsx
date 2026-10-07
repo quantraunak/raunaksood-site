@@ -87,13 +87,16 @@ export default function SchemaPage() {
             and free.
           </p>
           <p>
-            That is the design. Getting it to work took five attempts, and the failures
-            are more instructive than the design is. I set a sanity gate first: at{" "}
-            <span className="mono">k=1</span>, recall must clear 0.80. One needle, from a
-            sentence the extractor itself produced in the wild.
+            That is the design. Getting it to work took four builds, and the failures
+            are more instructive than the design is.
           </p>
           <p>
-            <strong>It came back 0.333.</strong> Then, after a fix, 0.400. Then 0.400 again.
+            <strong>The first pilot came back 0.333.</strong> One needle, from a sentence
+            the extractor itself produced in the wild, found a third of the time. Only
+            then did I add the gate that should have existed from the start: at{" "}
+            <span className="mono">k=1</span>, recall must clear 0.80 or no slope is
+            interpretable. The pre-registration records it as added after that failure,
+            not before. Then, after a fix, 0.400. Then 0.400 again.
           </p>
           <p>
             The first cause was that my injected sentences named their own original filer in
@@ -139,7 +142,8 @@ export default function SchemaPage() {
         <div className="prose">
           <p>
             <span className="mono">qwen3:14b</span>, 32k context, 75 matched documents per
-            arm (25 at each of k = 1, 4, 16), zero truncations. One caveat first: the k=1 gate
+            arm (25 at each of k = 1, 4, 16), no response within a tenth of the 24,000-token
+            ceiling (the longest is 903 tokens). One caveat first: the k=1 gate
             above was never met. The final run came in at 0.440 constrained and 0.640
             unconstrained against the 0.80 I had set, and the pre-registration said to abandon
             the constructed design at that point. I ran the comparison anyway. So the absolute

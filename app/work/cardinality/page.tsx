@@ -140,10 +140,13 @@ export default function CardinalityPage() {
         <h2 className="text-[25px]">The part that took longest</h2>
         <div className="prose mt-5">
           <p>
-            Before measuring anything I set a sanity check: with one item hidden in one
-            document, the extractor should find it at least 80% of the time. It came back{" "}
-            <strong>33%</strong>. Then 40%. Then 40% again, after fixing four separate bugs I
-            could see by reading the output.
+            The first pilot came back at <strong>33%</strong>: one item hidden in one
+            document, found a third of the time. Only then did I write down the check that
+            should have come first, that the extractor must find a single item at least 80%
+            of the time before any slope means anything. The pre-registration records the
+            gate as added after that failure, not before it. The next two builds came back
+            40%, then 40% again after fixing four separate bugs I could see by reading the
+            output.
           </p>
           <p>
             Guessing wasn&apos;t working, so I measured instead — same sentence, same single

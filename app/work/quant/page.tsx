@@ -228,7 +228,9 @@ avg_severity         exactly 0       bypass?`}
             Building the instrument produced two results that have nothing to do with this
             particular model. The first: most reported strategy returns are partly just exposure to
             a rising market, which an index fund gives you for free. Here 59% of the apparent edge
-            turns out to be exactly that.
+            turns out to be exactly that. One honesty note on that number: the regression behind
+            it was run once and its output was not saved to the repository, so it is reported as
+            recorded and will be re-run and committed before it is relied on.
           </p>
         </div>
         <BetaSplit />
@@ -247,7 +249,8 @@ avg_severity         exactly 0       bypass?`}
         <h2 className="text-[25px]">How the pipeline got built</h2>
         <div className="prose mt-5">
           <p>
-            The pipeline began as an inherited version reporting 35% a year. Reproducing it turned
+            The pipeline began as an inherited version whose own output reported 35% a year, a
+            number that no longer reproduces and is quoted only as the starting point. Reproducing it turned
             up six separate problems, none of which raised an error or produced an implausible
             number — which is what made them worth studying, and what eventually turned into{" "}
             <span className="mono">leakprobe</span>. Every one produced output a reviewer would
