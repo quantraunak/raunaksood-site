@@ -28,7 +28,7 @@ export function CrossoverFigure() {
   const { ref, seen } = useInView<HTMLDivElement>();
   const ks = [1, 4, 16];
   const constrained = [0.44, 0.64, 0.554];
-  const free = [0.64, 0.53, 0.426];
+  const free = [0.64, 0.58, 0.509];
   const [hover, setHover] = useState<number | null>(null);
 
   const W = 620, H = 300, L = 54, R = 118, T = 24, B = 54;
@@ -95,7 +95,7 @@ export function CrossoverFigure() {
       </div>
       <figcaption className="mt-3 text-[13px] leading-[1.6] text-ink-3">
         Recall against the number of items to emit, same 75 documents per arm. The arms cross
-        between k = 1 and k = 4. At k = 16 the gap is 0.128, p = 0.005. Hover a level for the
+        between k = 1 and k = 4. At k = 16 the gap is 0.045, p = 0.026. Hover a level for the
         pair.
       </figcaption>
     </figure>

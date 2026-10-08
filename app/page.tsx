@@ -34,8 +34,8 @@ const PROJECTS = [
     proposed:
       "Measure how extraction recall changes with the number of items to find by building the documents from verbatim sentences, so the answer key is exact and free.",
     result:
-      "In a one-model pilot, free-form recall falls 0.214 from 1 to 16 items and schema-constrained recall does not. The gap rests on the shortest lists, so the schema is not the cost; whether it is the cure is open.",
-    note: "0.214 recall lost unconstrained, none constrained",
+      "In a one-model pilot, neither free-form nor schema-constrained recall meets the pre-registered test for decline as the list grows. What the schema demonstrably buys is validity: free-form output stops being valid JSON as the list lengthens (21 of 25 at sixteen items), schema output never does.",
+    note: "validity 21/25 free vs 25/25 schema at k=16",
   },
   {
     href: "/work/filings",
