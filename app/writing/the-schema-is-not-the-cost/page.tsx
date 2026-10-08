@@ -7,7 +7,7 @@ import { CrossoverFigure, DilutionFigure } from "@/components/cardinality-figure
 export const metadata: Metadata = {
   title: "The schema is not the cost",
   description:
-    "Constrained decoding is supposed to cost you accuracy. On extraction recall as the number of items grows, it is the only thing holding recall up: unconstrained generation loses 0.214 from k=1 to k=16, the same model under a JSON schema loses nothing.",
+    "Constrained decoding is supposed to cost you accuracy. On extraction recall as the number of items grows, a one-model pilot finds neither regime meets the pre-registered test; what the schema buys is valid output. A scorer bug that once made this post claim more is disclosed inside.",
 };
 
 export default function SchemaPage() {
@@ -157,38 +157,54 @@ export default function SchemaPage() {
         <div className="code" role="img" aria-label="the pre-registered test result">
 {`pre-registered: drop >= 0.15 AND p < 0.05
 
-unconstrained   drop +0.214   p = 0.011   rejects
-constrained     drop -0.114   p = 0.73    nothing`}
+unconstrained   drop +0.131   p = 0.027   does not reject (drop < 0.15)
+constrained     drop -0.114   p = 0.73    nothing
+
+valid JSON as emitted, k = 1 / 4 / 16
+unconstrained   25/25   23/25   21/25
+constrained     25/25   25/25   25/25`}
         </div>
 
         <div className="prose mt-7">
           <p>
+            First, a correction to what this post said until October 2026. It reported a
+            0.214 drop under free generation and called it a rejection. Six of the 75
+            free-form answers had been scored as empty because my tolerant parser rejected
+            JSON whose strings contained quotation marks the model had copied from the
+            filings, like <span className="mono">Express Scripts, Inc. (&quot;Express
+            Scripts&quot;)</span>. Those six complete answers held 39 items, 38 correct. The
+            scorer now repairs interior quotes, fails closed if that does not yield valid
+            JSON, and has unit tests. Re-scored, the free-form drop is 0.131 at p = 0.027:
+            the rank test clears, the size does not, and the pre-registered rule rejects for
+            neither arm.
+          </p>
+          <p>
             Paired on the same documents, unconstrained leads by 0.200 at{" "}
-            <span className="mono">k=1</span> and trails by 0.128 at{" "}
+            <span className="mono">k=1</span> and trails by 0.045 at{" "}
             <span className="mono">k=16</span>. The interaction test, which I did not
-            pre-specify and ran after a reviewer asked for it, puts the gap at −0.082 per
-            doubling of k (p = 0.006).
+            pre-specify, puts the gap at −0.061 per doubling of k (p = 0.020), carried by
+            k=1, where the constrained arm returns an empty list on 13 of 25 documents.
+            Remove those and the slope is gone (p = 0.17): above one item, both arms lose
+            recall at about the same rate.
           </p>
           <p>
             <strong>
-              So the cardinality effect is real under free generation, and the grammar is
-              not the cost.
+              So the grammar is not the cost, and on this evidence it is not the cure
+              either. What it buys is validity.
             </strong>{" "}
-            Whether the grammar is the cure is weaker than I first wrote. The interaction is
-            carried by k=1, where the constrained arm returns an empty list on 13 of 25
-            documents. Remove those and the slope is zero (p = 0.79): above one item, both
-            arms lose recall at about the same rate.
+            Without a grammar, one answer in five at k=16 is not valid JSON as written, and
+            a scorer without a repair step reads that as zero recall, which is exactly how
+            this post came to report a result it did not have.
           </p>
           <p>
-            The emission counts show where the arms differ. At <span className="mono">k=16</span>{" "}
-            the constrained arm emits 9.4 items of the 16 available; the unconstrained arm
-            emits 7.2. Precision is identical at 0.946 and 0.948, so this is not a quality
-            tradeoff. The arms differ in where the model stops. An earlier version of this
-            post said a half-filled array is not a valid parse, so the schema forces the model
-            on. That is false: the schema is a bare list with no minimum length, the grammar
-            allows closing the array after any element, and the constrained arm does stop
-            early. Why the schema shifts the stopping point is not established. The experiment
-            that would test it, a minimum item count in the schema, has not been run.
+            The emission counts: at <span className="mono">k=16</span> the constrained arm
+            emits 9.4 items of the 16 available; the unconstrained arm emits 8.5, at the same
+            precision (0.946 and 0.953). Both stop well short. An earlier version of this post
+            said a half-filled array is not a valid parse, so the schema forces the model on.
+            That is false: the schema is a bare list with no minimum length, and most of the
+            emission gap I reported was the parser defect. The experiment that would test a
+            grammar-level stopping story, a minimum item count in the schema, has not been
+            run.
           </p>
           <p>
             That also kills a number I believed earlier in the week. On a 30B
@@ -206,10 +222,11 @@ constrained     drop -0.114   p = 0.73    nothing`}
         <div className="prose">
           <p>
             For anyone shipping structured extraction: the schema is not the thing costing
-            you recall at high item counts. On this model it may be what holds recall up, but
-            that rests on 25 documents per level and one model family. If you have been
-            considering free-form generation with post-hoc parsing to escape grammar masking,
-            measure the item-count axis before you switch.
+            you recall at high item counts, and what it buys you is output you can parse.
+            Free-form generation with post-hoc parsing costs no fewer tokens here and breaks
+            the format more often as the list grows. Whether it costs recall is not settled
+            at 25 documents per level. If you are considering it to escape grammar masking,
+            measure the item-count axis and test your parser before you switch.
           </p>
           <p>
             For anyone evaluating extraction: a single F1 over a benchmark whose{" "}

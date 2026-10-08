@@ -8,7 +8,7 @@ import { Contribution } from "@/components/contribution";
 export const metadata: Metadata = {
   title: "cardinality-eval",
   description:
-    "Does an extractor get worse as the number of things to find grows? In a one-model pilot, yes under free generation and not under a JSON schema. The gap rests on the shortest lists, so the schema is not the cost, and whether it is the cure is open.",
+    "Does an extractor get worse as the number of things to find grows? In a one-model pilot, neither free generation nor a JSON schema meets the pre-registered test. What the schema buys is valid output: free-form responses increasingly break JSON by quoting the source.",
 };
 
 export default function CardinalityPage() {
@@ -24,12 +24,13 @@ export default function CardinalityPage() {
         </h1>
         <p className="mt-6 text-[19.5px] leading-[1.65] text-ink-2">
           Ask a model to pull sixteen things out of a document instead of one, and it finds a
-          smaller share of them. Make it fill in a form and, on this model, it doesn&apos;t.
-          Whether that is the form doing the work, or the shortest lists, is the open question.
+          somewhat smaller share of them, with or without a form. What the form changes, on
+          this model, is whether the answer is valid at all: one free-form answer in five at
+          sixteen items is not valid JSON as written.
         </p>
         <Contribution
           proposed="A way to measure how extraction recall changes with the number of items, with no annotators: build the documents yourself from verbatim filing sentences, so the number of items is exact and the answer key is free. And a constraint every such study inherits: item count, item density and document length cannot all be held fixed, so each design picks two and should say which."
-          result="A pilot on one model, 25 documents per level. Free-form recall falls 0.214 from 1 to 16 items (p = 0.011) and schema-constrained recall does not (p = 0.73). The gap between arms is carried by the one-item documents, where the constrained arm returns an empty list on 13 of 25; without those it vanishes. So the schema is not what costs recall on long lists. Whether it is what holds recall up is not settled at this scale."
+          result="A pilot on one model, 25 documents per level. Neither arm meets the test I fixed in advance: free-form recall falls 0.131 from 1 to 16 items (the rule needs 0.15) and schema-constrained recall does not fall. The gap between arms is carried by the one-item documents and vanishes without them. What the schema buys, with an artifact, is validity: 25 of 25, 23 of 25, 21 of 25 free-form answers are valid JSON as the list grows; 75 of 75 under the schema. An earlier version of this page reported a rejection; that was a scorer bug, fixed and disclosed."
         />
         <div className="mt-7 flex flex-wrap gap-6 text-[16px]">
           <a href="https://github.com/quantraunak/cardinality-eval" className="link">
@@ -101,8 +102,9 @@ export default function CardinalityPage() {
         <h2 className="text-[25px]">What I found</h2>
         <div className="prose mt-5">
           <p>
-            Under the rule I fixed in advance, recall falls as the list grows when the model is
-            writing freely, and does not under a schema, on the same documents.
+            Under the rule I fixed in advance, neither arm clears the bar. Writing freely, recall
+            falls 0.131 from one item to sixteen on the same documents, short of the 0.15 the
+            rule requires; under a schema it does not fall at all.
           </p>
         </div>
 
@@ -112,26 +114,33 @@ export default function CardinalityPage() {
           <p>
             The test was fixed in advance: to count, recall had to drop at least 0.15 from
             the short lists to the long ones, <em>and</em> clear p &lt; 0.05. Free generation
-            drops <strong>0.214</strong> at p = 0.011. The schema drops{" "}
-            <strong>nothing</strong> — recall actually rises, p = 0.73.
+            drops <strong>0.131</strong> at p = 0.027, which clears the second condition and
+            not the first. The schema drops <strong>nothing</strong>; recall actually rises,
+            p = 0.73. An earlier version of this page said free generation dropped 0.214 and
+            rejected the null. Six of its 75 answers had been scored as empty because my
+            parser choked on quotation marks the model copied from the filings, such as{" "}
+            <span className="mono">Express Scripts, Inc. (&quot;Express Scripts&quot;)</span>.
+            Those six answers held 39 items, 38 of them right. The scorer now repairs that,
+            and every number here is from the repaired scoring.
           </p>
           <p>
-            The difference sits in how many items each one emits. At sixteen available, the
-            schema produces 9.4 and free generation produces 7.2, at the same precision. The
-            arms differ in where the model stops, not in what it finds. An earlier version of
-            this page said a half-filled array isn&apos;t valid JSON so the schema forces the
-            model on. That was wrong: the schema is a plain list with no minimum length, so the
-            grammar lets the model close the list after any item, and the constrained arm does
-            stop early, returning nothing at all on 13 of the 25 one-item documents. Why the
-            schema shifts the stopping point is not established. The experiment that would
-            test it, a minimum-length rule in the schema, has not been run.
+            What the schema does change is whether the answer is valid. Without it, 25 of 25
+            answers at one item are valid JSON as written, 23 of 25 at four, 21 of 25 at
+            sixteen. Under the schema, 75 of 75. The failures are not the model giving up;
+            they are complete answers that break the format by quoting a company&apos;s own
+            short name inside a string. That is the one effect of the grammar this study can
+            show with an artifact. At sixteen available, the schema emits 9.4 items and free
+            generation 8.5, at the same precision, so both stop well short. The schema is a
+            plain list with no minimum length, the constrained arm returns nothing at all on 13
+            of the 25 one-item documents, and the experiment that would test a grammar-level
+            stopping story, a minimum-length rule, has not been run.
           </p>
           <p>
-            The test the paper did not run at first is the one that matters: does the gap
-            between arms actually grow with the list? It does, by 0.082 per doubling of the
-            list (p = 0.006). But drop the one-item documents where the schema returned
-            nothing and the slope is zero (p = 0.79). Above one item, both arms lose recall at
-            about the same rate. The relative claim stands on the shortest lists.
+            The test the paper did not run at first is whether the gap between arms grows
+            with the list. It does, by 0.061 per doubling (p = 0.020). But drop the one-item
+            documents where the schema returned nothing and the slope is gone (p = 0.17).
+            Above one item, both arms lose recall at about the same rate. The recall
+            difference between arms rests on the shortest lists and is not a finding.
           </p>
         </div>
       </section>
@@ -185,11 +194,12 @@ export default function CardinalityPage() {
         <div className="prose mt-5">
           <p>
             If you run structured extraction in production, the schema is not what&apos;s
-            costing you recall on long lists. On this model it may be what holds recall up,
-            but that rests on 25 documents per level and one model, and the next run needs a
-            hundred per level and more than one model family before it is a recommendation.
-            Anyone considering free-form generation with post-hoc parsing to escape grammar
-            masking should measure this axis first; it costs nothing in tokens to find out.
+            costing you recall on long lists, and what it buys you is answers you can parse.
+            Free-form generation with post-hoc parsing costs no fewer tokens here and
+            produces output that has to be repaired before it can be scored; whether it costs
+            recall is not settled at 25 documents per level. The other lesson is about the
+            instrument: a tolerant parser is part of the measurement, and mine manufactured a
+            result until it was tested like one.
           </p>
           <p>
             And the thing I&apos;d keep: I had the alternative explanation written down, in my
