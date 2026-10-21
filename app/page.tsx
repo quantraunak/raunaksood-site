@@ -52,10 +52,10 @@ const PROJECTS = [
     title: "Melange",
     kind: "Product · TypeScript, iOS, CLIP",
     proposed:
-      "Small nights for people who make things, where an AI decides who sits with whom from the work they make, and half of every night is seated at random to test it.",
+      "An app for creative people to find collaborators, with an AI that learns taste from the work people make and suggests who to work with, measured against random suggestions.",
     result:
-      "Live on the App Store and the web. In production, the composer's tables scored 0.77–0.85 taste similarity against 0.64–0.69 for random seating; the first nights measure whether that means more people connect.",
-    note: "9 releases · randomised every night",
+      "Live on the App Store and the web, nine releases. In a production test, the AI's suggestions matched taste far better than random ones (0.77–0.85 similarity vs 0.64–0.69). About a dozen accounts so far.",
+    note: "9 releases · AI tested against random",
   },
 ];
 
