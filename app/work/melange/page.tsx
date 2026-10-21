@@ -131,7 +131,9 @@ export default function MelangePage() {
         <div className="prose mt-5">
           <p>
             Discover&apos;s feed is ranked by one Postgres function: eight weighted terms, no
-            service to call. Adding the taste score to it as a ninth is the next step.
+            service to call. The taste score is blended on top: it nudges the order of projects
+            and leads the order of people, so the creatives whose work is closest to yours come
+            first.
           </p>
         </div>
         <RankingBreakdown />
