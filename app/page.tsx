@@ -50,12 +50,12 @@ const PROJECTS = [
   {
     href: "/work/melange",
     title: "Melange",
-    kind: "Product · TypeScript, iOS",
+    kind: "Product · TypeScript, iOS, CLIP",
     proposed:
-      "An app for photographers, models and stylists to find each other: swipe, match only when both say yes, then talk.",
+      "An app for creative people to find collaborators, with an AI that learns taste from the work people make and suggests who to work with, measured against random suggestions.",
     result:
-      "Live on the App Store and the web, two clients against one Postgres, with the feed ranked by a query and mutual consent enforced by the database. No real user base yet.",
-    note: "App Store + web · 17k lines",
+      "Live on the App Store and the web, nine releases. In a production test, the AI's suggestions matched taste far better than random ones (0.77–0.85 similarity vs 0.64–0.69). About a dozen accounts so far.",
+    note: "9 releases · AI tested against random",
   },
 ];
 
