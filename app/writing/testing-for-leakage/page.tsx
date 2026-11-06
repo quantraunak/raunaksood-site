@@ -210,9 +210,9 @@ S5   a z-score whose mean and deviation come from all of time`}
             every column except the timestamp. Row count unchanged, clock unchanged, every
             row-to-row association destroyed. A feature that genuinely does not read that
             table cannot notice, while one that joins it and takes a column off it moves
-            immediately. This costs no false positives because it only ever runs on pairs the
-            user declared independent, which turns that declaration into something tested
-            rather than assumed.
+            immediately. It only ever runs on pairs the user declared independent, which turns
+            that declaration into something tested rather than assumed, and it raised no false
+            positives on the five clean pipelines.
           </p>
           <p>
             The second deletes the future. Given the cutoff your features are built for, drop
@@ -261,9 +261,11 @@ correct pipelines flagged                         0/5`}
           </p>
           <p>
             In practice this is narrow. Look-ahead is a dependency on timing or on row
-            identity, and both are covered now. What remains is a global constant lifted off
-            an undeclared table, and it is asserted in the test suite so that it cannot
-            quietly stop being true. That phrasing is load-bearing this time.
+            identity, and both are covered for features that aggregate per entity as of a cutoff.
+            Two shapes are not: per-row features, where a correct trailing lag moves with its
+            own timestamp, and sources sparser than the delay. What remains beyond those is a
+            global constant lifted off an undeclared table, and it is asserted in the test
+            suite so that it cannot quietly stop being true.
           </p>
         </div>
       </Section>
