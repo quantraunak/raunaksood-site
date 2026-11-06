@@ -17,12 +17,10 @@ export const metadata: Metadata = {
   description:
     "Machine learning and quantitative research. M.S. Computer Science at USC, ML at Innovius Capital. Point-in-time equity research, LLM reasoning diagnostics, and shipped product.",
   authors: [{ name: "Raunak Sood" }],
-  alternates: { canonical: "/" },
   openGraph: {
     type: "profile",
     title: "Raunak Sood",
     description: "Machine learning and quantitative research.",
-    url: "https://raunaksood.vercel.app",
     siteName: "Raunak Sood",
   },
   twitter: { card: "summary" },
@@ -34,7 +32,7 @@ const PERSON_SCHEMA = {
   "@type": "Person",
   name: "Raunak Sood",
   url: "https://raunaksood.vercel.app/",
-  jobTitle: "Machine Learning Intern & Quantitative Researcher",
+  jobTitle: "Machine Learning Engineer",
   email: "mailto:raunak.sood@gmail.com",
   address: {
     "@type": "PostalAddress",

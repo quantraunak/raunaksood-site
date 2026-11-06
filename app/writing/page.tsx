@@ -5,6 +5,8 @@ import { PAPERS, WRITING } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Writing",
+  alternates: { canonical: "/writing" },
+  openGraph: { title: "Writing", url: "/writing" },
   description: "Posts and papers by Raunak Sood.",
 };
 

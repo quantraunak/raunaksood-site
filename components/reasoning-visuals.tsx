@@ -31,7 +31,7 @@ export function MoveExplorer() {
   const m = MOVES[pick];
 
   return (
-    <Figure caption="The AI ranked these four opening moves from best to worst. Click each one to see how often ten re-runs from that move reached the right answer. Here its top choice never works and its second choice always does. One puzzle, real logged numbers; the pattern across all 200 puzzles is below.">
+    <Figure caption="The AI ranked these four opening moves from best to worst. Click each one to see how often ten re-runs from that move reached the right answer. Here its top choice never works and its second choice always does. One puzzle, real logged numbers; the pattern across all 100 puzzles is below.">
       <div className="text-[15px] text-ink-3">
         Puzzle: make 24 from the numbers <span className="text-ink">1, 1, 13, 13</span>
       </div>
