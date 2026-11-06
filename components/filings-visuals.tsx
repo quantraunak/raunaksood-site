@@ -100,7 +100,7 @@ export function AsymmetryFigure() {
         </div>
       </div>
       <figcaption className="mt-3 text-[13px] leading-[1.6] text-ink-3">
-        Relationships extracted, by type. Companies name their customers nearly three times
+        S&amp;P 500 corpus, before the supplier arm: relationships extracted, by type. Companies name their customers nearly three times
         as often as their suppliers — not by preference, but because Regulation S-K compels
         one disclosure and not the other.
       </figcaption>

@@ -7,6 +7,8 @@ import { Contribution } from "@/components/contribution";
 
 export const metadata: Metadata = {
   title: "cardinality-eval",
+  alternates: { canonical: "/work/cardinality" },
+  openGraph: { title: "cardinality-eval", url: "/work/cardinality" },
   description:
     "Does an extractor get worse as the number of things to find grows? In a one-model pilot, neither free generation nor a JSON schema meets the pre-registered test. What the schema buys is valid output: free-form responses increasingly break JSON by quoting the source.",
 };
@@ -25,12 +27,12 @@ export default function CardinalityPage() {
         <p className="mt-6 text-[19.5px] leading-[1.65] text-ink-2">
           Ask a model to pull sixteen things out of a document instead of one, and it finds a
           somewhat smaller share of them, with or without a form. What the form changes, on
-          this model, is whether the answer is valid at all: one free-form answer in five at
-          sixteen items is not valid JSON as written.
+          this model, is whether the answer is valid at all: four of twenty-five free-form answers at
+          sixteen items are not valid JSON as written.
         </p>
         <Contribution
           proposed="A way to measure how extraction recall changes with the number of items, with no annotators: build the documents yourself from verbatim filing sentences, so the number of items is exact and the answer key is free. And a constraint every such study inherits: item count, item density and document length cannot all be held fixed, so each design picks two and should say which."
-          result="A pilot on one model, 25 documents per level. Neither arm meets the test I fixed in advance: free-form recall falls 0.131 from 1 to 16 items (the rule needs 0.15) and schema-constrained recall does not fall. The gap between arms is carried by the one-item documents and vanishes without them. What the schema buys, with an artifact, is validity: 25 of 25, 23 of 25, 21 of 25 free-form answers are valid JSON as the list grows; 75 of 75 under the schema. An earlier version of this page reported a rejection; that was a scorer bug, fixed and disclosed."
+          result="A pilot on one model, 25 documents per level. Neither arm meets the test I fixed in advance: free-form recall falls 0.131 from 1 to 16 items (the rule needs 0.15) and schema-constrained recall does not fall. The gap between arms is carried by the one-item documents and vanishes without them. What the schema demonstrably buys is validity: 25 of 25, 23 of 25, 21 of 25 free-form answers are valid JSON as the list grows; 75 of 75 under the schema. An earlier version of this page reported a rejection; that was a scorer bug, fixed and disclosed."
         />
         <div className="mt-7 flex flex-wrap gap-6 text-[16px]">
           <a href="https://github.com/quantraunak/cardinality-eval" className="link">
@@ -104,7 +106,7 @@ export default function CardinalityPage() {
           <p>
             Under the rule I fixed in advance, neither arm clears the bar. Writing freely, recall
             falls 0.131 from one item to sixteen on the same documents, short of the 0.15 the
-            rule requires; under a schema it does not fall at all.
+            rule requires, and most of that fall is which items happened to be drawn at one item, not the count (with item fixed effects the slope is near zero). Under a schema, recall at sixteen items is higher than at one (0.554 vs 0.440), though it dips from 0.640 at four.
           </p>
         </div>
 

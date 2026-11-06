@@ -231,7 +231,7 @@ export function RankingBreakdown() {
     <figure className="my-10">
       <div className="rounded-xl border border-rule p-5 sm:p-7">
         <div className="mono mb-5 text-[11.5px] uppercase tracking-[0.12em] text-ink-3">
-          rank_score — weights that sum to 1.00
+          rank_score — weights that sum to 1.00, plus 0.05 for verified authors
         </div>
 
         {TERMS.map((t) => {

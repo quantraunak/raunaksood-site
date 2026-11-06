@@ -7,6 +7,8 @@ import { Contribution } from "@/components/contribution";
 
 export const metadata: Metadata = {
   title: "Resampled Thought Trees",
+  alternates: { canonical: "/work/reasoning" },
+  openGraph: { title: "Resampled Thought Trees", url: "/work/reasoning" },
   description:
     "Measuring which steps in an AI's reasoning actually matter, by freezing it mid-thought and re-running the search 22,000 times.",
 };
@@ -24,11 +26,11 @@ export default function ReasoningPage() {
         </h1>
         <p className="mt-6 text-[19.5px] leading-[1.65] text-ink-2">
           When an AI solves a problem step by step, some steps are essential and some are wasted
-          effort. Nobody could tell which was which. We built a way to measure it.
+          effort. Search usually judges a step only by the final answer. We measured each step directly.
         </p>
         <Contribution
           proposed="Score each intermediate step of an AI's search by freezing the search at that step and re-running it ten times. The share of re-runs that still reach the answer is the step's real value, independent of how promising the AI said it looked."
-          result="A per-step map over 22,350 re-runs on two puzzle types. The AI's top-ranked move reaches a solution 16% of the time; moves it ranked lower reach one about 40% of the time. Deleting branches rarely changed whether a puzzle was solved but removed most of the routes to the solution, a loss that pass/fail scoring cannot see."
+          result="A per-step map from about 11,000 stochastic re-runs (22,350 counting deterministic repeats) on two puzzle types. Within the first move, the AI's ranking barely predicts which move works (41% vs 37–38% at temperature 0.2), so rank alone is not a reliable guide. Deleting branches rarely changed whether a puzzle was solved; deleting a redundant branch removed 38% of the remaining routes to the solution, a loss pass/fail scoring cannot see."
           role="A five-author course project at USC, built and run collaboratively by the five co-authors. The repository linked below mirrors the team's release and adds the paper."
         />
       </header>
@@ -69,12 +71,12 @@ export default function ReasoningPage() {
         <h2 className="text-[25px]">Main finding</h2>
         <div className="prose mt-5">
           <p>
-            <strong>The AI&apos;s own confidence is a weak guide.</strong> Across 200 Game24
-            puzzles, the move it ranked first reached a solution 16% of the time. The moves it
-            ranked second, third and fourth each reached one about 40% of the time. Part of
-            that gap is tree depth rather than rank, since top-ranked moves are followed deeper
-            where every state is harder, and the paper says so; within the first move alone the
-            difference is small.
+            <strong>The AI&apos;s own ranking is a weak guide.</strong> Across 100 Game24
+            puzzles, each run at two temperatures, the first moves it ranked first through
+            fourth reached a solution 41%, 38%, 38% and 37% of the time at temperature 0.2,
+            and 37–41% in no consistent order at temperature 0. Pooled over all depths the
+            top-ranked move looks far worse (16% vs about 40%), but that is depth, not rank:
+            top-ranked moves are followed deeper, where every state is harder.
           </p>
           <p>
             That matters practically: these systems decide what to explore using exactly that
@@ -118,7 +120,7 @@ export default function ReasoningPage() {
             the AI&apos;s options rather than letting it generate freely, which makes the measurement
             much cleaner but means the findings describe this setup rather than every AI system.
             Two more limits. At temperature zero the re-runs are deterministic, so those scores
-            can only be 0 or 100%; the numbers above are from the temperature 0.2 run. And the
+            can only be 0 or 100%; the opening-move example is from the temperature 0.2 run and the crossword depth chart from temperature 0. And the
             idea of re-running from a partial state to value it is shared with Monte Carlo tree
             search rollouts and with process-reward labelling; the contribution here is the
             per-step taxonomy and the ablation check, not the resampling itself.

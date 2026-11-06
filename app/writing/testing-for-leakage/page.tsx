@@ -4,8 +4,10 @@ import { Shell, Section } from "@/components/ui";
 
 export const metadata: Metadata = {
   title: "Testing for leakage without knowing the right answer",
+  alternates: { canonical: "/writing/testing-for-leakage" },
+  openGraph: { title: "Testing for leakage without knowing the right answer", url: "/writing/testing-for-leakage" },
   description:
-    "A factor that looked price-only divided by shares outstanding, and inflated mean IC by 59%. You cannot unit-test that, because the correct value is the thing in dispute. What you can test is what the answer must be invariant to.",
+    "A factor that looked price-only divided by shares outstanding. The dating mistake behind it inflates mean IC by 59%. You cannot unit-test that, because the correct value is the thing in dispute. What you can test is what the answer must be invariant to.",
 };
 
 export default function LeakagePage() {
@@ -97,7 +99,7 @@ export default function LeakagePage() {
           <p>
             Run it on my twenty-two factors and eleven move, eleven do not, and one of the
             eleven that moves is <span className="mono">turnover_1m</span>, which had declared
-            itself price-only. That bug was worth having. Joining fundamentals on period-end
+            itself price-only. That is the bug class the split exists to measure: in a controlled run, joining fundamentals on period-end
             rather than filing date inflated mean IC by <strong>59%</strong>, and pushed{" "}
             <strong>4 of 11</strong> factors across t = 2 that did not belong there.
           </p>

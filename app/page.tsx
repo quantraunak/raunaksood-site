@@ -4,7 +4,10 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import { CardVisual } from "@/components/card-visual";
 import { Reveal } from "@/components/reveal";
+import type { Metadata } from "next";
 import { PAPERS, WRITING } from "@/lib/content";
+
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 const PROJECTS = [
   {
@@ -14,7 +17,7 @@ const PROJECTS = [
     proposed:
       "A test for data leakage that needs no answer key. You say which tables each feature may read; it changes something the code must be blind to, like one table's timestamps, and re-runs. Anything that moves was reading something it shouldn't.",
     result:
-      "A real leak found this way had inflated a stock-picking result by 59%. Released on PyPI; on five public datasets it catches 8 of 9 planted leaks with no false alarms, and the ninth is invisible to it by construction.",
+      "It caught a factor declared price-only that was quietly reading company filings; the dating mistake it tests for inflated a 22-factor study's measured skill by 59%. Released on PyPI; on five public datasets it catches 8 of 9 planted leaks with no false alarms, and the ninth is invisible to it by construction.",
     note: "pip install leakprobe",
   },
   {
@@ -24,7 +27,7 @@ const PROJECTS = [
     proposed:
       "Score each step of an AI's reasoning by freezing the search there and re-running it ten times. The share of re-runs that still succeed is what the step was worth.",
     result:
-      "A per-step map over 22,350 re-runs. The AI's top-ranked move led to a solution 16% of the time; lower-ranked ones about 40%. A five-author course project, built and run collaboratively.",
+      "A per-step value map from about 11,000 stochastic re-runs on 100 puzzles: most steps are dead ends or bottlenecks, and pass/fail scoring hides which branches carried the solutions. A five-author course project, built and run collaboratively.",
     note: "Paper · 280 logged search trees",
   },
   {
@@ -54,7 +57,7 @@ const PROJECTS = [
     proposed:
       "An app for creative people to find collaborators, with an AI that learns taste from the work people make and suggests who to work with, measured against random suggestions.",
     result:
-      "Live on the App Store and the web, nine releases. In a production test, the AI's suggestions matched taste far better than random ones (0.77–0.85 similarity vs 0.64–0.69). About a dozen accounts so far.",
+      "Live on the App Store (2.0) and the web. Its table composer beats random seating on its own taste objective (0.77–0.85 vs 0.64–0.69); whether that yields more real collaborations is what the first events will measure. About a dozen accounts so far.",
     note: "9 releases · AI tested against random",
   },
 ];
@@ -63,7 +66,7 @@ const PROJECTS = [
 const WORK: [string, string, string, string][] = [
   [
     "Innovius Capital",
-    "Machine Learning Intern",
+    "ML Engineer, Investment Platform (intern May–Aug 2026)",
     "2026 —",
     "Replaced chance-level PCA company scoring with a supervised CatBoost and LLM ranker, raising P@20 from 0.20 to 0.90. Built the 14k-company point-in-time training set, where a label-leakage fix moved AUC 0.62 to 0.66.",
   ],

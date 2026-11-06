@@ -7,6 +7,8 @@ import { Contribution } from "@/components/contribution";
 
 export const metadata: Metadata = {
   title: "Melange",
+  alternates: { canonical: "/work/melange" },
+  openGraph: { title: "Melange", url: "/work/melange" },
   description:
     "Where creative people find their next collaboration. An AI learns taste from the work people make and suggests who to work with, checked against random suggestions.",
 };
@@ -28,7 +30,7 @@ export default function MelangePage() {
         </p>
         <Contribution
           proposed="An app for creative people to find collaborators, with an AI that learns taste from the work people make and suggests who to work with, measured against random suggestions."
-          result="Live on the App Store and the web; nine releases, seven of them in twelve days. In a production test, the AI's suggestions matched taste far better than random ones (0.77–0.85 similarity vs 0.64–0.69). About a dozen accounts so far."
+          result="Live on the App Store (2.0) and the web. The table composer beats random seating on its own taste objective (0.77–0.85 vs 0.64–0.69), so the optimizer works; whether it produces more real collaborations is what the first events will measure. About a dozen accounts so far."
         />
       </header>
 
@@ -63,7 +65,7 @@ export default function MelangePage() {
           <p>
             <strong>Pairs.</strong> A pair score combines taste similarity, whether two roles make
             each other&apos;s work possible (a photographer and a stylist, not two photographers),
-            and shared interests. The weights start as a prior and are refit from what actually
+            and shared interests. The weights start as a prior and will be refit from what actually
             happens: whether two people hearted each other afterwards.
           </p>
           <p>
@@ -130,7 +132,7 @@ export default function MelangePage() {
         <h2 className="text-[25px]">Discover is a query</h2>
         <div className="prose mt-5">
           <p>
-            Discover&apos;s feed is ranked by one Postgres function: eight weighted terms, no
+            Discover&apos;s feed is ranked by one Postgres function: eight weighted terms plus a small boost for verified authors, no
             service to call. The taste score is blended on top: it nudges the order of projects
             and leads the order of people, so the creatives whose work is closest to yours come
             first.
@@ -143,7 +145,7 @@ export default function MelangePage() {
         <h2 className="text-[25px]">Where it stands</h2>
         <div className="prose mt-5">
           <p>
-            Live on the App Store (1.8, with 1.9 next) and the web. About a dozen accounts — this
+            Live on the App Store (2.0) and the web. About a dozen accounts — this
             is a working product, not a traction story yet. The taste model, the composer and the
             experiment are deployed; the first measured result comes from the first real events.
           </p>

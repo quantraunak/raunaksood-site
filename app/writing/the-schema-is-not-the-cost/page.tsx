@@ -6,6 +6,8 @@ import { CrossoverFigure, DilutionFigure } from "@/components/cardinality-figure
 
 export const metadata: Metadata = {
   title: "The schema is not the cost",
+  alternates: { canonical: "/writing/the-schema-is-not-the-cost" },
+  openGraph: { title: "The schema is not the cost", url: "/writing/the-schema-is-not-the-cost" },
   description:
     "Constrained decoding is supposed to cost you accuracy. On extraction recall as the number of items grows, a one-model pilot finds neither regime meets the pre-registered test; what the schema buys is valid output. A scorer bug that once made this post claim more is disclosed inside.",
 };
@@ -192,7 +194,7 @@ constrained     25/25   25/25   25/25`}
               So the grammar is not the cost, and on this evidence it is not the cure
               either. What it buys is validity.
             </strong>{" "}
-            Without a grammar, one answer in five at k=16 is not valid JSON as written, and
+            Without a grammar, four of 25 answers at k=16 are not valid JSON as written, and
             a scorer without a repair step reads that as zero recall, which is exactly how
             this post came to report a result it did not have.
           </p>
