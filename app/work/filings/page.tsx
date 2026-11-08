@@ -6,6 +6,8 @@ import { Contribution } from "@/components/contribution";
 
 export const metadata: Metadata = {
   title: "filing-links",
+  alternates: { canonical: "/work/filings" },
+  openGraph: { title: "filing-links", url: "/work/filings" },
   description:
     "A dated map of which companies name which others in their 10-K filings, released with its own coverage ceiling attached. The pre-registered gate fired and the study stopped.",
 };
@@ -135,8 +137,8 @@ export default function FilingsPage() {
             customers is what the law compels. So I ran it.
           </p>
           <p>
-            First a check that decided whether it was worth doing at all: none of those 181
-            companies were in the price panel, because the panel is built from index
+            First a check that decided whether it was worth doing at all: none of the 181 supplier-side issuers
+            already downloaded were in the price panel, because the panel is built from index
             membership. A company with no share price contributes a relationship but never a
             testable observation. Fetching prices and applying the same screens left 105 that
             are genuinely tradable.

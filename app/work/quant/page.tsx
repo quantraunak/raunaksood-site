@@ -2,13 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import q from "@/public/data/quant.json";
 import { Shell } from "@/components/ui";
-import { GrowthChart, BetaSplit, SeedLottery, BeforeAfter, Signatures } from "@/components/simple-charts";
+import { GrowthChart, SeedLottery, BeforeAfter, Signatures } from "@/components/simple-charts";
 import { Details } from "@/components/details";
 import { LeakDemo } from "@/components/leak-demo";
 import { Contribution } from "@/components/contribution";
 
 export const metadata: Metadata = {
   title: "leakprobe",
+  alternates: { canonical: "/work/quant" },
+  openGraph: { title: "leakprobe", url: "/work/quant" },
   description:
     "Temporal leakage never throws an error and always improves your metrics. leakprobe finds it by changing something your features must be invariant to and reporting whatever moved.",
 };
@@ -46,7 +48,7 @@ export default function QuantPage() {
         </p>
         <Contribution
           proposed="Test a feature pipeline for data leakage without knowing the right answers: declare which tables each feature may read, change something the code must be blind to, and treat any movement as proof of an undeclared dependency. Behind it, bias fingerprinting: each data-handling mistake in a stock-picking study leaves a fixed pattern of shifts across 22 standard signals, so a published results table can be read backwards to say which mistake it contains."
-          result="The test found a real leak that had inflated a stock-picking result by 59%. Released as pip install leakprobe; on five public datasets it catches 8 of 9 planted leaks with no false alarms, and the one it misses is invisible to it by construction. The fingerprint paper shows a dating mistake inflates and a survivorship mistake rearranges, and that only the second is identifiable from outside."
+          result="The test caught a factor declared price-only that was reading company filings; the dating mistake it tests for inflated a 22-factor study's measured skill by 59%. Released as pip install leakprobe; on five public datasets it catches 8 of 9 planted leaks with no false alarms, and the one it misses is invisible to it by construction. The fingerprint paper shows a dating mistake inflates and a survivorship mistake rearranges, and that only the second is identifiable from outside."
         />
         <div className="mt-7 flex flex-wrap gap-6 text-[16px]">
           <a href="https://github.com/quantraunak/leakprobe" className="link">
@@ -227,11 +229,10 @@ avg_severity         exactly 0       bypass?`}
           <p>
             Building the instrument produced two results that have nothing to do with this
             particular model. The first: most reported strategy returns are partly just exposure to
-            a rising market, which an index fund gives you for free. Here 59% of the apparent edge
-            turns out to be exactly that.
+            a rising market, which an index fund gives you for free, so a return has to be split
+            into market exposure and what is left before it says anything about skill.
           </p>
         </div>
-        <BetaSplit />
         <div className="prose">
           <p>
             The second: machine-learning models contain randomness. Running the identical model six
@@ -247,7 +248,8 @@ avg_severity         exactly 0       bypass?`}
         <h2 className="text-[25px]">How the pipeline got built</h2>
         <div className="prose mt-5">
           <p>
-            The pipeline began as an inherited version reporting 35% a year. Reproducing it turned
+            The pipeline began as an inherited version whose own output reported 35% a year, a
+            number that no longer reproduces and is quoted only as the starting point. Reproducing it turned
             up six separate problems, none of which raised an error or produced an implausible
             number — which is what made them worth studying, and what eventually turned into{" "}
             <span className="mono">leakprobe</span>. Every one produced output a reviewer would

@@ -4,8 +4,10 @@ import { Shell, Section } from "@/components/ui";
 
 export const metadata: Metadata = {
   title: "Testing for leakage without knowing the right answer",
+  alternates: { canonical: "/writing/testing-for-leakage" },
+  openGraph: { title: "Testing for leakage without knowing the right answer", url: "/writing/testing-for-leakage" },
   description:
-    "A factor that looked price-only divided by shares outstanding, and inflated mean IC by 59%. You cannot unit-test that, because the correct value is the thing in dispute. What you can test is what the answer must be invariant to.",
+    "A factor that looked price-only divided by shares outstanding. The dating mistake behind it inflates mean IC by 59%. You cannot unit-test that, because the correct value is the thing in dispute. What you can test is what the answer must be invariant to.",
 };
 
 export default function LeakagePage() {
@@ -97,7 +99,7 @@ export default function LeakagePage() {
           <p>
             Run it on my twenty-two factors and eleven move, eleven do not, and one of the
             eleven that moves is <span className="mono">turnover_1m</span>, which had declared
-            itself price-only. That bug was worth having. Joining fundamentals on period-end
+            itself price-only. That is the bug class the split exists to measure: in a controlled run, joining fundamentals on period-end
             rather than filing date inflated mean IC by <strong>59%</strong>, and pushed{" "}
             <strong>4 of 11</strong> factors across t = 2 that did not belong there.
           </p>
@@ -208,9 +210,9 @@ S5   a z-score whose mean and deviation come from all of time`}
             every column except the timestamp. Row count unchanged, clock unchanged, every
             row-to-row association destroyed. A feature that genuinely does not read that
             table cannot notice, while one that joins it and takes a column off it moves
-            immediately. This costs no false positives because it only ever runs on pairs the
-            user declared independent, which turns that declaration into something tested
-            rather than assumed.
+            immediately. It only ever runs on pairs the user declared independent, which turns
+            that declaration into something tested rather than assumed, and it raised no false
+            positives on the five clean pipelines.
           </p>
           <p>
             The second deletes the future. Given the cutoff your features are built for, drop
@@ -259,9 +261,11 @@ correct pipelines flagged                         0/5`}
           </p>
           <p>
             In practice this is narrow. Look-ahead is a dependency on timing or on row
-            identity, and both are covered now. What remains is a global constant lifted off
-            an undeclared table, and it is asserted in the test suite so that it cannot
-            quietly stop being true. That phrasing is load-bearing this time.
+            identity, and both are covered for features that aggregate per entity as of a cutoff.
+            Two shapes are not: per-row features, where a correct trailing lag moves with its
+            own timestamp, and sources sparser than the delay. What remains beyond those is a
+            global constant lifted off an undeclared table, and it is asserted in the test
+            suite so that it cannot quietly stop being true.
           </p>
         </div>
       </Section>
