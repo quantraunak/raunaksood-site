@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     description: "Machine learning engineer. Ranking models, LLM agents and evaluation, and shipped product.",
     siteName: "Raunak Sood",
   },
-  twitter: { card: "summary" },
+  twitter: { card: "summary_large_image" },
   robots: { index: true, follow: true },
 };
 
@@ -71,10 +71,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${sans.variable} ${mono.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
-        <link
-          rel="icon"
-          href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%23a06d26'/%3E%3Ctext x='50' y='71' font-size='58' text-anchor='middle' font-family='Georgia,serif' fill='%23f7f5f0'%3ER%3C/text%3E%3C/svg%3E"
-        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(PERSON_SCHEMA) }}
