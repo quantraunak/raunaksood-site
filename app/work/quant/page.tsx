@@ -28,23 +28,20 @@ export default function QuantPage() {
         </h1>
         <p className="mt-6 text-[19.5px] leading-[1.65] text-ink-2">
           If a model gets to see data that didn&apos;t exist yet, it scores brilliantly in
-          testing and fails the moment it&apos;s real. Nothing crashes. No number looks
-          strange.
+          testing and fails the moment it&apos;s real. Nothing crashes and no number looks strange.
         </p>
         <p className="mt-5 text-[17px] leading-[1.7] text-ink-2">
           <strong>leakprobe</strong> works like this. You hand it the function that builds
           your features, the tables it reads from, and one line per feature naming which
           tables that feature is <em>allowed</em> to read. It then makes a change your code
-          should be blind to — pushing one table&apos;s timestamps three weeks later, so
-          rows that were visible no longer are — and runs your function again.
+          should be blind to (pushing one table&apos;s timestamps three weeks later, so rows that were visible no longer are) and runs your function again.
         </p>
         <p className="mt-4 text-[17px] leading-[1.7] text-ink-2">
-          A feature that genuinely cannot read that table gets identical inputs through
+          A feature that cannot read that table gets identical inputs through
           identical code and returns <strong>bit-identical numbers</strong>: its difference
           is <span className="mono">0.0</span>, not <span className="mono">1e-15</span>. So
           any movement at all is proof of a dependency nobody declared. You never need to
-          know what the correct value was, which is the point — if you knew that, you
-          wouldn&apos;t have the bug.
+          know what the correct value was. If you knew that, you wouldn&apos;t have the bug.
         </p>
         <Contribution
           proposed="Test a feature pipeline for data leakage without knowing the right answers: declare which tables each feature may read, change something the code must be blind to, and treat any movement as proof of an undeclared dependency. Behind it, bias fingerprinting: each data-handling mistake in a stock-picking study leaves a fixed pattern of shifts across 22 standard signals, so a published results table can be read backwards to say which mistake it contains."
@@ -71,17 +68,11 @@ export default function QuantPage() {
           <p>
             Some of your features can&apos;t possibly depend on when a particular table
             arrived. A feature built only from daily prices cannot care what day an earnings
-            report was published. That&apos;s not a guess about the code — it&apos;s
-            arithmetic.
+            report was published. You can know that from arithmetic, without reading the code.
           </p>
           <p>
-            So: push that table&apos;s arrival date a month later and run everything again.
-            The features that genuinely can&apos;t see it return <em>identical</em> numbers.
-            Not close — identical, to the last decimal, because they got the same arrays
-            through the same code. Anything that moves has a connection to that table you
-            didn&apos;t know about. And in a system that predicts the future, an unknown
-            connection to <em>when data arrived</em> is exactly the bug you&apos;re looking
-            for.
+            So push that table&apos;s arrival date a month later and run everything again. The features that can&apos;t see it return <em>identical</em> numbers, to the last decimal, because they got the same arrays through the same code. Anything that moves has a connection to that table you
+            didn&apos;t know about. In a system that predicts the future, an unknown connection to <em>when data arrived</em> is the bug you&apos;re looking for.
           </p>
           <p>
             You never need to know the correct answer. You only need to know one change the
@@ -109,9 +100,7 @@ avg_severity         exactly 0       bypass?`}
           <p>
             That last line is a real bug. <span className="mono">avg_severity</span> filters
             support tickets on when they were <em>opened</em> rather than when they were
-            resolved — so tickets still open at scoring time leak in, which are exactly the
-            ones that predict churn. It declares that it reads tickets, then doesn&apos;t
-            react when the ticket clock moves, because it reached around the clock entirely.
+            resolved, so tickets still open at scoring time leak in, and those are the ones that predict churn. It declares that it reads tickets, then doesn&apos;t react when the ticket clock moves, because it reached around the clock.
           </p>
         </div>
       </section>
@@ -126,8 +115,7 @@ avg_severity         exactly 0       bypass?`}
             <span className="mono">price.py</span>. Every person who looked at it agreed.
           </p>
           <p>
-            It divides by shares outstanding — a number that comes off a company filing. So
-            it was quietly reading regulatory data while sitting in the group that
+            It divides by shares outstanding, a number that comes off a company filing. So it was reading regulatory data while sitting in the group that
             supposedly couldn&apos;t. Nobody found that by reading the code. The test found
             it, because it was the one member of its group that moved when the filing
             calendar shifted and eleven others held at exactly zero.
@@ -141,8 +129,7 @@ avg_severity         exactly 0       bypass?`}
           <p>
             This started as a question about stock-picking research, where the same bug has
             a name: using a company&apos;s quarterly figures on the day the quarter ended
-            rather than the day they were actually published. Roughly, betting on a game
-            with tomorrow&apos;s newspaper.
+            rather than the day they were published. It is like betting on a game with tomorrow&apos;s newspaper.
           </p>
           <p>
             I measured what that costs. Take 22 stock-picking rules, run them on identical
@@ -165,10 +152,7 @@ avg_severity         exactly 0       bypass?`}
         <div className="prose">
           <p>
             The chart shows a second mistake alongside the first: building your test from
-            today&apos;s list of big companies and running it backwards, which quietly fills
-            your sample with firms that were small a decade ago and then grew. It damages a
-            completely different set of rules, in a different direction — which is a finding
-            in its own right, and the subject of the paper below.
+            today&apos;s list of big companies and running it backwards, which fills your sample with firms that were small a decade ago and then grew. It damages a different set of rules, in a different direction. That is a separate finding and the subject of the paper below.
           </p>
         </div>
       </section>
@@ -216,8 +200,7 @@ avg_severity         exactly 0       bypass?`}
             and 2014 to 2018 was the worst stretch for that approach in modern history.
           </p>
           <p>
-            1.9% a year is not a finding, and it is not meant to be one. It is the control
-            condition: the number you get when nothing is wrong, which is what makes it possible to
+            1.9% a year is the control condition, not a finding: the number you get when nothing is wrong, which is what makes it possible to
             price each mistake against it.
           </p>
         </div>
@@ -228,7 +211,7 @@ avg_severity         exactly 0       bypass?`}
         <div className="prose mt-5">
           <p>
             Building the instrument produced two results that have nothing to do with this
-            particular model. The first: most reported strategy returns are partly just exposure to
+            particular model. The first: most reported strategy returns are partly exposure to
             a rising market, which an index fund gives you for free, so a return has to be split
             into market exposure and what is left before it says anything about skill.
           </p>
@@ -251,7 +234,7 @@ avg_severity         exactly 0       bypass?`}
             The pipeline began as an inherited version whose own output reported 35% a year, a
             number that no longer reproduces and is quoted only as the starting point. Reproducing it turned
             up six separate problems, none of which raised an error or produced an implausible
-            number — which is what made them worth studying, and what eventually turned into{" "}
+            number. That made them worth studying, and they are what turned into{" "}
             <span className="mono">leakprobe</span>. Every one produced output a reviewer would
             accept.
           </p>

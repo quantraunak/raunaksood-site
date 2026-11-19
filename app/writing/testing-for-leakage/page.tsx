@@ -32,8 +32,7 @@ export default function LeakagePage() {
           <p>
             Turnover is monthly volume over shares outstanding. Everyone files it with the
             market-data factors, the ones built from prices and volume rather than from
-            filings, because volume comes off the tape and the tape is available the instant
-            it prints. Nothing to date carefully. I had
+            filings, because volume comes off the tape and the tape is available the instant it prints, so there is nothing to date carefully. I had
             twenty-two factors split into two blocks, eleven that read a filed figure and
             eleven that did not, and the split was load-bearing. The whole design depended on
             the second block being unable to respond to the filing calendar.
@@ -49,16 +48,11 @@ export default function LeakagePage() {
           </p>
           <p>
             So <span className="mono">turnover_1m</span> sat in the price-only block,
-            inheriting the filing calendar through its denominator. Nothing raised. No number
-            looked implausible. The factor behaved, the backtest behaved, and the only symptom
-            was that results came out slightly better than they should have, which is not a
+            inheriting the filing calendar through its denominator. Nothing raised and no number looked implausible. The only symptom was that results came out slightly better than they should have, which is not a
             symptom anyone investigates.
           </p>
           <p>
-            That is the whole problem with temporal leakage. It has no failure mode. A feature
-            reads something that was not knowable yet, your metrics improve, and you find out
-            in production or you find out when someone asks a question you cannot answer. Or
-            you never find out.
+            Temporal leakage has no failure mode. A feature reads something that was not knowable yet, your metrics improve, and you find out in production, or when someone asks a question you cannot answer, or never.
           </p>
         </div>
       </Section>
@@ -81,7 +75,7 @@ export default function LeakagePage() {
           <p>
             That is a metamorphic relation, a property linking two runs of the same program
             rather than a program&apos;s output to a known value. The technique is
-            Chen&apos;s, from 1998, and it exists precisely for programs where you cannot
+            Chen&apos;s, from 1998, and it exists for programs where you cannot
             write down the expected answer, which the testing literature calls{" "}
             <a href="https://dl.acm.org/doi/10.1145/3143561" className="link">
               the oracle problem
@@ -169,7 +163,7 @@ S5   a z-score whose mean and deviation come from all of time`}
             <strong>leakprobe saw nothing.</strong>
           </p>
           <p>
-            The reason is almost obvious once you say it out loud. The perturbation moves
+            The perturbation moves
             timestamps, and moving a timestamp only removes rows from code that filters on
             that timestamp. My buggy code never looked at{" "}
             <span className="mono">updated_on</span> at all. It joined on an ID and took a
@@ -186,8 +180,7 @@ S5   a z-score whose mean and deviation come from all of time`}
             I then found this limitation already documented in my own test suite, in a test
             asserting it so it &ldquo;cannot quietly stop being true,&rdquo; with a docstring
             calling it &ldquo;the method&apos;s boundary rather than a miss.&rdquo; I had
-            written the gap down and then stopped thinking about it, which is a comfortable
-            way to stay wrong about something.
+            written the gap down and then stopped thinking about it.
           </p>
         </div>
       </Section>
@@ -208,9 +201,8 @@ S5   a z-score whose mean and deviation come from all of time`}
           <p>
             The first permutes the payload. For a source a feature claims not to read, shuffle
             every column except the timestamp. Row count unchanged, clock unchanged, every
-            row-to-row association destroyed. A feature that genuinely does not read that
-            table cannot notice, while one that joins it and takes a column off it moves
-            immediately. It only ever runs on pairs the user declared independent, which turns
+            row-to-row association destroyed. A feature that does not read that table cannot notice, while one that joins it and takes a column off it moves
+            immediately. It runs only on pairs the user declared independent, which turns
             that declaration into something tested rather than assumed, and it raised no false
             positives on the five clean pipelines.
           </p>
@@ -265,7 +257,7 @@ correct pipelines flagged                         0/5`}
             Two shapes are not: per-row features, where a correct trailing lag moves with its
             own timestamp, and sources sparser than the delay. What remains beyond those is a
             global constant lifted off an undeclared table, and it is asserted in the test
-            suite so that it cannot quietly stop being true.
+            suite so that it cannot stop being true unnoticed.
           </p>
         </div>
       </Section>
@@ -273,18 +265,16 @@ correct pipelines flagged                         0/5`}
       <Section title="What I would take from this">
         <div className="prose">
           <p>
-            The useful idea is not the tool. It is that you can test a computation you cannot
-            verify, as long as you can name something it must be invariant to. Temporal
+            The useful idea is larger than the tool: you can test a computation you cannot verify, as long as you can name something it must be invariant to. Temporal
             availability is one such thing, and a good one, because leakage is by construction
             a dependency on time. There are others. A feature set should be invariant to row
             order, to a rename of an ID column, to shuffling entities that are supposed to be
             independent.
           </p>
           <p>
-            The second idea is less comfortable. I documented this tool&apos;s limitation in a
+            The second idea: I documented this tool&apos;s limitation in a
             test, then treated having documented it as having dealt with it. It took building
-            an adversarial benchmark on data I did not choose to turn that note back into a
-            problem. Writing down what your method cannot do is where the work starts.
+            an adversarial benchmark on data I did not choose to turn that note back into a problem.
           </p>
         </div>
 

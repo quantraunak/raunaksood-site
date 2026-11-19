@@ -64,7 +64,7 @@ export function GrowthChart() {
         era === "early"
           ? "Money going down, for five years straight. This is the stretch that drags the whole result down."
           : era === "late"
-          ? "The same model, after 2018. Steady growth — eight positive years out of eight."
+          ? "The same model, after 2018. Steady growth: eight positive years out of eight."
           : "$100 invested at the start. It falls for five years, then recovers and grows. The headline number averages those two very different periods together."
       }
     >
@@ -89,7 +89,7 @@ export function GrowthChart() {
       <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label={`Growth of $100, ${YEARS[era]}`}>
         <line x1="0" y1={y(100)} x2={W} y2={y(100)} stroke="var(--color-rule)" strokeDasharray="4 4" />
         <text x="4" y={y(100) - 8} className="text-[13px]" fill="var(--color-ink-3)" fontSize="13">
-          $100 — break even
+          $100, break even
         </text>
         <path
           d={`${d}L${W},${H - 28}L0,${H - 28}Z`}
@@ -120,7 +120,7 @@ export function BetaSplit() {
 
   return (
     <Figure
-      caption={`Of everything the model appeared to earn, ${betaPart}% was just the stock market going up — something you get for free by buying an index fund. Only ${skillPart}% came from actually picking better stocks.`}
+      caption={`Of everything the model appeared to earn, ${betaPart}% was the stock market going up, which you get for free by buying an index fund. Only ${skillPart}% came from picking better stocks.`}
     >
       <div className="flex h-16 overflow-hidden rounded-lg">
         <div
@@ -159,7 +159,7 @@ export function SeedLottery() {
 
   return (
     <Figure
-      caption="Six runs of the same model, changing nothing but an internal random number. The score swings from 0.09 to 0.49 — a five-fold difference. Any single one of those numbers would be a lucky or unlucky draw, not a measurement."
+      caption="Six runs of the same model, changing nothing but an internal random number. The score swings from 0.09 to 0.49, a five-fold difference. Any single one of those numbers would be a lucky or unlucky draw, not a measurement."
       note="This is why the write-up reports a range rather than one headline figure."
     >
       <div className="space-y-3">
@@ -251,7 +251,7 @@ export function Signatures() {
 
   return (
     <Figure
-      caption={`The eight factors that move most. A dashed outline means the shift is exactly zero — not small, zero — because a factor built from prices alone can never read a company filing. The two columns pick out almost different signals, which is what lets you tell one mistake from the other.`}
+      caption={`The eight factors that move most. A dashed outline means the shift is exactly zero, because a factor built from prices alone can never read a company filing. The two columns pick out almost different signals, which is what lets you tell one mistake from the other.`}
       note={`Shift in t-statistic from the correct baseline; the longest bar is ${max.toFixed(2)}. Correlation between the two columns across all ${s.n_factors} factors: ${s.correlation}. ${s.exact_zero_dating} factors are exactly unmoved by the dating mistake.`}
     >
       <div className="grid grid-cols-[1.25fr_1fr_1fr] items-center gap-x-4 text-[13px] text-ink-3">

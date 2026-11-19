@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import "./globals.css";
-import { SiteNav } from "@/components/site-nav";
 import { SITE_URL } from "@/lib/site";
 
 export const viewport = {
-  themeColor: "#eceae5",
+  themeColor: "#ffffff",
   colorScheme: "light" as const,
 };
 
@@ -13,7 +11,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default: "Raunak Sood",
-    template: "%s — Raunak Sood",
+    template: "%s | Raunak Sood",
   },
   description:
     "Machine learning engineer on the investment platform at Innovius Capital and M.S. Computer Science student at USC. Ranking models, LLM agents and evaluation, an open-source leakage test, and an app on the App Store.",
@@ -63,7 +61,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..500&family=Inter:wght@400;450;500;550&family=JetBrains+Mono:wght@400;500&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;550&family=JetBrains+Mono:wght@400;500&display=swap"
           rel="stylesheet"
         />
         <link
@@ -82,13 +80,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to content
         </a>
-        <div className="mx-auto w-full max-w-[1180px] px-0 sm:px-8 lg:px-10">
-          <div className="sheet mt-0 sm:mt-8">
-            <SiteNav />
-            <main id="main">{children}</main>
-          </div>
-          <SiteFooter />
-        </div>
+        <main id="main">{children}</main>
+        <SiteFooter />
       </body>
     </html>
   );
@@ -96,24 +89,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 function SiteFooter() {
   return (
-    <footer className="mx-auto w-full max-w-[1320px] px-6 sm:px-10 lg:px-14">
-      <div className="rule flex flex-wrap items-baseline justify-between gap-4 py-8 mono text-[11.5px] text-ink-3">
-        <span>© {new Date().getFullYear()} Raunak Sood · Los Angeles, California</span>
-        <span className="flex flex-wrap gap-5">
-          <a href="mailto:raunak.sood@gmail.com" className="hover:text-[var(--color-sea)] transition-colors">
-            email
-          </a>
-          <a href="https://github.com/quantraunak" className="hover:text-[var(--color-sea)] transition-colors">
-            github
-          </a>
-          <a href="https://www.linkedin.com/in/raunak-sood" className="hover:text-[var(--color-sea)] transition-colors">
-            linkedin
-          </a>
-          <a href="/Raunak-Sood-Resume.pdf" className="hover:text-[var(--color-sea)] transition-colors">
-            résumé
-          </a>
-        </span>
-      </div>
+    <footer className="mx-auto w-full max-w-[600px] px-6 pb-12 text-[13px] text-ink-3">
+      © {new Date().getFullYear()} Raunak Sood
     </footer>
   );
 }

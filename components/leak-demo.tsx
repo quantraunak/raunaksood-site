@@ -128,7 +128,7 @@ export function LeakDemo() {
             <>Nothing has moved yet. Drag the clock.</>
           ) : (
             <>
-              Six features hold at <span className="mono text-ink">0.00</span> — they never read a
+              Six features hold at <span className="mono text-ink">0.00</span>: they never read a
               filing, so they cannot move.{" "}
               {leaks.length > 0 && (
                 <>

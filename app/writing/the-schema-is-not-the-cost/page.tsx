@@ -57,16 +57,13 @@ export default function SchemaPage() {
             <a href="https://www.langchain.com/blog/multi-needle-in-a-haystack" className="link">
               Multi-needle NIAH
             </a>{" "}
-            already reports that retrieval falls as needle count rises. What nobody had
-            measured was the same axis for structured extraction under a grammar, with input
-            length actually held constant, reported as a slope rather than as &ldquo;it
+            already reports that retrieval falls as needle count rises. Nobody had measured the same axis for structured extraction under a grammar, with input length held constant, reported as a slope rather than as &ldquo;it
             declines.&rdquo;
           </p>
           <p>
-            And there was a specific reason to care. In my own extraction work I had written
+            I had a specific reason to care. In my own extraction work I had written
             down constrained decoding as the strongest competing explanation for any
-            cardinality effect I might find. I recorded it as unfalsified and moved on,
-            which is a comfortable way to stay wrong.
+            cardinality effect I might find. I recorded it as unfalsified and moved on.
           </p>
         </div>
       </Section>
@@ -78,7 +75,7 @@ export default function SchemaPage() {
             <span className="mono">k</span> is the treatment. If it comes from whichever
             filings you happened to sample and a human has to recover it, it is measured with
             error that correlates with the outcome, because an annotator&apos;s attention
-            flags on exactly the long enumerations where the effect should live.
+            flags on the long enumerations where the effect should live.
           </p>
           <p>
             So I built the documents instead. Take verbatim-validated sentences from real
@@ -89,8 +86,7 @@ export default function SchemaPage() {
             and free.
           </p>
           <p>
-            That is the design. Getting it to work took four builds, and the failures
-            are more instructive than the design is.
+            Getting that design to work took four builds, and the failures taught me more than the design did.
           </p>
           <p>
             <strong>The first pilot came back 0.333.</strong> One needle, from a sentence
@@ -98,7 +94,7 @@ export default function SchemaPage() {
             then did I add the gate that should have existed from the start: at{" "}
             <span className="mono">k=1</span>, recall must clear 0.80 or no slope is
             interpretable. The pre-registration records it as added after that failure,
-            not before. Then, after a fix, 0.400. Then 0.400 again.
+            not before. After a fix it came back 0.400, then 0.400 again.
           </p>
           <p>
             The first cause was that my injected sentences named their own original filer in
@@ -111,7 +107,7 @@ export default function SchemaPage() {
             <span className="mono">Komatsu Cummins Chile, Ltda.</span> as a miss.
           </p>
           <p>
-            Fixed all four. Recall: 0.400. At that point I stopped patching things I could
+            I fixed all four and recall was still 0.400. At that point I stopped patching things I could
             see and ran a controlled comparison instead.
           </p>
         </div>
@@ -122,12 +118,11 @@ export default function SchemaPage() {
           <p>
             <strong>Dilution alone was worth 0.25 recall.</strong> I had built the filler by
             selecting prose <em>for containing no company names</em>, which made it far more
-            inert than any real prompt. The gate was never failing because of the bank or the
-            chunking. It was failing because I had buried one sentence in a haystack far
+            inert than any real prompt. The gate kept failing, whatever I did to the bank or the chunking, because I had buried one sentence in a haystack far
             emptier than anything the model sees in practice.
           </p>
           <p>
-            It also exposed something structural. Count, density and length are mechanically
+            It also exposed a constraint. Count, density and length are mechanically
             linked: density = (count × span length) / total length. Fix any two and the third
             follows, so every study of item count picks two and inherits a confound in the
             third. Fix length and let density rise with <span className="mono">k</span>, as I
@@ -195,8 +190,7 @@ constrained     25/25   25/25   25/25`}
               either. What it buys is validity.
             </strong>{" "}
             Without a grammar, four of 25 answers at k=16 are not valid JSON as written, and
-            a scorer without a repair step reads that as zero recall, which is exactly how
-            this post came to report a result it did not have.
+            a scorer without a repair step reads that as zero recall, which is how this post came to report a result it did not have.
           </p>
           <p>
             The emission counts: at <span className="mono">k=16</span> the constrained arm
@@ -210,9 +204,7 @@ constrained     25/25   25/25   25/25`}
           </p>
           <p>
             That also kills a number I believed earlier in the week. On a 30B
-            mixture-of-experts model, unconstrained generation cost 18× the tokens. I
-            reported that as a fact about removing the grammar. It was not. That model was
-            writing 7,000 to 12,000 tokens against an 8,192-token context window, so the arm
+            mixture-of-experts model, unconstrained generation cost 18× the tokens. I reported that as a fact about removing the grammar, and it was wrong: that model was writing 7,000 to 12,000 tokens against an 8,192-token context window, so the arm
             was measuring a wall. On a model whose generation fits, unconstrained costs 1.1×
             at <span className="mono">k=1</span> and <strong>0.7× at k=16</strong>. It is
             cheaper and worse.
@@ -238,11 +230,7 @@ constrained     25/25   25/25   25/25`}
             an upper or a lower bound.
           </p>
           <p>
-            The methodological lesson is narrower and more annoying. I had recorded
-            constrained decoding as the strongest competing explanation and left it
-            unfalsified. Writing down what you have not ruled out is not the same as ruling
-            it out, and the gap between those two things was, in this case, the entire
-            finding.
+            The methodological lesson is narrower. I had recorded constrained decoding as the strongest competing explanation and left it unfalsified. Recording it ruled nothing out, and everything in this post came from testing it.
           </p>
           <p>
             One more correction to the record. The pre-registration originally specified a

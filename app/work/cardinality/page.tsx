@@ -51,8 +51,7 @@ export default function CardinalityPage() {
         <h2 className="text-[25px]">The problem</h2>
         <div className="prose mt-5">
           <p>
-            When you ask a language model for structured output — a list of records, not a
-            paragraph — you usually hand it a schema and force the answer to fit. The schema
+            When you ask a language model for structured output (a list of records instead of a paragraph), you usually hand it a schema and force the answer to fit. The schema
             guarantees you get valid JSON back.
           </p>
           <p>
@@ -64,7 +63,7 @@ export default function CardinalityPage() {
           <p>
             I had a specific reason to check. In my extraction work I&apos;d written down
             constrained decoding as the most likely alternative explanation for something I
-            was seeing, then never tested it — which is a comfortable way to stay wrong.
+            was seeing, and then never tested it.
           </p>
         </div>
       </section>
@@ -75,7 +74,7 @@ export default function CardinalityPage() {
           <p>
             The hard part is knowing the right answer. If you take real documents and have
             someone mark up every company mentioned, you get labels that are expensive and
-            unreliable — and an annotator&apos;s attention drifts on exactly the long lists
+            unreliable, and an annotator&apos;s attention drifts on the long lists
             where the effect should show up.
           </p>
           <p>
@@ -95,7 +94,7 @@ export default function CardinalityPage() {
           <CardinalityDemo />
         </div>
         <p className="mt-3 text-[13px] leading-[1.6] text-ink-3">
-          Every number is measured. The three stops are the three levels actually run, 25
+          Every number is measured. The three stops are the three levels I ran, 25
           documents each and 75 per arm, with nothing interpolated between them.
         </p>
       </section>
@@ -117,7 +116,7 @@ export default function CardinalityPage() {
             The test was fixed in advance: to count, recall had to drop at least 0.15 from
             the short lists to the long ones, <em>and</em> clear p &lt; 0.05. Free generation
             drops <strong>0.131</strong> at p = 0.027, which clears the second condition and
-            not the first. The schema drops <strong>nothing</strong>; recall actually rises,
+            not the first. The schema drops <strong>nothing</strong>; recall rises,
             p = 0.73. An earlier version of this page said free generation dropped 0.214 and
             rejected the null. Six of its 75 answers had been scored as empty because my
             parser choked on quotation marks the model copied from the filings, such as{" "}
@@ -128,9 +127,7 @@ export default function CardinalityPage() {
           <p>
             What the schema does change is whether the answer is valid. Without it, 25 of 25
             answers at one item are valid JSON as written, 23 of 25 at four, 21 of 25 at
-            sixteen. Under the schema, 75 of 75. The failures are not the model giving up;
-            they are complete answers that break the format by quoting a company&apos;s own
-            short name inside a string. That is the one effect of the grammar this study can
+            sixteen. Under the schema, 75 of 75. The failed answers are complete. They break the format by quoting a company&apos;s own short name inside a string. That is the one effect of the grammar this study can
             show with an artifact. At sixteen available, the schema emits 9.4 items and free
             generation 8.5, at the same precision, so both stop well short. The schema is a
             plain list with no minimum length, the constrained arm returns nothing at all on 13
@@ -160,8 +157,7 @@ export default function CardinalityPage() {
             output.
           </p>
           <p>
-            Guessing wasn&apos;t working, so I measured instead — same sentence, same single
-            item, only the amount of surrounding filler changing.
+            Guessing wasn&apos;t working, so I measured instead: same sentence, same single item, with only the amount of surrounding filler changing.
           </p>
         </div>
 
@@ -170,9 +166,7 @@ export default function CardinalityPage() {
         <div className="prose">
           <p>
             I had built the filler by picking text <em>for having no company names in it</em>,
-            which made it far emptier than any real document. The sanity check was never
-            failing because of the bugs I kept fixing. It was failing because I had buried one
-            sentence in a haystack nothing like the ones the model actually sees.
+            which made it far emptier than any real document. The sanity check kept failing through every bug fix because I had buried one sentence in a haystack nothing like the documents the model normally sees.
           </p>
           <p>
             The check was never passed. The final run came in at 44% under the schema and 64%
@@ -182,9 +176,7 @@ export default function CardinalityPage() {
             the model, and only the comparison between arms on identical documents is readable.
           </p>
           <p>
-            That also surfaced a constraint worth stating. The number of items, how densely
-            they&apos;re packed, and how long the document is are not three independent
-            knobs — fix any two and the third follows. So every study of this kind picks two
+            That also surfaced a constraint. The number of items, how densely they&apos;re packed and how long the document is are not independent: fix any two and the third follows. So every study of this kind picks two
             and inherits a bias in the third, and which two you pick decides whether your
             answer is an over- or under-estimate.
           </p>
@@ -204,9 +196,7 @@ export default function CardinalityPage() {
             result until it was tested like one.
           </p>
           <p>
-            And the thing I&apos;d keep: I had the alternative explanation written down, in my
-            own notes, marked as untested. Writing down what you haven&apos;t ruled out is not
-            the same as ruling it out. The gap between those two was the entire finding.
+            The thing I&apos;d keep: I had the alternative explanation in my own notes, marked as untested, and listing it there ruled nothing out. Everything on this page came from testing it.
           </p>
         </div>
       </section>

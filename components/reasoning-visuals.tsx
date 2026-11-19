@@ -106,7 +106,7 @@ export function TaskShapes() {
     <Figure
       caption={
         task === "crossword"
-          ? "In crosswords, the further in you get, the more reliable things become — wrong guesses die early, so anything still alive deep in the puzzle is probably right."
+          ? "In crosswords, the further in you get, the more reliable things become: wrong guesses die early, so anything still alive deep in the puzzle is probably right."
           : "In the arithmetic puzzle it is the opposite: the very first move decides almost everything, and things get worse from there."
       }
     >

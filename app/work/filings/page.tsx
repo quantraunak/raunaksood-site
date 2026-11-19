@@ -26,8 +26,7 @@ export default function FilingsPage() {
         <p className="mt-6 text-[19.5px] leading-[1.65] text-ink-2">
           Companies name each other in their annual filings. I extracted 10,382 of those
           relationships with a model running on my laptop, built the graph, and then found it
-          was too thin to answer the question I built it for. The reason turned out to be the
-          interesting part, and acting on it nearly doubled the graph without closing the gap.
+          was too thin to answer the question I built it for. The reason is a rule in disclosure law, and acting on it nearly doubled the graph without closing the gap.
         </p>
         <Contribution
           proposed="A dated map of who buys from whom, extracted from 10-K text by a model on a laptop, every edge quoting the sentence it came from, built so that a backtest on it never sees tomorrow's knowledge."
@@ -56,8 +55,7 @@ export default function FilingsPage() {
           </p>
           <p>
             You can buy supply-chain data, but not as a <em>historical series that knows what
-            was public on each past date</em>. Without that, any backtest is quietly using
-            tomorrow&apos;s knowledge. So I built one: every edge stamped with the day the
+            was public on each past date</em>. Without that, any backtest is using tomorrow&apos;s knowledge. So I built one: every edge stamped with the day the
             filing appeared, and every claim required to quote the sentence it came from
             word-for-word.
           </p>
@@ -90,15 +88,13 @@ export default function FilingsPage() {
             10,382 validated claims become 2,572 dated relationships between listed companies,
             across 220 source firms. Only about a third of the claims name a counterparty that
             resolves to a traded ticker; the rest name private companies, subsidiaries or
-            governments. 2,572 sounds like a lot until you ask how many companies it covers{" "}
-            <em>on any given day</em>. The answer is 47, out of
-            roughly 403 trading. The test I built this for needs about 97 to see effects the
-            size the literature actually reports.
+            governments. Those 2,572 relationships cover 47 companies{" "}
+            <em>on any given day</em>, out of roughly 403 trading. The test I built this for needs about 97 to see effects the
+            size the literature reports.
           </p>
           <p>
             At 47, the bar the test would have to clear is IC 0.024, and published effects sit
-            near 0.010 to 0.020. It would run. It still wouldn&apos;t mean anything. So I
-            didn&apos;t run it.
+            near 0.010 to 0.020. The test would run and its result would mean nothing, so I didn&apos;t run it.
           </p>
           <p>
             Four explanations for the shortfall occurred to me, and I tested each against data
@@ -108,7 +104,7 @@ export default function FilingsPage() {
             wrong. One explanation I did not test: the two-thirds of claims lost at name
             resolution. That is a larger loss than the disclosure asymmetry below, and
             whether a better resolver would move coverage is an open question. Coverage grows in a straight line with the number of filings, which I have
-            now measured twice — ten times the filings gave almost exactly ten times the
+            now measured twice: ten times the filings gave almost exactly ten times the
             coverage the first time, and running a second corpus 1.7&times; the size moved it
             1.7&times; again.
           </p>
@@ -116,7 +112,7 @@ export default function FilingsPage() {
       </section>
 
       <section className="rule py-12">
-        <h2 className="text-[25px]">What was actually going on</h2>
+        <h2 className="text-[25px]">What was going on</h2>
         <AsymmetryFigure />
         <div className="prose">
           <p>
@@ -132,7 +128,7 @@ export default function FilingsPage() {
             filings rather than of the extractor.
           </p>
           <p>
-            The design lesson follows directly: this graph should be built from the{" "}
+            The design lesson is that this graph should be built from the{" "}
             <strong>supplier</strong> side, because small companies naming their large
             customers is what the law compels. So I ran it.
           </p>
@@ -141,7 +137,7 @@ export default function FilingsPage() {
             already downloaded were in the price panel, because the panel is built from index
             membership. A company with no share price contributes a relationship but never a
             testable observation. Fetching prices and applying the same screens left 105 that
-            are genuinely tradable.
+            are tradable.
           </p>
           <p>
             Extracting their 1,322 filings confirmed the prediction. They yield 5.9
@@ -150,11 +146,10 @@ export default function FilingsPage() {
             <strong>47</strong>.
           </p>
           <p>
-            And it still wasn&apos;t enough. That is the honest end of this study: the reason
+            It still wasn&apos;t enough. The study ends there: the reason
             for the shortfall was right, acting on it nearly doubled the graph, and the bar
             was further away than the gain. Getting to 97 would need roughly 6,800 filings
-            against the 3,298 that exist, from companies not yet downloaded. That is a
-            different project, not a continuation of this one.
+            against the 3,298 that exist, from companies not yet downloaded. That is a different project.
           </p>
         </div>
       </section>
@@ -163,13 +158,13 @@ export default function FilingsPage() {
         <h2 className="text-[25px]">Why it matters</h2>
         <div className="prose mt-5">
           <p>
-            The graph is real and released, with per-edge quotes and its coverage ceiling
+            The graph is released, with per-edge quotes and its coverage ceiling
             attached. Commercial supply-chain datasets publish neither their point-in-time
-            behaviour nor how much of the market they actually cover, and both decide whether
+            behaviour nor how much of the market they cover, and both decide whether
             a result built on them is trustworthy.
           </p>
           <p>
-            The rest is a negative result reported at full strength. I built the thing, it
+            The rest is a negative result. I built the graph, it
             wasn&apos;t enough, and the reason is a fact about disclosure law that anyone
             planning the same project can use before spending the compute.
           </p>

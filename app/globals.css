@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Light, always. Warm paper, near-black ink, one accent. */
+/* Light, always. White page, near-black ink, one accent kept for the figures. */
 
 @theme {
   --color-paper: #ffffff;
@@ -38,11 +38,11 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
-  background: #eceae5;
+  background: #ffffff;
 }
 
 body {
-  background: #eceae5;
+  background: #ffffff;
   color: var(--color-ink);
   font-family: var(--font-sans);
   font-size: 17px;
@@ -229,15 +229,37 @@ input[type="range"] {
 }
 
 .link {
-  color: var(--color-sea);
+  color: var(--color-ink);
   text-decoration: underline;
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;
-  text-decoration-color: color-mix(in srgb, var(--color-sea) 35%, transparent);
-  transition: color 0.15s, text-decoration-color 0.15s;
+  text-decoration-color: #c4c7cc;
+  transition: text-decoration-color 0.15s;
 }
 .link:hover {
-  color: var(--color-deep);
+  text-decoration-color: currentColor;
+}
+
+/* Section heading on the home page: small and grey, so the items lead. */
+h2.sec {
+  margin-bottom: 14px;
+  font-size: 13.5px;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--color-ink-3);
+}
+
+/* A linked title in a list: plain until hovered. */
+.title {
+  color: var(--color-ink);
+  font-weight: 450;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: transparent;
+  transition: text-decoration-color 0.15s;
+}
+.title:hover {
   text-decoration-color: currentColor;
 }
 
@@ -304,33 +326,4 @@ input[type="range"] {
   letter-spacing: 0.14em;
   font-size: 11.5px;
   font-weight: 500;
-}
-
-/* ---------------------------------------------------------------- sheet */
-/* The page ground is warm paper; the content sits on a white sheet over it.
-   Depth without a single shadow, and it gives the hairline rules something
-   to be hairlines *on*. */
-
-.sheet {
-  background: var(--color-paper);
-  border-radius: 14px;
-  border: 1px solid #e3e0da;
-}
-
-@media (max-width: 640px) {
-  .sheet {
-    border-radius: 0;
-    border-left: 0;
-    border-right: 0;
-  }
-}
-
-/* A flat graphic panel for the hero, in place of a photograph. */
-.plate {
-  aspect-ratio: 4 / 5;
-  border-radius: 10px;
-  background: var(--color-paper-3);
-  border: 1px solid var(--color-rule);
-  overflow: hidden;
-  position: relative;
 }

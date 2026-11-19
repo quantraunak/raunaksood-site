@@ -145,7 +145,7 @@ export function SwipeDemo() {
               ) : (
                 <tr className="text-ink-3">
                   <td className="pt-1" colSpan={2}>
-                    (0 rows) — one right swipe is not a match
+                    (0 rows): one right swipe is not a match
                   </td>
                 </tr>
               )}
@@ -214,7 +214,7 @@ export function SwipeDemo() {
 const TERMS = [
   { key: "recency", w: 0.22, label: "Recency", note: "1 / (1 + days / 7). A post decays to half weight in a week." },
   { key: "vibes", w: 0.18, label: "Vibe overlap", note: "Jaccard index over the tags on your profile and the post." },
-  { key: "role", w: 0.18, label: "Role fit", note: "1.0 if the post is explicitly looking for your role, 0.55 if you simply do something different from the author, 0.1 otherwise." },
+  { key: "role", w: 0.18, label: "Role fit", note: "1.0 if the post is explicitly looking for your role, 0.55 if you do something different from the author, 0.1 otherwise." },
   { key: "embed", w: 0.12, label: "Text similarity", note: "Cosine between a 128-dim embedding of your profile and one of the post." },
   { key: "rep", w: 0.12, label: "Reputation", note: "Average review rating, from reviews that only unlock when both sides have written one." },
   { key: "portfolio", w: 0.08, label: "Portfolio depth", note: "Images on the author's profile, capped at nine." },
@@ -231,7 +231,7 @@ export function RankingBreakdown() {
     <figure className="my-10">
       <div className="rounded-xl border border-rule p-5 sm:p-7">
         <div className="mono mb-5 text-[11.5px] uppercase tracking-[0.12em] text-ink-3">
-          rank_score — weights that sum to 1.00, plus 0.05 for verified authors
+          rank_score: weights that sum to 1.00, plus 0.05 for verified authors
         </div>
 
         {TERMS.map((t) => {
@@ -278,8 +278,7 @@ export function RankingBreakdown() {
       </div>
       <figcaption className="mt-4 text-[15.5px] leading-[1.65] text-ink-2">
         <span className="font-medium text-ink">What to look at: </span>
-        no single term dominates. Recency is the largest at 0.22, which is deliberate — in a
-        marketplace with almost no supply, showing people the newest thing matters more than
+        no single term dominates. Recency is the largest at 0.22, which is deliberate: in a marketplace with almost no supply, showing people the newest thing matters more than
         showing them the best-matched thing.
       </figcaption>
     </figure>

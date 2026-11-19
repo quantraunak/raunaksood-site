@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Shell } from "@/components/ui";
 import { RankingBreakdown } from "@/components/melange-visuals";
-import { PhoneRow } from "@/components/home-visuals";
+import { PhoneRow } from "@/components/phone-row";
 import { Details } from "@/components/details";
 import { Contribution } from "@/components/contribution";
 
@@ -26,7 +26,7 @@ export default function MelangePage() {
         <p className="mt-6 text-[19.5px] leading-[1.65] text-ink-2">
           Where creative people find their next collaboration. Photographers, models, stylists and
           other creatives find each other nearby, see who&apos;s into their work, and make something
-          together. The hard question is who to show you — so an AI learns taste from the work
+          together. The hard question is who to show you, so an AI learns taste from the work
           people make, and its suggestions are checked against random ones.
         </p>
         <Contribution
@@ -47,7 +47,7 @@ export default function MelangePage() {
           <p>
             Discover is the front door: swipe through creatives and projects near you, heart the
             work you like, and when it&apos;s mutual a conversation opens. Around that sit the
-            things a collaboration needs — events where people meet in person, with a group chat
+            things a collaboration needs: events where people meet in person, with a group chat
             and a private photo roll for the people who went, and credits that record who made
             what.
           </p>
@@ -67,21 +67,18 @@ export default function MelangePage() {
             <strong>Taste.</strong> Each member&apos;s taste is the average CLIP embedding of the
             images they&apos;ve posted and hearted. The model is open-source and runs as a batch
             job on a laptop GPU, so no member&apos;s photos go to a third party, and it never sees
-            a question about anyone&apos;s looks — only what they make and like.
+            a question about anyone&apos;s looks, only what they make and like.
           </p>
           <p>
             <strong>Pairs.</strong> A pair score combines taste similarity, whether two roles make
             each other&apos;s work possible (a photographer and a stylist, not two photographers),
-            and shared interests. The weights start as a prior and will be refit from what actually
-            happens: whether two people hearted each other afterwards.
+            and shared interests. The weights start as a prior and will be refit from what happens: whether two people hearted each other afterwards.
           </p>
           <p>
-            <strong>Groups.</strong> At an event, a composer uses the score to seat whole tables,
-            not just pairs. Its objective is
+            <strong>Groups.</strong> At an event, a composer uses the score to seat whole tables rather than match pairs. Its objective is
             each person&apos;s average chemistry with their tablemates passed through a concave
             curve, so lifting the person who&apos;s worst off counts for more than making a good
-            table slightly better. Blocked pairs are never seated together. It&apos;s a local
-            search — random starts and swaps — that finishes in milliseconds at this size.
+            table slightly better. Blocked pairs are never seated together. It&apos;s a local search (random starts and swaps) that finishes in milliseconds at this size.
           </p>
           <p>
             <strong>The test.</strong> The AI is checked against random choices instead of being
@@ -92,7 +89,7 @@ export default function MelangePage() {
           </p>
           <p>
             The first production run caught a flaw in my own design. With thirteen people, each
-            half got exactly one table — so the composer had no choice to make, and its
+            half got exactly one table, so the composer had no choice to make, and its
             &ldquo;AI&rdquo; table scored worse than the random one. Tables now shrink until each
             half has at least two. After the fix, the AI&apos;s groups beat random on every run.
           </p>
@@ -104,9 +101,9 @@ export default function MelangePage() {
         <div className="prose mt-5">
           <p>
             Both apps talk straight to Postgres with a public key, so every rule has to live in
-            the database. After an event you can quietly heart anyone who was there; you only find
+            the database. After an event you can privately heart anyone who was there; you only find
             out if it was mutual. Those hearts sit in a table with row-level security on and no
-            read policy at all — the only way in is a function that answers when a heart is
+            read policy at all. The only way in is a function that answers when a heart is
             mutual. My first design reused the app&apos;s general hearts table, which notifies on
             every insert, and would have told everyone about every one-way heart.
           </p>
@@ -128,9 +125,7 @@ export default function MelangePage() {
             fixture.
           </p>
           <p>
-            That caught a policy someone had added in the dashboard — present in production, in
-            no migration — that let signed-out visitors read every profile. The schema in the repo
-            and the database had quietly drifted apart, and nothing else would have said so.
+            That caught a policy someone had added in the dashboard (present in production, in no migration) that let signed-out visitors read every profile. The schema in the repo and the database had drifted apart, and nothing else would have said so.
           </p>
         </div>
       </section>
@@ -152,8 +147,7 @@ export default function MelangePage() {
         <h2 className="text-[25px]">Where it stands</h2>
         <div className="prose mt-5">
           <p>
-            Live on the App Store (2.1) and the web. About a dozen accounts — this
-            is a working product, not a traction story yet. The taste model, the composer and the
+            Live on the App Store (2.1) and the web. About a dozen accounts, so this is a working product and not yet a traction story. The taste model, the composer and the
             experiment are deployed; the first measured result comes from the first real events.
           </p>
         </div>
