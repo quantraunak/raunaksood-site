@@ -5,10 +5,10 @@ import { usePathname } from "next/navigation";
 
 const NAV = [
   { href: "/work/quant", label: "leakprobe" },
+  { href: "/work/melange", label: "Melange" },
+  { href: "/work/reasoning", label: "Thought trees" },
   { href: "/work/cardinality", label: "cardinality" },
   { href: "/work/filings", label: "filing-links" },
-  { href: "/work/reasoning", label: "LLM reasoning" },
-  { href: "/work/melange", label: "Melange" },
   { href: "/writing", label: "Writing" },
 ];
 

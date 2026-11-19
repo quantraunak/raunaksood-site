@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
 import { SiteNav } from "@/components/site-nav";
+import { SITE_URL } from "@/lib/site";
 
 export const viewport = {
   themeColor: "#eceae5",
@@ -9,18 +10,18 @@ export const viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://raunaksood.vercel.app"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Raunak Sood",
     template: "%s — Raunak Sood",
   },
   description:
-    "Machine learning and quantitative research. M.S. Computer Science at USC, ML at Innovius Capital. Point-in-time equity research, LLM reasoning diagnostics, and shipped product.",
+    "Machine learning engineer on the investment platform at Innovius Capital and M.S. Computer Science student at USC. Ranking models, LLM agents and evaluation, an open-source leakage test, and an app on the App Store.",
   authors: [{ name: "Raunak Sood" }],
   openGraph: {
     type: "profile",
     title: "Raunak Sood",
-    description: "Machine learning and quantitative research.",
+    description: "Machine learning engineer. Ranking models, LLM agents and evaluation, and shipped product.",
     siteName: "Raunak Sood",
   },
   twitter: { card: "summary" },
@@ -31,12 +32,12 @@ const PERSON_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Raunak Sood",
-  url: "https://raunaksood.vercel.app/",
+  url: `${SITE_URL}/`,
   jobTitle: "Machine Learning Engineer",
   email: "mailto:raunak.sood@gmail.com",
   address: {
     "@type": "PostalAddress",
-    addressLocality: "Los Altos",
+    addressLocality: "Los Angeles",
     addressRegion: "CA",
     addressCountry: "US",
   },
@@ -97,7 +98,7 @@ function SiteFooter() {
   return (
     <footer className="mx-auto w-full max-w-[1320px] px-6 sm:px-10 lg:px-14">
       <div className="rule flex flex-wrap items-baseline justify-between gap-4 py-8 mono text-[11.5px] text-ink-3">
-        <span>© {new Date().getFullYear()} Raunak Sood · Los Altos, California</span>
+        <span>© {new Date().getFullYear()} Raunak Sood · Los Angeles, California</span>
         <span className="flex flex-wrap gap-5">
           <a href="mailto:raunak.sood@gmail.com" className="hover:text-[var(--color-sea)] transition-colors">
             email

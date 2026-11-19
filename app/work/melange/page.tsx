@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Shell } from "@/components/ui";
 import { RankingBreakdown } from "@/components/melange-visuals";
+import { PhoneRow } from "@/components/home-visuals";
 import { Details } from "@/components/details";
 import { Contribution } from "@/components/contribution";
 
@@ -30,8 +31,14 @@ export default function MelangePage() {
         </p>
         <Contribution
           proposed="An app for creative people to find collaborators, with an AI that learns taste from the work people make and suggests who to work with, measured against random suggestions."
-          result="Live on the App Store (2.0) and the web. The table composer beats random seating on its own taste objective (0.77–0.85 vs 0.64–0.69), so the optimizer works; whether it produces more real collaborations is what the first events will measure. About a dozen accounts so far."
+          result="Live on the App Store (2.1) and the web. The table composer beats random seating on its own taste objective (0.77–0.85 vs 0.64–0.69), so the optimizer works; whether it produces more real collaborations is what the first events will measure. About a dozen accounts so far."
         />
+        <div className="mt-8">
+          <PhoneRow priority />
+          <p className="mt-3 text-[13.5px] leading-[1.6] text-ink-3">
+            The shipped iOS app: Explore, Discover, and a shoot with everyone on it credited.
+          </p>
+        </div>
       </header>
 
       <section className="rule py-12">
@@ -145,7 +152,7 @@ export default function MelangePage() {
         <h2 className="text-[25px]">Where it stands</h2>
         <div className="prose mt-5">
           <p>
-            Live on the App Store (2.0) and the web. About a dozen accounts — this
+            Live on the App Store (2.1) and the web. About a dozen accounts — this
             is a working product, not a traction story yet. The taste model, the composer and the
             experiment are deployed; the first measured result comes from the first real events.
           </p>
@@ -158,7 +165,7 @@ export default function MelangePage() {
               Authorisation in row-level security and security-definer functions; realtime for
               chat; two Deno edge functions (push notifications, and the composer, which runs as
               the calling host so the database decides who may seat a room). Taste vectors in
-              pgvector, computed with open_clip ViT-B/32 on Apple silicon. 26 ordered, idempotent
+              pgvector, computed with open_clip ViT-B/32 on Apple silicon. 29 ordered, idempotent
               migrations; 57 automated tests, including the composer&apos;s.
             </p>
           </div>
