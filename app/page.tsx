@@ -96,7 +96,7 @@ export default function Home() {
             <p>
               At Innovius I rebuilt the firm&apos;s startup-ranking model. Of its top 20 picks,{" "}
               <span className="num">90%</span> advanced, up from <span className="num">20%</span>{" "}
-              with the model it replaced. Before that I spent two summers on machine learning at
+              with the model it replaced. Before that I did machine learning for drug discovery at
               QIAGEN and studied economics at Santa Clara, where I played Division I tennis.
             </p>
           </div>
