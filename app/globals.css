@@ -423,23 +423,21 @@ h2.sec::after {
   color: var(--color-ink);
 }
 
-/* Link pills under the intro. */
-.chip {
+/* Links under the intro: small mono, underlined on hover. */
+.mlink {
   font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.04em;
+  font-size: 12.5px;
+  letter-spacing: 0.02em;
   color: var(--color-ink-2);
-  background: color-mix(in srgb, var(--color-paper) 70%, transparent);
-  border: 1px solid var(--color-rule);
-  border-radius: 999px;
-  padding: 5px 13px;
-  backdrop-filter: blur(4px);
-  transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--color-rule);
+  transition: color 0.15s, text-decoration-color 0.15s;
 }
-.chip:hover {
-  color: var(--color-paper);
-  background: var(--color-ink);
-  border-color: var(--color-ink);
+.mlink:hover {
+  color: var(--color-ink);
+  text-decoration-color: var(--color-accent);
 }
 
 /* A row in a list: the whole line is the link. */

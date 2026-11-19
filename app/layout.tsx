@@ -85,16 +85,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         <TopBar />
         <main id="main">{children}</main>
-        <SiteFooter />
       </body>
     </html>
-  );
-}
-
-function SiteFooter() {
-  return (
-    <footer className="tech mx-auto w-full max-w-[680px] px-6 pb-12 text-ink-3 sm:px-8">
-      © {new Date().getFullYear()} Raunak Sood
-    </footer>
   );
 }

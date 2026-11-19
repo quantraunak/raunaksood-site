@@ -12,12 +12,12 @@ const LINKS: [string, string][] = [
 ];
 
 const PROJECTS: [string, string, string, string][] = [
-  ["/work/quant", "leakprobe", "Python library that finds ML features reading future data. It caught 8 of 9 planted leaks.", "PyPI"],
+  ["/work/quant", "leakprobe", "Python library that finds ML features reading future data.", "PyPI"],
   ["/work/melange", "Melange", "iOS and web app where creative people find collaborators.", "App Store"],
-  ["/work/reasoning", "Resampled Thought Trees", "Scores each step of an AI's search by re-running from it. Five-author paper at USC.", "Paper"],
-  ["https://github.com/quantraunak/deal-desk-voice", "Deal Desk", "Voice agent that answers deal questions with citations, and an audit of its LLM judge.", "GitHub"],
-  ["/work/cardinality", "cardinality-eval", "Tests whether LLM extraction gets worse as the list of things to find grows.", "Study"],
-  ["/work/filings", "filing-links", "A dated map of which companies name each other in their 10-Ks.", "Study"],
+  ["/work/reasoning", "Resampled Thought Trees", "Scores each step of an AI's search by re-running from it.", "Paper"],
+  ["https://github.com/quantraunak/deal-desk-voice", "Deal Desk", "Voice agent for deal questions, with an audit of its LLM judge.", "GitHub"],
+  ["/work/cardinality", "cardinality-eval", "Tests whether LLM extraction degrades as the list grows.", "Study"],
+  ["/work/filings", "filing-links", "A dated map of which companies name each other in 10-Ks.", "Study"],
 ];
 
 const WRITING: [string, string, string, string][] = [
@@ -79,7 +79,7 @@ export default function Home() {
   return (
     <div className="relative">
       <DotField />
-      <div className="relative mx-auto w-full max-w-[680px] px-6 pb-20 pt-20 text-[15.5px] leading-[1.65] sm:px-8 sm:pt-28">
+      <div className="relative mx-auto w-full max-w-[620px] px-6 pb-24 pt-20 text-[15.5px] leading-[1.65] sm:px-8 sm:pt-28">
         <header>
           <div className="enter" style={{ "--i": 0 } as React.CSSProperties}>
             <h1 className="text-[22px] font-medium tracking-[-0.02em]">Raunak Sood</h1>
@@ -100,9 +100,9 @@ export default function Home() {
               QIAGEN and studied economics at Santa Clara, where I played Division I tennis.
             </p>
           </div>
-          <p className="enter mt-7 flex flex-wrap gap-2" style={{ "--i": 2 } as React.CSSProperties}>
+          <p className="enter mt-7 flex flex-wrap gap-x-6 gap-y-1" style={{ "--i": 2 } as React.CSSProperties}>
             {LINKS.map(([href, label]) => (
-              <a key={href} href={href} className="chip">
+              <a key={href} href={href} className="mlink">
                 {label}
               </a>
             ))}
