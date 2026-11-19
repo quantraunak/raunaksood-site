@@ -1,5 +1,5 @@
 /* The one block a non-technical reader needs on every project page:
-   what was proposed, and what it produced. Two short lines, nothing else. */
+   the idea, and what came of it. Mono labels on the left, hairlines between. */
 
 export function Contribution({
   proposed,
@@ -11,29 +11,21 @@ export function Contribution({
   role?: React.ReactNode;
 }) {
   return (
-    <div className="mt-8 rounded-lg bg-paper-2 p-6">
-      <dl className="space-y-4">
+    <dl className="summary">
+      <div>
+        <dt>Idea</dt>
+        <dd>{proposed}</dd>
+      </div>
+      <div>
+        <dt>Result</dt>
+        <dd>{result}</dd>
+      </div>
+      {role && (
         <div>
-          <dt className="text-[12.5px] font-medium uppercase tracking-[0.07em] text-ink-3">
-            What I proposed
-          </dt>
-          <dd className="mt-1.5 text-[16.5px] leading-[1.6] text-ink">{proposed}</dd>
+          <dt>My part</dt>
+          <dd>{role}</dd>
         </div>
-        <div>
-          <dt className="text-[12.5px] font-medium uppercase tracking-[0.07em] text-ink-3">
-            What it produced
-          </dt>
-          <dd className="mt-1.5 text-[16.5px] leading-[1.6] text-ink">{result}</dd>
-        </div>
-        {role && (
-          <div>
-            <dt className="text-[12.5px] font-medium uppercase tracking-[0.07em] text-ink-3">
-              My part
-            </dt>
-            <dd className="mt-1.5 text-[15.5px] leading-[1.6] text-ink-2">{role}</dd>
-          </div>
-        )}
-      </dl>
-    </div>
+      )}
+    </dl>
   );
 }

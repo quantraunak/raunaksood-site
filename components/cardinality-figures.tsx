@@ -39,7 +39,7 @@ export function CrossoverFigure() {
 
   return (
     <figure ref={ref} className="my-10">
-      <div className="overflow-hidden rounded-lg border border-rule-soft bg-paper-2 px-4 py-5">
+      <div className="fig overflow-hidden bg-paper-2 px-4 py-5">
         <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ maxHeight: 320 }}
              role="img" aria-label="Recall against number of items for both decoding arms">
           {[0.4, 0.5, 0.6].map((g) => (
@@ -113,7 +113,7 @@ export function DilutionFigure() {
   ];
   return (
     <figure ref={ref} className="my-10">
-      <div className="rounded-lg border border-rule-soft bg-paper-2 px-6 py-6">
+      <div className="fig bg-paper-2 p-5 sm:p-6">
         <div className="space-y-4">
           {bars.map((b, i) => (
             <div key={b.chars} className="flex items-center gap-4">

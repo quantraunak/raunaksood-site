@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { Shell } from "@/components/ui";
+import { Shell, PageHeader, Lede, Links } from "@/components/ui";
 import { MoveExplorer, TaskShapes } from "@/components/reasoning-visuals";
 import { Details } from "@/components/details";
 import { Contribution } from "@/components/contribution";
@@ -15,29 +14,26 @@ export const metadata: Metadata = {
 
 export default function ReasoningPage() {
   return (
-    <Shell>
-      <header className="pb-10 pt-14 sm:pt-20">
-        <Link href="/" className="text-[15px] text-ink-3 transition-colors hover:text-[var(--color-sea)]">
-          ← Back
-        </Link>
-        <div className="label mt-10">AI research · USC · five authors</div>
-        <h1 className="mt-3 text-[34px] leading-[1.15] sm:text-[42px]">
-          Resampled Thought Trees
-        </h1>
-        <p className="mt-6 text-[19.5px] leading-[1.65] text-ink-2">
+    <Shell numbered path="/work/reasoning">
+      <PageHeader kind="AI research · USC · five authors" title="Resampled Thought Trees">
+        <Lede>
           When an AI solves a problem step by step, some steps are essential and some are wasted
           effort. Search usually judges a step only by the final answer. We measured each step directly.
-        </p>
+        </Lede>
+        <Links>
+          <a href="/Resampled-Thought-Trees.pdf" className="mlink">Paper</a>
+          <a href="https://github.com/quantraunak/tot-resampled-thought-trees" className="mlink">Code and data</a>
+        </Links>
         <Contribution
           proposed="Score each intermediate step of an AI's search by freezing the search at that step and re-running it ten times. The share of re-runs that still reach the answer is the step's real value, independent of how promising the AI said it looked."
           result="A per-step map from about 11,000 stochastic re-runs (22,350 counting deterministic repeats) on two puzzle types. Within the first move, the AI's ranking barely predicts which move works (41% vs 37–38% at temperature 0.2), so rank alone is not a reliable guide. Deleting branches rarely changed whether a puzzle was solved; deleting a redundant branch removed 38% of the remaining routes to the solution, a loss pass/fail scoring cannot see."
           role="A five-author course project at USC, built and run collaboratively by the five co-authors. The repository linked below mirrors the team's release and adds the paper."
         />
-      </header>
+      </PageHeader>
 
-      <section className="rule py-12">
-        <h2 className="text-[25px]">The problem</h2>
-        <div className="prose mt-5">
+      <section className="part">
+        <h2 className="h">The problem</h2>
+        <div className="prose">
           <p>
             Modern AI systems solve hard problems by exploring: trying one line of reasoning, then
             another, like a person working through a puzzle. At each step the model picks which idea
@@ -50,9 +46,9 @@ export default function ReasoningPage() {
         </div>
       </section>
 
-      <section className="rule py-12">
-        <h2 className="text-[25px]">What we did</h2>
-        <div className="prose mt-5">
+      <section className="part">
+        <h2 className="h">What we did</h2>
+        <div className="prose">
           <p>
             Freeze the AI at one specific thought. Restart it from exactly that point, ten times over.
             Count how often it still reaches the right answer.
@@ -65,9 +61,9 @@ export default function ReasoningPage() {
         <MoveExplorer />
       </section>
 
-      <section className="rule py-12">
-        <h2 className="text-[25px]">Main finding</h2>
-        <div className="prose mt-5">
+      <section className="part">
+        <h2 className="h">Main finding</h2>
+        <div className="prose">
           <p>
             <strong>The AI&apos;s own ranking is a weak guide.</strong> Across 100 Game24
             puzzles, each run at two temperatures, the first moves it ranked first through
@@ -82,9 +78,9 @@ export default function ReasoningPage() {
         </div>
       </section>
 
-      <section className="rule py-12">
-        <h2 className="text-[25px]">Results differ by task</h2>
-        <div className="prose mt-5">
+      <section className="part">
+        <h2 className="h">Results differ by task</h2>
+        <div className="prose">
           <p>
             We expected a simple rule like &ldquo;early steps matter most.&rdquo; Instead the two
             tasks behaved in opposite ways, so there is no shortcut and you have to measure.
@@ -93,9 +89,9 @@ export default function ReasoningPage() {
         <TaskShapes />
       </section>
 
-      <section className="rule py-12">
-        <h2 className="text-[25px]">A second result</h2>
-        <div className="prose mt-5">
+      <section className="part">
+        <h2 className="h">A second result</h2>
+        <div className="prose">
           <p>
             We also deleted branches from the tree to see what broke. Judged only on{" "}
             <em>did it still solve the puzzle</em>, deleting things looked harmless.
@@ -106,9 +102,9 @@ export default function ReasoningPage() {
         </div>
       </section>
 
-      <section className="rule py-12">
-        <h2 className="text-[25px]">Scope and limitations</h2>
-        <div className="prose mt-5">
+      <section className="part">
+        <h2 className="h">Scope and limitations</h2>
+        <div className="prose">
           <p>
             This was a five-author project at USC. We controlled
             the AI&apos;s options rather than letting it generate freely, which makes the measurement
@@ -139,9 +135,9 @@ export default function ReasoningPage() {
           </div>
         </Details>
 
-        <div className="mt-9 flex flex-wrap gap-6 text-[16px]">
-          <a href="/Resampled-Thought-Trees.pdf" className="link">Read the paper (PDF)</a>
-          <a href="https://github.com/quantraunak/tot-resampled-thought-trees" className="link">
+        <div className="links">
+          <a href="/Resampled-Thought-Trees.pdf" className="mlink">Read the paper (PDF)</a>
+          <a href="https://github.com/quantraunak/tot-resampled-thought-trees" className="mlink">
             Code and data
           </a>
         </div>

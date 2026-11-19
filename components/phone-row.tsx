@@ -9,7 +9,7 @@ const SHOTS = [
 
 export function PhoneRow({ priority = false }: { priority?: boolean }) {
   return (
-    <div className="overflow-hidden border border-rule bg-paper-2 px-5 pt-7 sm:px-8 sm:pt-9">
+    <div className="fig overflow-hidden bg-paper-2 px-5 pt-7 sm:px-8 sm:pt-9">
       <div className="mx-auto flex max-w-[460px] items-start justify-center gap-3 sm:gap-4">
         {SHOTS.map((s, i) => (
           <div

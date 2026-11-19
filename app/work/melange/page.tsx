@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { Shell } from "@/components/ui";
+import { Shell, PageHeader, Lede, Links } from "@/components/ui";
 import { RankingBreakdown } from "@/components/melange-visuals";
 import { PhoneRow } from "@/components/phone-row";
 import { Details } from "@/components/details";
@@ -16,34 +15,34 @@ export const metadata: Metadata = {
 
 export default function MelangePage() {
   return (
-    <Shell>
-      <header className="pb-10 pt-14 sm:pt-20">
-        <Link href="/" className="text-[15px] text-ink-3 transition-colors hover:text-[var(--color-sea)]">
-          ← Back
-        </Link>
-        <div className="label mt-10">Product · TypeScript, iOS, Postgres, CLIP</div>
-        <h1 className="mt-3 text-[34px] leading-[1.15] sm:text-[42px]">Melange</h1>
-        <p className="mt-6 text-[19.5px] leading-[1.65] text-ink-2">
+    <Shell numbered path="/work/melange">
+      <PageHeader kind="Product · TypeScript, iOS, Postgres, CLIP" title="Melange">
+        <Lede>
           Where creative people find their next collaboration. Photographers, models, stylists and
           other creatives find each other nearby, see who&apos;s into their work, and make something
           together. The hard question is who to show you, so an AI learns taste from the work
           people make, and its suggestions are checked against random ones.
-        </p>
+        </Lede>
+        <Links>
+          <a href="https://melange-psi.vercel.app" className="mlink">Web app</a>
+          <a href="https://apps.apple.com/app/id6774481477" className="mlink">App Store</a>
+          <a href="https://github.com/quantraunak/Melange" className="mlink">GitHub</a>
+        </Links>
+        <div className="mt-10">
+          <PhoneRow priority />
+          <p className="cap">
+            The shipped iOS app: Explore, Discover, and a shoot with everyone on it credited.
+          </p>
+        </div>
         <Contribution
           proposed="An app for creative people to find collaborators, with an AI that learns taste from the work people make and suggests who to work with, measured against random suggestions."
           result="Live on the App Store (2.1) and the web. The table composer beats random seating on its own taste objective (0.77–0.85 vs 0.64–0.69), so the optimizer works; whether it produces more real collaborations is what the first events will measure. About a dozen accounts so far."
         />
-        <div className="mt-8">
-          <PhoneRow priority />
-          <p className="mt-3 text-[13.5px] leading-[1.6] text-ink-3">
-            The shipped iOS app: Explore, Discover, and a shoot with everyone on it credited.
-          </p>
-        </div>
-      </header>
+      </PageHeader>
 
-      <section className="rule py-12">
-        <h2 className="text-[25px]">What it does</h2>
-        <div className="prose mt-5">
+      <section className="part">
+        <h2 className="h">What it does</h2>
+        <div className="prose">
           <p>
             Discover is the front door: swipe through creatives and projects near you, heart the
             work you like, and when it&apos;s mutual a conversation opens. Around that sit the
@@ -60,9 +59,9 @@ export default function MelangePage() {
         </div>
       </section>
 
-      <section className="rule py-12">
-        <h2 className="text-[25px]">Who you should work with</h2>
-        <div className="prose mt-5">
+      <section className="part">
+        <h2 className="h">Who you should work with</h2>
+        <div className="prose">
           <p>
             <strong>Taste.</strong> Each member&apos;s taste is the average CLIP embedding of the
             images they&apos;ve posted and hearted. The model is open-source and runs as a batch
@@ -96,9 +95,9 @@ export default function MelangePage() {
         </div>
       </section>
 
-      <section className="rule py-12">
-        <h2 className="text-[25px]">Privacy the database enforces</h2>
-        <div className="prose mt-5">
+      <section className="part">
+        <h2 className="h">Privacy the database enforces</h2>
+        <div className="prose">
           <p>
             Both apps talk straight to Postgres with a public key, so every rule has to live in
             the database. After an event you can privately heart anyone who was there; you only find
@@ -114,9 +113,9 @@ export default function MelangePage() {
         </div>
       </section>
 
-      <section className="rule py-12">
-        <h2 className="text-[25px]">Testing against production without changing it</h2>
-        <div className="prose mt-5">
+      <section className="part">
+        <h2 className="h">Testing against production without changing it</h2>
+        <div className="prose">
           <p>
             Every migration since October runs first inside <span className="mono">BEGIN … ROLLBACK</span>{" "}
             against the live database, with tests that impersonate real roles: can an outsider
@@ -130,9 +129,9 @@ export default function MelangePage() {
         </div>
       </section>
 
-      <section className="rule py-12">
-        <h2 className="text-[25px]">Discover is a query</h2>
-        <div className="prose mt-5">
+      <section className="part">
+        <h2 className="h">Discover is a query</h2>
+        <div className="prose">
           <p>
             Discover&apos;s feed is ranked by one Postgres function: eight weighted terms plus a small boost for verified authors, no
             service to call. The taste score is blended on top: it nudges the order of projects
@@ -143,9 +142,9 @@ export default function MelangePage() {
         <RankingBreakdown />
       </section>
 
-      <section className="rule py-12">
-        <h2 className="text-[25px]">Where it stands</h2>
-        <div className="prose mt-5">
+      <section className="part">
+        <h2 className="h">Where it stands</h2>
+        <div className="prose">
           <p>
             Live on the App Store (2.1) and the web. About a dozen accounts, so this is a working product and not yet a traction story. The taste model, the composer and the
             experiment are deployed; the first measured result comes from the first real events.
@@ -165,10 +164,10 @@ export default function MelangePage() {
           </div>
         </Details>
 
-        <div className="mt-9 flex flex-wrap gap-6 text-[16px]">
-          <a href="https://melange-psi.vercel.app" className="link">Melange</a>
-          <a href="https://apps.apple.com/app/id6774481477" className="link">App Store</a>
-          <a href="https://github.com/quantraunak/Melange" className="link">Code on GitHub</a>
+        <div className="links">
+          <a href="https://melange-psi.vercel.app" className="mlink">Melange</a>
+          <a href="https://apps.apple.com/app/id6774481477" className="mlink">App Store</a>
+          <a href="https://github.com/quantraunak/Melange" className="mlink">Code on GitHub</a>
         </div>
       </section>
     </Shell>

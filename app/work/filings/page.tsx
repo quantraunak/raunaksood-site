@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { Shell } from "@/components/ui";
+import { Shell, PageHeader, Lede, Links } from "@/components/ui";
 import { CoverageFigure, AsymmetryFigure } from "@/components/filings-visuals";
 import { Contribution } from "@/components/contribution";
 
@@ -14,34 +13,25 @@ export const metadata: Metadata = {
 
 export default function FilingsPage() {
   return (
-    <Shell>
-      <header className="pb-10 pt-14 sm:pt-20">
-        <Link href="/" className="text-[15px] text-ink-3 transition-colors hover:text-[var(--color-sea)]">
-          ← Back
-        </Link>
-        <div className="label mt-10">Information extraction · Python</div>
-        <h1 className="mt-3 text-[34px] leading-[1.15] sm:text-[42px]">
-          A map of who buys from whom, and why it stops short
-        </h1>
-        <p className="mt-6 text-[19.5px] leading-[1.65] text-ink-2">
-          Companies name each other in their annual filings. I extracted 10,382 of those
+    <Shell numbered path="/work/filings">
+      <PageHeader kind="Information extraction · Python" title="filing-links">
+        <Lede>
+          A map of who buys from whom, and why it stops short. Companies name each other in their annual filings. I extracted 10,382 of those
           relationships with a model running on my laptop, built the graph, and then found it
           was too thin to answer the question I built it for. The reason is a rule in disclosure law, and acting on it nearly doubled the graph without closing the gap.
-        </p>
+        </Lede>
+        <Links>
+          <a href="https://github.com/quantraunak/filing-links" className="mlink">GitHub</a>
+        </Links>
         <Contribution
           proposed="A dated map of who buys from whom, extracted from 10-K text by a model on a laptop, every edge quoting the sentence it came from, built so that a backtest on it never sees tomorrow's knowledge."
           result="2,572 edges over 220 firms, covering 47 names on a typical day. The return test needs 97, so the study stopped at the coverage report. The shortfall traces to disclosure law: a company must name customers above 10% of revenue and never its suppliers, so the S&P 500 side of the graph is the silent side. Building from the supplier side nearly doubled coverage, as predicted, and still fell short."
         />
-        <div className="mt-7 flex flex-wrap gap-6 text-[16px]">
-          <a href="https://github.com/quantraunak/filing-links" className="link">
-            filing-links on GitHub
-          </a>
-        </div>
-      </header>
+      </PageHeader>
 
-      <section className="rule py-12">
-        <h2 className="text-[25px]">The idea</h2>
-        <div className="prose mt-5">
+      <section className="part">
+        <h2 className="h">The idea</h2>
+        <div className="prose">
           <p>
             <em>&ldquo;Intel is one of our most significant customers.&rdquo;</em>{" "}
             <em>&ldquo;We purchase substrates from Ibiden and Unimicron.&rdquo;</em> Sentences
@@ -62,9 +52,9 @@ export default function FilingsPage() {
         </div>
       </section>
 
-      <section className="rule py-12">
-        <h2 className="text-[25px]">What I built</h2>
-        <div className="prose mt-5">
+      <section className="part">
+        <h2 className="h">What I built</h2>
+        <div className="prose">
           <p>
             3,298 filings, run through a 30-billion-parameter model on a laptop over about
             27 hours across two passes. No API spend. Each extracted relationship survives
@@ -80,8 +70,8 @@ export default function FilingsPage() {
         </div>
       </section>
 
-      <section className="rule py-12">
-        <h2 className="text-[25px]">The gate fired</h2>
+      <section className="part">
+        <h2 className="h">The gate fired</h2>
         <CoverageFigure />
         <div className="prose">
           <p>
@@ -111,8 +101,8 @@ export default function FilingsPage() {
         </div>
       </section>
 
-      <section className="rule py-12">
-        <h2 className="text-[25px]">What was going on</h2>
+      <section className="part">
+        <h2 className="h">What was going on</h2>
         <AsymmetryFigure />
         <div className="prose">
           <p>
@@ -154,9 +144,9 @@ export default function FilingsPage() {
         </div>
       </section>
 
-      <section className="rule py-12">
-        <h2 className="text-[25px]">Why it matters</h2>
-        <div className="prose mt-5">
+      <section className="part">
+        <h2 className="h">Why it matters</h2>
+        <div className="prose">
           <p>
             The graph is released, with per-edge quotes and its coverage ceiling
             attached. Commercial supply-chain datasets publish neither their point-in-time

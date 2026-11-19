@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Shell } from "@/components/ui";
+import { Shell, PageHeader, Lede, Links } from "@/components/ui";
 import { CardinalityDemo } from "@/components/cardinality-demo";
 import { CrossoverFigure, DilutionFigure } from "@/components/cardinality-figures";
 import { Contribution } from "@/components/contribution";
@@ -15,41 +15,28 @@ export const metadata: Metadata = {
 
 export default function CardinalityPage() {
   return (
-    <Shell>
-      <header className="pb-10 pt-14 sm:pt-20">
-        <Link href="/" className="text-[15px] text-ink-3 transition-colors hover:text-[var(--color-sea)]">
-          ← Back
-        </Link>
-        <div className="label mt-10">LLM evaluation · Python</div>
-        <h1 className="mt-3 text-[34px] leading-[1.15] sm:text-[42px]">
-          The schema is not the cost
-        </h1>
-        <p className="mt-6 text-[19.5px] leading-[1.65] text-ink-2">
-          Ask a model to pull sixteen things out of a document instead of one, and it finds a
+    <Shell numbered path="/work/cardinality">
+      <PageHeader kind="LLM evaluation · Python" title="cardinality-eval">
+        <Lede>
+          The schema is not the cost. Ask a model to pull sixteen things out of a document instead of one, and it finds a
           somewhat smaller share of them, with or without a form. What the form changes, on
           this model, is whether the answer is valid at all: four of twenty-five free-form answers at
           sixteen items are not valid JSON as written.
-        </p>
+        </Lede>
+        <Links>
+          <a href="https://github.com/quantraunak/cardinality-eval" className="mlink">GitHub</a>
+          <Link href="/writing/the-schema-is-not-the-cost" className="mlink">Essay</Link>
+          <a href="/papers/cardinality.pdf" className="mlink">Paper</a>
+        </Links>
         <Contribution
           proposed="A way to measure how extraction recall changes with the number of items, with no annotators: build the documents yourself from verbatim filing sentences, so the number of items is exact and the answer key is free. And a constraint every such study inherits: item count, item density and document length cannot all be held fixed, so each design picks two and should say which."
           result="A pilot on one model, 25 documents per level. Neither arm meets the test I fixed in advance: free-form recall falls 0.131 from 1 to 16 items (the rule needs 0.15) and schema-constrained recall does not fall. The gap between arms is carried by the one-item documents and vanishes without them. What the schema demonstrably buys is validity: 25 of 25, 23 of 25, 21 of 25 free-form answers are valid JSON as the list grows; 75 of 75 under the schema. An earlier version of this page reported a rejection; that was a scorer bug, fixed and disclosed."
         />
-        <div className="mt-7 flex flex-wrap gap-6 text-[16px]">
-          <a href="https://github.com/quantraunak/cardinality-eval" className="link">
-            cardinality-eval on GitHub
-          </a>
-          <Link href="/writing/the-schema-is-not-the-cost" className="link">
-            Full write-up
-          </Link>
-          <a href="/papers/cardinality.pdf" className="link">
-            Paper (PDF)
-          </a>
-        </div>
-      </header>
+      </PageHeader>
 
-      <section className="rule py-12">
-        <h2 className="text-[25px]">The problem</h2>
-        <div className="prose mt-5">
+      <section className="part">
+        <h2 className="h">The problem</h2>
+        <div className="prose">
           <p>
             When you ask a language model for structured output (a list of records instead of a paragraph), you usually hand it a schema and force the answer to fit. The schema
             guarantees you get valid JSON back.
@@ -68,9 +55,9 @@ export default function CardinalityPage() {
         </div>
       </section>
 
-      <section className="rule py-12">
-        <h2 className="text-[25px]">What I did</h2>
-        <div className="prose mt-5">
+      <section className="part">
+        <h2 className="h">What I did</h2>
+        <div className="prose">
           <p>
             The hard part is knowing the right answer. If you take real documents and have
             someone mark up every company mentioned, you get labels that are expensive and
@@ -90,18 +77,18 @@ export default function CardinalityPage() {
           </p>
         </div>
 
-        <div className="mt-8">
+        <div className="mt-7">
           <CardinalityDemo />
         </div>
-        <p className="mt-3 text-[13px] leading-[1.6] text-ink-3">
+        <p className="cap">
           Every number is measured. The three stops are the three levels I ran, 25
           documents each and 75 per arm, with nothing interpolated between them.
         </p>
       </section>
 
-      <section className="rule py-12">
-        <h2 className="text-[25px]">What I found</h2>
-        <div className="prose mt-5">
+      <section className="part">
+        <h2 className="h">What I found</h2>
+        <div className="prose">
           <p>
             Under the rule I fixed in advance, neither arm clears the bar. Writing freely, recall
             falls 0.131 from one item to sixteen on the same documents, short of the 0.15 the
@@ -144,9 +131,9 @@ export default function CardinalityPage() {
         </div>
       </section>
 
-      <section className="rule py-12">
-        <h2 className="text-[25px]">The part that took longest</h2>
-        <div className="prose mt-5">
+      <section className="part">
+        <h2 className="h">The part that took longest</h2>
+        <div className="prose">
           <p>
             The first pilot came back at <strong>33%</strong>: one item hidden in one
             document, found a third of the time. Only then did I write down the check that
@@ -183,9 +170,9 @@ export default function CardinalityPage() {
         </div>
       </section>
 
-      <section className="rule py-12">
-        <h2 className="text-[25px]">Why it matters</h2>
-        <div className="prose mt-5">
+      <section className="part">
+        <h2 className="h">Why it matters</h2>
+        <div className="prose">
           <p>
             If you run structured extraction in production, the schema is not what&apos;s
             costing you recall on long lists, and what it buys you is answers you can parse.

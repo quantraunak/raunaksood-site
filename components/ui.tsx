@@ -1,152 +1,98 @@
 import Link from "next/link";
 
-/** Reading column. Narrow on purpose — long lines are the enemy of "easy to read". */
-export function Shell({ children }: { children: React.ReactNode }) {
-  return <div className="mx-auto w-full max-w-[680px] px-6 sm:px-8">{children}</div>;
-}
+/* The shared frame for every project page and essay: the same column as the
+   home page, a mono label, a small title, hairline sections. */
 
-/** Figures break out of the reading column, but never to the viewport edge. */
-export function Wide({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <div className={`mx-auto w-full max-w-[1000px] px-6 sm:px-8 ${className}`}>{children}</div>;
-}
+const NEXT: Record<string, [string, string]> = {
+  "/work/quant": ["/work/melange", "Melange"],
+  "/work/melange": ["/work/reasoning", "Resampled Thought Trees"],
+  "/work/reasoning": ["/work/cardinality", "cardinality-eval"],
+  "/work/cardinality": ["/work/filings", "filing-links"],
+  "/work/filings": ["/work/quant", "leakprobe"],
+  "/writing/testing-for-leakage": ["/writing/the-schema-is-not-the-cost", "The schema is not the cost"],
+  "/writing/the-schema-is-not-the-cost": [
+    "/writing/testing-for-leakage",
+    "Testing for leakage without knowing the right answer",
+  ],
+};
 
-export function Column({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <div className={className}>{children}</div>;
-}
-
-export function Section({
-  eyebrow,
-  title,
-  children,
-  className = "",
-}: {
-  eyebrow?: string;
-  title?: string;
-  children: React.ReactNode;
-  className?: string;
-}) {
+function BackArrow() {
   return (
-    <section className={`rule py-14 sm:py-16 ${className}`}>
-      {eyebrow && <div className="label mb-3">{eyebrow}</div>}
-      {title && <h2 className="mb-7 text-[24px] leading-snug sm:text-[27px]">{title}</h2>}
-      {children}
-    </section>
+    <svg viewBox="0 0 12 12" width="10" height="10" aria-hidden>
+      <path d="M10 6H2M5.5 2.5L2 6l3.5 3.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
   );
 }
 
-export function CaseHeader({
+/** Reading column. `numbered` puts a mono counter beside each section title.
+ *  `path` adds the "next" link at the foot of the page. */
+export function Shell({
+  children,
+  numbered = false,
+  path,
+}: {
+  children: React.ReactNode;
+  numbered?: boolean;
+  path?: string;
+}) {
+  const next = path ? NEXT[path] : undefined;
+  return (
+    <div className={`doc mx-auto w-full max-w-[620px] px-6 pb-24 sm:px-8${numbered ? " numbered" : ""}`}>
+      {children}
+      <nav className="foot" aria-label="More pages">
+        <Link href="/" className="back">
+          <BackArrow />
+          Index
+        </Link>
+        {next && (
+          <Link href={next[0]} className="next">
+            <span className="tech text-ink-3">Next</span>
+            <span className="next-name">{next[1]}</span>
+          </Link>
+        )}
+      </nav>
+    </div>
+  );
+}
+
+/** Top of a page: back link level with the theme switch, label, title, then
+ *  whatever the page puts under it. */
+export function PageHeader({
   kind,
   title,
-  lede,
-  meta,
-  links,
+  children,
 }: {
-  kind: string;
+  kind?: string;
   title: string;
-  lede: React.ReactNode;
-  meta: { label: string; value: string }[];
-  links?: { href: string; label: string }[];
+  children?: React.ReactNode;
 }) {
   return (
-    <header className="pb-12 pt-14 sm:pt-20">
-      <Link href="/" className="text-[14px] text-ink-3 transition-colors hover:text-[var(--color-sea)]">
-        ← Index
+    <header className="enter">
+      <Link href="/" className="back back-top">
+        <BackArrow />
+        Index
       </Link>
-      <div className="label mt-10">{kind}</div>
-      <h1 className="mt-3 text-[clamp(30px,4.6vw,42px)] leading-[1.12]">{title}</h1>
-      <div className="lede prose mt-5">{lede}</div>
-
-      <dl className="mt-9 grid grid-cols-2 gap-x-8 gap-y-5 sm:grid-cols-4">
-        {meta.map((m) => (
-          <div key={m.label}>
-            <dt className="text-[12.5px] text-ink-3">{m.label}</dt>
-            <dd className="mt-1 text-[14px] text-ink-2">{m.value}</dd>
-          </div>
-        ))}
-      </dl>
-
-      {links && links.length > 0 && (
-        <div className="mt-8 flex flex-wrap gap-6">
-          {links.map((l) => (
-            <a key={l.href} href={l.href} className="link text-[15px]">
-              {l.label}
-            </a>
-          ))}
-        </div>
-      )}
+      {kind && <p className="tech mt-12 text-ink-3 sm:mt-16">{kind}</p>}
+      <h1 className={kind ? "mt-3" : "mt-12 sm:mt-16"}>{title}</h1>
+      {children}
     </header>
   );
 }
 
-export function Callout({
-  tone = "warn",
-  title,
-  children,
-}: {
-  tone?: "warn" | "note";
-  title?: string;
-  children: React.ReactNode;
-}) {
-  const color = tone === "warn" ? "var(--color-coral)" : "var(--color-kelp)";
-  return (
-    <div className="my-8 rounded-lg bg-paper-2 p-6">
-      {title && (
-        <div className="mb-2 text-[12.5px] font-medium uppercase tracking-[0.07em]" style={{ color }}>
-          {title}
-        </div>
-      )}
-      <div className="prose">{children}</div>
-    </div>
-  );
+export function Lede({ children }: { children: React.ReactNode }) {
+  return <p className="lede">{children}</p>;
 }
 
-export function StatRow({ children }: { children: React.ReactNode }) {
-  return <div className="grid grid-cols-2 gap-x-8 gap-y-7 sm:grid-cols-3">{children}</div>;
+/** A row of small mono links. */
+export function Links({ children }: { children: React.ReactNode }) {
+  return <p className="links">{children}</p>;
 }
 
-export function Table({
-  columns,
-  rows,
-  highlight,
-}: {
-  columns: string[];
-  rows: (string | number | React.ReactNode)[][];
-  highlight?: number;
-}) {
+export function Section({ title, children }: { title?: string; children: React.ReactNode }) {
   return (
-    <div className="scroll-x">
-      <table className="w-full min-w-[480px] border-collapse text-[14px] tnum">
-        <thead>
-          <tr>
-            {columns.map((c, i) => (
-              <th
-                key={c}
-                className={`border-b border-rule pb-2.5 text-[12.5px] font-medium text-ink-3 ${
-                  i === 0 ? "text-left" : "text-right"
-                }`}
-              >
-                {c}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row, r) => (
-            <tr key={r} className={highlight === r ? "bg-[var(--color-accent-soft)]" : ""}>
-              {row.map((cell, i) => (
-                <td
-                  key={i}
-                  className={`border-b border-rule-soft py-2.5 ${
-                    i === 0 ? "pl-2 text-left text-ink-2" : "pr-2 text-right"
-                  }`}
-                >
-                  {cell}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <section className="part">
+      {title && <h2 className="h">{title}</h2>}
+      {children}
+    </section>
   );
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import q from "@/public/data/quant.json";
-import { Shell } from "@/components/ui";
+import { Shell, PageHeader, Lede, Links } from "@/components/ui";
 import { GrowthChart, SeedLottery, BeforeAfter, Signatures } from "@/components/simple-charts";
 import { Details } from "@/components/details";
 import { LeakDemo } from "@/components/leak-demo";
@@ -17,61 +17,43 @@ export const metadata: Metadata = {
 
 export default function QuantPage() {
   return (
-    <Shell>
-      <header className="pb-10 pt-14 sm:pt-20">
-        <Link href="/" className="text-[15px] text-ink-3 transition-colors hover:text-[var(--color-sea)]">
-          ← Back
-        </Link>
-        <div className="label mt-10">Open source · Python</div>
-        <h1 className="mt-3 text-[34px] leading-[1.15] sm:text-[42px]">
-          Finding the bug that makes your model look good
-        </h1>
-        <p className="mt-6 text-[19.5px] leading-[1.65] text-ink-2">
-          If a model gets to see data that didn&apos;t exist yet, it scores brilliantly in
-          testing and fails the moment it&apos;s real. Nothing crashes and no number looks strange.
-        </p>
-        <p className="mt-5 text-[17px] leading-[1.7] text-ink-2">
-          <strong>leakprobe</strong> works like this. You hand it the function that builds
-          your features, the tables it reads from, and one line per feature naming which
-          tables that feature is <em>allowed</em> to read. It then makes a change your code
-          should be blind to (pushing one table&apos;s timestamps three weeks later, so rows that were visible no longer are) and runs your function again.
-        </p>
-        <p className="mt-4 text-[17px] leading-[1.7] text-ink-2">
-          A feature that cannot read that table gets identical inputs through
-          identical code and returns <strong>bit-identical numbers</strong>: its difference
-          is <span className="mono">0.0</span>, not <span className="mono">1e-15</span>. So
-          any movement at all is proof of a dependency nobody declared. You never need to
-          know what the correct value was. If you knew that, you wouldn&apos;t have the bug.
-        </p>
+    <Shell numbered path="/work/quant">
+      <PageHeader kind="Open source · Python" title="leakprobe">
+        <Lede>
+          Finding the bug that makes your model look good. If a model gets to see data that
+          didn&apos;t exist yet, it scores brilliantly in testing and fails the moment it&apos;s
+          real. Nothing crashes and no number looks strange.
+        </Lede>
+        <Links>
+          <a href="https://github.com/quantraunak/leakprobe" className="mlink">GitHub</a>
+          <a href="https://pypi.org/project/leakprobe/" className="mlink">PyPI</a>
+          <a href="/Bias-Fingerprints.pdf" className="mlink">Paper</a>
+          <Link href="/writing/testing-for-leakage" className="mlink">Essay</Link>
+        </Links>
+        <div className="mt-10">
+          <LeakDemo />
+          <p className="cap">
+            Move the clock on one data source. Anything that shifts had a dependency on it that
+            nobody declared.
+          </p>
+        </div>
         <Contribution
           proposed="Test a feature pipeline for data leakage without knowing the right answers: declare which tables each feature may read, change something the code must be blind to, and treat any movement as proof of an undeclared dependency. Behind it, bias fingerprinting: each data-handling mistake in a stock-picking study leaves a fixed pattern of shifts across 22 standard signals, so a published results table can be read backwards to say which mistake it contains."
           result="The test caught a factor declared price-only that was reading company filings; the dating mistake it tests for inflated a 22-factor study's measured skill by 59%. Released as pip install leakprobe; on five public datasets it catches 8 of 9 planted leaks with no false alarms, and the one it misses is invisible to it by construction. The fingerprint paper shows a dating mistake inflates and a survivorship mistake rearranges, and that only the second is identifiable from outside."
         />
-        <div className="mt-7 flex flex-wrap gap-6 text-[16px]">
-          <a href="https://github.com/quantraunak/leakprobe" className="link">
-            leakprobe on GitHub
-          </a>
-        </div>
-      </header>
+      </PageHeader>
 
-      <section className="rule py-12">
-        <LeakDemo />
-        <p className="mt-3 text-[13px] leading-[1.6] text-ink-3">
-          Move the clock on one data source. Anything that shifts had a dependency on it that
-          nobody declared.
-        </p>
-      </section>
-
-      <section className="rule py-12">
-        <h2 className="text-[25px]">The trick</h2>
-        <div className="prose mt-5">
+      <section className="part">
+        <h2 className="h">The trick</h2>
+        <div className="prose">
           <p>
             Some of your features can&apos;t possibly depend on when a particular table
             arrived. A feature built only from daily prices cannot care what day an earnings
             report was published. You can know that from arithmetic, without reading the code.
           </p>
           <p>
-            So push that table&apos;s arrival date a month later and run everything again. The features that can&apos;t see it return <em>identical</em> numbers, to the last decimal, because they got the same arrays through the same code. Anything that moves has a connection to that table you
+            So push that table&apos;s arrival date a month later and run everything again. The features that can&apos;t see it return <em>identical</em> numbers, to the last decimal, because they got the same arrays through the same code. Their difference is{" "}
+            <span className="mono">0.0</span>, not <span className="mono">1e-15</span>. Anything that moves has a connection to that table you
             didn&apos;t know about. In a system that predicts the future, an unknown connection to <em>when data arrived</em> is the bug you&apos;re looking for.
           </p>
           <p>
@@ -105,9 +87,9 @@ avg_severity         exactly 0       bypass?`}
         </div>
       </section>
 
-      <section className="rule py-12">
-        <h2 className="text-[25px]">It caught a real one</h2>
-        <div className="prose mt-5">
+      <section className="part">
+        <h2 className="h">It caught a real one</h2>
+        <div className="prose">
           <p>
             In the project this came out of, a signal called{" "}
             <span className="mono">turnover_1m</span> was filed under &ldquo;built from
@@ -123,9 +105,9 @@ avg_severity         exactly 0       bypass?`}
         </div>
       </section>
 
-      <section className="rule py-12">
-        <h2 className="text-[25px]">Where the idea came from</h2>
-        <div className="prose mt-5">
+      <section className="part">
+        <h2 className="h">Where the idea came from</h2>
+        <div className="prose">
           <p>
             This started as a question about stock-picking research, where the same bug has
             a name: using a company&apos;s quarterly figures on the day the quarter ended
@@ -157,10 +139,9 @@ avg_severity         exactly 0       bypass?`}
         </div>
       </section>
 
-      <section className="rule py-12">
-        <div className="label">Paper</div>
-        <h2 className="mt-3 text-[25px]">Bias Fingerprints</h2>
-        <div className="prose mt-5">
+      <section className="part">
+        <h2 className="h">The paper: Bias Fingerprints</h2>
+        <div className="prose">
           <p>
             A write-up of the measurements above: what each mistake does to 22 stock-picking
             rules, why one of them doesn&apos;t inflate results at all but rearranges which
@@ -172,14 +153,14 @@ avg_severity         exactly 0       bypass?`}
             the verdicts did not change, the numbers did, and the paper says so.
           </p>
         </div>
-        <div className="mt-9 flex flex-wrap gap-6 text-[16px]">
-          <a href="/Bias-Fingerprints.pdf" className="link">Read the paper (PDF)</a>
+        <div className="links">
+          <a href="/Bias-Fingerprints.pdf" className="mlink">Read the paper (PDF)</a>
         </div>
       </section>
 
-      <section className="rule py-12">
-        <h2 className="text-[25px]">The pipeline underneath</h2>
-        <div className="prose mt-5">
+      <section className="part">
+        <h2 className="h">The pipeline underneath</h2>
+        <div className="prose">
           <p>
             None of this works without a pipeline that is correct on the dimension being studied,
             because the correct run is what everything else is measured against. That is
@@ -206,9 +187,9 @@ avg_severity         exactly 0       bypass?`}
         </div>
       </section>
 
-      <section className="rule py-12">
-        <h2 className="text-[25px]">Two things worth knowing about any backtest</h2>
-        <div className="prose mt-5">
+      <section className="part">
+        <h2 className="h">Two things worth knowing about any backtest</h2>
+        <div className="prose">
           <p>
             Building the instrument produced two results that have nothing to do with this
             particular model. The first: most reported strategy returns are partly exposure to
@@ -227,9 +208,9 @@ avg_severity         exactly 0       bypass?`}
         <SeedLottery />
       </section>
 
-      <section className="rule py-12">
-        <h2 className="text-[25px]">How the pipeline got built</h2>
-        <div className="prose mt-5">
+      <section className="part">
+        <h2 className="h">How the pipeline got built</h2>
+        <div className="prose">
           <p>
             The pipeline began as an inherited version whose own output reported 35% a year, a
             number that no longer reproduces and is quoted only as the starting point. Reproducing it turned
@@ -274,11 +255,11 @@ avg_severity         exactly 0       bypass?`}
           </div>
         </Details>
 
-        <div className="mt-9 flex flex-wrap gap-6 text-[16px]">
-          <a href="https://github.com/quantraunak/bias-fingerprints" className="link">
+        <div className="links">
+          <a href="https://github.com/quantraunak/bias-fingerprints" className="mlink">
             Code on GitHub
           </a>
-          <a href="https://quantraunak.github.io/bias-fingerprints/" className="link">
+          <a href="https://quantraunak.github.io/bias-fingerprints/" className="mlink">
             Full results dashboard
           </a>
         </div>

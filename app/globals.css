@@ -104,19 +104,6 @@ h3 {
   color: var(--color-ink);
 }
 
-.display {
-  font-size: clamp(40px, 7vw, 76px);
-  line-height: 0.96;
-  letter-spacing: -0.035em;
-  font-weight: 500;
-}
-
-.serif {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  letter-spacing: -0.02em;
-}
-
 .mono {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
@@ -136,19 +123,13 @@ h3 {
   font-family: var(--font-sans);
 }
 
-.lede {
-  font-size: 19px;
-  line-height: 1.65;
-  color: var(--color-ink-2);
-}
-
 .prose p {
   color: var(--color-ink-2);
-  font-size: 17px;
-  line-height: 1.75;
+  font-size: 16px;
+  line-height: 1.72;
 }
 .prose p + p {
-  margin-top: 1.15em;
+  margin-top: 1.05em;
 }
 .prose strong {
   color: var(--color-ink);
@@ -166,16 +147,6 @@ h3 {
   border-radius: 3px;
 }
 
-.tide {
-  color: var(--color-sea);
-}
-
-.card {
-  background: var(--color-paper-2);
-  border: 1px solid var(--color-rule);
-  border-radius: 10px;
-}
-
 /* --------------------------------------------------------------- layout */
 
 .rule {
@@ -191,64 +162,23 @@ h3 {
   scrollbar-width: thin;
 }
 
-/* --------------------------------------------------------------- motion */
-
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-.reveal {
-  animation: rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.onscroll {
-  opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.onscroll.in {
-  opacity: 1;
-  transform: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  .reveal {
-    animation: none !important;
-  }
-  .onscroll {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
-}
-
 input[type="range"] {
   accent-color: var(--color-sea);
 }
 
 .code {
   font-family: var(--font-mono);
-  font-size: 13.5px;
+  font-size: 12.5px;
   line-height: 1.75;
-  background: var(--color-paper-3);
+  background: var(--color-paper-2);
   border: 1px solid var(--color-rule);
-  border-radius: 12px;
-  padding: 20px 22px;
+  border-radius: 10px;
+  padding: 16px 18px;
   overflow-x: auto;
   white-space: pre;
   color: var(--color-ink-2);
-  margin: 26px 0;
+  margin: 24px 0;
+  scrollbar-width: thin;
 }
 .code b {
   color: var(--color-ink);
@@ -285,77 +215,6 @@ h2.sec::after {
   flex: 1;
   height: 1px;
   background: var(--color-rule);
-}
-
-/* A linked title in a list: plain until hovered. */
-.title {
-  color: var(--color-ink);
-  font-weight: 450;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  text-decoration-thickness: 1px;
-  text-decoration-color: transparent;
-  transition: text-decoration-color 0.15s;
-}
-.title:hover {
-  text-decoration-color: currentColor;
-}
-
-/* ------------------------------------------------------------- reveal */
-
-@keyframes reveal-in {
-  from {
-    opacity: 0;
-    filter: blur(9px);
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    filter: blur(0);
-    transform: none;
-  }
-}
-
-.reveal {
-  opacity: 0;
-}
-.reveal.is-in {
-  animation: reveal-in 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reveal,
-  .reveal.is-in {
-    opacity: 1;
-    animation: none;
-    filter: none;
-    transform: none;
-  }
-  html {
-    scroll-behavior: auto;
-  }
-}
-
-/* Hairline rules framing the reading column, the way a technical drawing
-   frames its sheet. */
-.framed {
-  position: relative;
-}
-.framed::before,
-.framed::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: var(--color-rule);
-  pointer-events: none;
-}
-.framed::before {
-  left: 0;
-}
-.framed::after {
-  right: 0;
 }
 
 .tech {
@@ -414,13 +273,6 @@ h2.sec::after {
   vertical-align: -1px;
   background: var(--color-accent);
   animation: blink 1.1s steps(1) infinite;
-}
-
-/* Figures in running text: weight only, no box. */
-.num {
-  font-weight: 550;
-  font-variant-numeric: tabular-nums;
-  color: var(--color-ink);
 }
 
 /* Links under the intro: small mono, underlined on hover. */
@@ -488,8 +340,193 @@ h2.sec::after {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   .enter,
   .caret {
     animation: none;
   }
+}
+
+/* ------------------------------------------- project pages and essays */
+
+/* Same column and the same voice as the home page: small title, mono
+   labels, hairlines. */
+.doc {
+  font-size: 16px;
+  line-height: 1.7;
+  counter-reset: sec;
+}
+.doc h1 {
+  font-size: 26px;
+  line-height: 1.2;
+  font-weight: 500;
+  letter-spacing: -0.022em;
+}
+
+/* "Index", top left, on the same line as the theme switch. */
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink-3);
+  transition: color 0.15s;
+}
+.back svg {
+  transition: transform 0.18s;
+}
+.back:hover {
+  color: var(--color-ink);
+}
+.back:hover svg {
+  transform: translateX(-2px);
+  color: var(--color-accent);
+}
+.back-top {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  width: fit-content;
+  height: 26px;
+  margin-top: -26px;
+}
+.doc header {
+  padding-bottom: 44px;
+}
+/* The summary's last row closes on the first section's rule. */
+.doc header:has(.summary) {
+  padding-bottom: 0;
+}
+
+.lede {
+  margin-top: 18px;
+  font-size: 17px;
+  line-height: 1.62;
+  color: var(--color-ink);
+}
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 24px;
+  margin-top: 24px;
+}
+
+/* The idea and the result, as a small ruled table. */
+.summary {
+  margin-top: 36px;
+  border-top: 1px solid var(--color-rule);
+}
+.summary > div {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr);
+  gap: 20px;
+  padding: 15px 0 16px;
+}
+.summary > div + div {
+  border-top: 1px solid var(--color-rule);
+}
+.summary dt {
+  padding-top: 4px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink-3);
+}
+.summary dd {
+  font-size: 15px;
+  line-height: 1.62;
+  color: var(--color-ink-2);
+}
+@media (max-width: 520px) {
+  .summary > div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+  }
+}
+
+.part {
+  border-top: 1px solid var(--color-rule);
+  padding: 40px 0 44px;
+}
+.part:last-of-type {
+  padding-bottom: 8px;
+}
+h2.h {
+  position: relative;
+  margin-bottom: 16px;
+  font-size: 18px;
+  line-height: 1.35;
+  font-weight: 550;
+  letter-spacing: -0.012em;
+}
+/* Section numbers: in the margin when there is one, inline when not. */
+.numbered h2.h::before {
+  counter-increment: sec;
+  content: counter(sec, decimal-leading-zero);
+  margin-right: 12px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--color-ink-3);
+  font-variant-numeric: tabular-nums;
+}
+@media (min-width: 780px) {
+  .numbered h2.h::before {
+    position: absolute;
+    right: 100%;
+    top: 0.5em;
+    margin-right: 22px;
+  }
+}
+
+/* A frame for a chart, demo or screenshot. */
+.fig {
+  border: 1px solid var(--color-rule);
+  border-radius: 10px;
+}
+.cap {
+  margin-top: 12px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--color-ink-3);
+}
+
+/* Foot of the page: back to the index, on to the next one. */
+.foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 48px;
+  padding-top: 22px;
+  border-top: 1px solid var(--color-rule);
+}
+.next {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 12px;
+  min-width: 0;
+  text-align: right;
+}
+.next-name {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--color-rule);
+  transition: text-decoration-color 0.15s;
+}
+.next:hover .next-name {
+  text-decoration-color: var(--color-accent);
 }

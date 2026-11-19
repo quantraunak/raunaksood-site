@@ -40,7 +40,7 @@ export function CoverageFigure() {
   }
   return (
     <figure ref={ref} className="my-10">
-      <div className="rounded-lg border border-rule-soft bg-paper-2 px-6 py-6">
+      <div className="fig bg-paper-2 p-5 sm:p-6">
         <div className="grid gap-[5px]" style={{ gridTemplateColumns: `repeat(${cols}, minmax(0,1fr))` }}>
           {dots}
         </div>
@@ -77,7 +77,7 @@ export function AsymmetryFigure() {
   const max = 668;
   return (
     <figure ref={ref} className="my-10">
-      <div className="rounded-lg border border-rule-soft bg-paper-2 px-6 py-6">
+      <div className="fig bg-paper-2 p-5 sm:p-6">
         <div className="space-y-4">
           {rows.map((r, i) => (
             <div key={r.label} className="flex items-center gap-4">

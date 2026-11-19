@@ -31,7 +31,7 @@ export function SecurityDemo() {
 
   return (
     <figure className="my-10">
-      <div className="rounded-xl border border-rule p-5 sm:p-7">
+      <div className="fig p-5 sm:p-6">
         <div className="space-y-2.5">
           {CASES.map((cs, idx) => (
             <button
@@ -98,7 +98,7 @@ export function SwipeDemo() {
 
   return (
     <figure className="my-10">
-      <div className="rounded-xl border border-rule p-5 sm:p-7">
+      <div className="fig p-5 sm:p-6">
         <div className="grid grid-cols-2 gap-4">
           {[
             { who: ME, on: mine, set: setMine, sub: "iPhone" },
@@ -229,7 +229,7 @@ export function RankingBreakdown() {
 
   return (
     <figure className="my-10">
-      <div className="rounded-xl border border-rule p-5 sm:p-7">
+      <div className="fig p-5 sm:p-6">
         <div className="mono mb-5 text-[11.5px] uppercase tracking-[0.12em] text-ink-3">
           rank_score: weights that sum to 1.00, plus 0.05 for verified authors
         </div>

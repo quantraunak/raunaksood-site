@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { Shell, Section } from "@/components/ui";
+import { Shell, Section, PageHeader, Lede } from "@/components/ui";
 import { CardinalityDemo } from "@/components/cardinality-demo";
 import { CrossoverFigure, DilutionFigure } from "@/components/cardinality-figures";
 
@@ -14,23 +13,16 @@ export const metadata: Metadata = {
 
 export default function SchemaPage() {
   return (
-    <Shell>
-      <header className="pb-10 pt-14 sm:pt-20">
-        <Link href="/" className="text-[15px] text-ink-3 transition-colors hover:text-[var(--color-sea)]">
-          ← Back
-        </Link>
-        <div className="label mt-10">Writing · September 2026</div>
-        <h1 className="mt-3 text-[34px] leading-[1.15] sm:text-[42px]">
-          The schema is not the cost
-        </h1>
-        <p className="mt-6 text-[19.5px] leading-[1.65] text-ink-2">
+    <Shell path="/writing/the-schema-is-not-the-cost">
+      <PageHeader kind="Essay · September 2026" title="The schema is not the cost">
+        <Lede>
           If you run an LLM behind a JSON schema, you have probably worried about what the
           grammar is doing to the model. I went looking for that cost in a specific place
           and found the opposite.
-        </p>
-      </header>
+        </Lede>
+      </PageHeader>
 
-      <div className="pb-4">
+      <div className="pb-12">
         <CardinalityDemo />
       </div>
 
@@ -114,7 +106,7 @@ export default function SchemaPage() {
 
         <DilutionFigure />
 
-        <div className="prose mt-7">
+        <div className="prose">
           <p>
             <strong>Dilution alone was worth 0.25 recall.</strong> I had built the filler by
             selecting prose <em>for containing no company names</em>, which made it far more
@@ -162,7 +154,7 @@ unconstrained   25/25   23/25   21/25
 constrained     25/25   25/25   25/25`}
         </div>
 
-        <div className="prose mt-7">
+        <div className="prose">
           <p>
             First, a correction to what this post said until October 2026. It reported a
             0.214 drop under free generation and called it a rejection. Six of the 75

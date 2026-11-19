@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { Shell, Section } from "@/components/ui";
+import { Shell, Section, PageHeader, Lede } from "@/components/ui";
 
 export const metadata: Metadata = {
   title: "Testing for leakage without knowing the right answer",
@@ -12,20 +11,13 @@ export const metadata: Metadata = {
 
 export default function LeakagePage() {
   return (
-    <Shell>
-      <header className="pb-10 pt-14 sm:pt-20">
-        <Link href="/" className="text-[15px] text-ink-3 transition-colors hover:text-[var(--color-sea)]">
-          ← Back
-        </Link>
-        <div className="label mt-10">Writing · September 2026</div>
-        <h1 className="mt-3 text-[34px] leading-[1.15] sm:text-[42px]">
-          Testing for leakage without knowing the right answer
-        </h1>
-        <p className="mt-6 text-[19.5px] leading-[1.65] text-ink-2">
+    <Shell path="/writing/testing-for-leakage">
+      <PageHeader kind="Essay · September 2026" title="Testing for leakage without knowing the right answer">
+        <Lede>
           A factor called <span className="mono">turnover_1m</span> broke a backtest of mine,
           and it took months to notice because nothing about it looked wrong.
-        </p>
-      </header>
+        </Lede>
+      </PageHeader>
 
       <Section>
         <div className="prose">
@@ -125,7 +117,7 @@ export default function LeakagePage() {
           </p>
         </div>
 
-        <div className="code mt-7" role="img" aria-label="the five shapes of leakage tested">
+        <div className="code" role="img" aria-label="the five shapes of leakage tested">
 {`S1   a cutoff filter is missing, so an aggregate runs over every row
 S2   a feature reads a second table it never declared
 S3   outcome leakage, the outcome in a table with its own later clock
@@ -133,7 +125,7 @@ S4   the same, but read under the event's own timestamp
 S5   a z-score whose mean and deviation come from all of time`}
         </div>
 
-        <div className="prose mt-7">
+        <div className="prose">
           <p>
             The correct pipelines mattered more to me than the bugged ones. A detector that
             flags clean code is worse than no detector, because it teaches you to ignore it.
@@ -219,7 +211,7 @@ S5   a z-score whose mean and deviation come from all of time`}
           </p>
         </div>
 
-        <div className="code mt-7" role="img" aria-label="benchmark results by leakage shape">
+        <div className="code" role="img" aria-label="benchmark results by leakage shape">
 {`shape                                          caught
 S1  missing cutoff filter                         3/3
 S2  undeclared source read                        2/2
@@ -230,7 +222,7 @@ S5  statistic over all of time                    1/1
 correct pipelines flagged                         0/5`}
         </div>
 
-        <div className="prose mt-7">
+        <div className="prose">
           <p>
             Eight of nine. The miss is S4, and it is a miss by construction rather than a
             bug. When the outcome sits in the same row as the event, under the event&apos;s
@@ -278,9 +270,9 @@ correct pipelines flagged                         0/5`}
           </p>
         </div>
 
-        <div className="code mt-7">pip install leakprobe</div>
+        <div className="code">pip install leakprobe</div>
 
-        <div className="prose mt-7">
+        <div className="prose">
           <p>
             The zoo is in <span className="mono">benchmarks/leak_zoo.py</span> in{" "}
             <a href="https://github.com/quantraunak/leakprobe" className="link">

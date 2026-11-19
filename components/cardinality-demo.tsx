@@ -39,7 +39,7 @@ export function CardinalityDemo() {
   const lead = level.free.recall - level.constrained.recall;
 
   return (
-    <div className="rounded-lg border border-rule-soft bg-paper-2 p-6">
+    <div className="fig bg-paper-2 p-5 sm:p-6">
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <div className="label">Items the model was asked to find</div>
         <div className="mono text-[12.5px] text-ink-3">

@@ -18,7 +18,7 @@ function Figure({
 }) {
   return (
     <figure className="my-10">
-      <div className="rounded-xl border border-rule p-5 sm:p-7">{children}</div>
+      <div className="fig p-5 sm:p-6">{children}</div>
       <figcaption className="mt-4 text-[15.5px] leading-[1.65] text-ink-2">
         <span className="font-medium text-ink">What to look at: </span>
         {caption}
