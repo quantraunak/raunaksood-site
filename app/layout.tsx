@@ -1,11 +1,23 @@
 import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { TopBar } from "@/components/top-bar";
 import { SITE_URL } from "@/lib/site";
 
+const sans = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" });
+const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono", display: "swap" });
+
 export const viewport = {
-  themeColor: "#ffffff",
-  colorScheme: "light" as const,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fcfcfb" },
+    { media: "(prefers-color-scheme: dark)", color: "#0b0b0c" },
+  ],
+  colorScheme: "light dark" as const,
 };
+
+/* Set the theme before first paint: the saved choice, else the system's. */
+const THEME_SCRIPT =
+  '(function(){var d=document.documentElement;try{var t=localStorage.getItem("theme");if(t!=="light"&&t!=="dark")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";d.dataset.theme=t}catch(e){d.dataset.theme="light"}})()';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -56,14 +68,9 @@ const PERSON_SCHEMA = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${sans.variable} ${mono.variable}`} suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;550&family=JetBrains+Mono:wght@400;500&display=swap"
-          rel="stylesheet"
-        />
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
         <link
           rel="icon"
           href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%23a06d26'/%3E%3Ctext x='50' y='71' font-size='58' text-anchor='middle' font-family='Georgia,serif' fill='%23f7f5f0'%3ER%3C/text%3E%3C/svg%3E"
@@ -80,6 +87,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to content
         </a>
+        <TopBar />
         <main id="main">{children}</main>
         <SiteFooter />
       </body>
@@ -89,7 +97,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 function SiteFooter() {
   return (
-    <footer className="mx-auto w-full max-w-[600px] px-6 pb-12 text-[13px] text-ink-3">
+    <footer className="tech mx-auto w-full max-w-[680px] px-6 pb-12 text-ink-3 sm:px-8">
       © {new Date().getFullYear()} Raunak Sood
     </footer>
   );

@@ -1,110 +1,130 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { DotField } from "@/components/dot-field";
 
 export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 const LINKS: [string, string][] = [
-  ["mailto:raunak.sood@gmail.com", "Email"],
   ["https://github.com/quantraunak", "GitHub"],
   ["https://www.linkedin.com/in/raunak-sood", "LinkedIn"],
   ["/Raunak-Sood-Resume.pdf", "Résumé"],
+  ["mailto:raunak.sood@gmail.com", "Email"],
 ];
 
-const PROJECTS: [string, string, string][] = [
-  ["/work/quant", "leakprobe", "Python library that finds ML features reading future data. It caught 8 of 9 planted leaks."],
-  ["/work/melange", "Melange", "iOS and web app where creative people find collaborators."],
-  ["/work/reasoning", "Resampled Thought Trees", "Scores each step of an AI's search by re-running from it. Five-author paper at USC."],
-  ["https://github.com/quantraunak/deal-desk-voice", "Deal Desk", "Voice agent that answers deal questions with citations, and an audit of its LLM judge."],
+const PROJECTS: [string, string, string, string][] = [
+  ["/work/quant", "leakprobe", "Python library that finds ML features reading future data. It caught 8 of 9 planted leaks.", "PyPI"],
+  ["/work/melange", "Melange", "iOS and web app where creative people find collaborators.", "App Store"],
+  ["/work/reasoning", "Resampled Thought Trees", "Scores each step of an AI's search by re-running from it. Five-author paper at USC.", "Paper"],
+  ["https://github.com/quantraunak/deal-desk-voice", "Deal Desk", "Voice agent that answers deal questions with citations, and an audit of its LLM judge.", "GitHub"],
+  ["/work/cardinality", "cardinality-eval", "Tests whether LLM extraction gets worse as the list of things to find grows.", "Study"],
+  ["/work/filings", "filing-links", "A dated map of which companies name each other in their 10-Ks.", "Study"],
 ];
 
-const WRITING: [string, string, string][] = [
-  ["/writing/testing-for-leakage", "Testing for leakage without knowing the right answer", "Essay"],
-  ["/writing/the-schema-is-not-the-cost", "The schema is not the cost", "Essay"],
-  ["/papers/bias-fingerprints.pdf", "Bias Fingerprints", "Paper"],
-  ["/papers/cardinality.pdf", "What Constrained Decoding Buys at High Item Counts", "Paper"],
+const WRITING: [string, string, string, string][] = [
+  ["/writing/testing-for-leakage", "Testing for leakage without knowing the right answer", "", "Essay"],
+  ["/writing/the-schema-is-not-the-cost", "The schema is not the cost", "", "Essay"],
+  ["/papers/bias-fingerprints.pdf", "Bias Fingerprints", "", "Paper"],
+  ["/papers/cardinality.pdf", "What Constrained Decoding Buys at High Item Counts", "", "Paper"],
 ];
 
-function Anchor({ href, className, children }: { href: string; className?: string; children: React.ReactNode }) {
-  const internal = href.startsWith("/") && !href.endsWith(".pdf");
-  return internal ? (
-    <Link href={href} className={className}>
-      {children}
-    </Link>
-  ) : (
-    <a href={href} className={className}>
-      {children}
-    </a>
+function Arrow() {
+  return (
+    <svg viewBox="0 0 12 12" width="10" height="10" aria-hidden className="row-arrow">
+      <path d="M3 9l6-6M4.5 3H9v4.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
   );
 }
 
-function Heading({ children }: { children: React.ReactNode }) {
-  return <h2 className="sec">{children}</h2>;
+function Row({ href, name, line, tag }: { href: string; name: string; line: string; tag: string }) {
+  const inner = (
+    <>
+      <span className="min-w-0">
+        <span className="row-name">{name}</span>
+        {line && <span className="mt-0.5 block text-ink-2">{line}</span>}
+      </span>
+      <span className="tech flex shrink-0 items-center gap-1.5 pt-[3px] text-ink-3">
+        {tag}
+        <Arrow />
+      </span>
+    </>
+  );
+  const internal = href.startsWith("/") && !href.endsWith(".pdf");
+  return (
+    <li>
+      {internal ? (
+        <Link href={href} className="row">
+          {inner}
+        </Link>
+      ) : (
+        <a href={href} className="row">
+          {inner}
+        </a>
+      )}
+    </li>
+  );
+}
+
+function Section({ label, i, children }: { label: string; i: number; children: React.ReactNode }) {
+  return (
+    <section className="enter mt-14" style={{ "--i": i } as React.CSSProperties}>
+      <h2 className="sec">
+        <span>{label}</span>
+      </h2>
+      {children}
+    </section>
+  );
 }
 
 export default function Home() {
   return (
-    <div className="mx-auto w-full max-w-[600px] px-6 pb-20 pt-16 text-[15.5px] leading-[1.65] sm:pt-28">
-      <header>
-        <h1 className="text-[15.5px] font-medium tracking-normal">Raunak Sood</h1>
-        <p className="mt-5">
-          Machine learning engineer at Innovius Capital and master&apos;s student in computer
-          science at USC, graduating May 2027.
-        </p>
-        <p className="mt-3.5">
-          At Innovius I rebuilt the firm&apos;s startup-ranking model. Of its top 20 picks, 90%
-          advanced, up from 20% with the model it replaced. Before that I spent two summers on
-          machine learning at QIAGEN and studied economics at Santa Clara, where I played Division
-          I tennis.
-        </p>
-        <p className="mt-5 flex flex-wrap gap-x-5 gap-y-1">
-          {LINKS.map(([href, label]) => (
-            <a key={href} href={href} className="link">
-              {label}
-            </a>
-          ))}
-        </p>
-      </header>
+    <div className="relative">
+      <DotField />
+      <div className="relative mx-auto w-full max-w-[680px] px-6 pb-20 pt-20 text-[15.5px] leading-[1.65] sm:px-8 sm:pt-28">
+        <header>
+          <div className="enter" style={{ "--i": 0 } as React.CSSProperties}>
+            <h1 className="text-[22px] font-medium tracking-[-0.02em]">Raunak Sood</h1>
+            <p className="tech mt-2 text-ink-3">
+              Machine learning engineer
+              <span className="caret" aria-hidden />
+            </p>
+          </div>
+          <div className="enter mt-8 space-y-4" style={{ "--i": 1 } as React.CSSProperties}>
+            <p>
+              I build ranking models and LLM agents at Innovius Capital, and I&apos;m finishing a
+              master&apos;s in computer science at USC in May 2027.
+            </p>
+            <p>
+              At Innovius I rebuilt the firm&apos;s startup-ranking model. Of its top 20 picks,{" "}
+              <span className="num">90%</span> advanced, up from <span className="num">20%</span>{" "}
+              with the model it replaced. Before that I spent two summers on machine learning at
+              QIAGEN and studied economics at Santa Clara, where I played Division I tennis.
+            </p>
+          </div>
+          <p className="enter mt-7 flex flex-wrap gap-2" style={{ "--i": 2 } as React.CSSProperties}>
+            {LINKS.map(([href, label]) => (
+              <a key={href} href={href} className="chip">
+                {label}
+              </a>
+            ))}
+          </p>
+        </header>
 
-      <section className="mt-12">
-        <Heading>Projects</Heading>
-        <ul className="space-y-3">
-          {PROJECTS.map(([href, name, line]) => (
-            <li key={href} className="sm:grid sm:grid-cols-[11.5rem_minmax(0,1fr)] sm:gap-x-4">
-              <span>
-                <Anchor href={href} className="title">
-                  {name}
-                </Anchor>
-              </span>
-              <span className="block text-ink-2">{line}</span>
-            </li>
-          ))}
-        </ul>
-        <p className="mt-4 text-ink-3">
-          Also{" "}
-          <Link href="/work/cardinality" className="link">
-            cardinality-eval
-          </Link>{" "}
-          and{" "}
-          <Link href="/work/filings" className="link">
-            filing-links
-          </Link>
-          .
-        </p>
-      </section>
+        <Section label="Projects" i={3}>
+          <ul>
+            {PROJECTS.map(([href, name, line, tag]) => (
+              <Row key={href} href={href} name={name} line={line} tag={tag} />
+            ))}
+          </ul>
+        </Section>
 
-      <section className="mt-12">
-        <Heading>Writing</Heading>
-        <ul className="space-y-2">
-          {WRITING.map(([href, title, kind]) => (
-            <li key={href} className="flex items-baseline justify-between gap-6">
-              <Anchor href={href} className="title">
-                {title}
-              </Anchor>
-              <span className="shrink-0 text-[13.5px] text-ink-3">{kind}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
+        <Section label="Writing" i={4}>
+          <ul>
+            {WRITING.map(([href, name, line, tag]) => (
+              <Row key={href} href={href} name={name} line={line} tag={tag} />
+            ))}
+          </ul>
+        </Section>
+      </div>
     </div>
   );
 }

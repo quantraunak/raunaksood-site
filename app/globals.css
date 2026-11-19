@@ -3,7 +3,7 @@
 /* Light, always. White page, near-black ink, one accent kept for the figures. */
 
 @theme {
-  --color-paper: #ffffff;
+  --color-paper: #fcfcfb;
   --color-paper-2: #fbfbfa;
   --color-paper-3: #f4f4f2;
   --color-paper-4: #e8e8e5;
@@ -26,9 +26,35 @@
   --color-accent: var(--color-sea);
   --color-accent-soft: #eaf3f6;
 
-  --font-serif: "Fraunces", "Iowan Old Style", Georgia, serif;
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --font-serif: "Iowan Old Style", Georgia, serif;
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+/* Dark theme. Same tokens, so every page and figure follows. */
+[data-theme="dark"] {
+  --color-paper: #0b0b0c;
+  --color-paper-2: #121214;
+  --color-paper-3: #19191c;
+  --color-paper-4: #2b2b30;
+
+  --color-ink: #ededee;
+  --color-ink-2: #a5a5ab;
+  --color-ink-3: #6c6c74;
+
+  --color-rule: #242428;
+  --color-rule-soft: #19191c;
+
+  --color-shallow: #3f8ea3;
+  --color-sea: #62b8d1;
+  --color-deep: #8fd0e3;
+  --color-abyss: #b5e1ee;
+  --color-kelp: #3fb898;
+  --color-coral: #e87558;
+  --color-sand: #cfa64e;
+
+  --color-accent: var(--color-sea);
+  --color-accent-soft: #0f2a33;
 }
 
 /* No bare `* { margin: 0 }` here. Tailwind's preflight already resets the
@@ -38,11 +64,12 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
-  background: #ffffff;
+  background: var(--color-paper);
 }
 
 body {
-  background: #ffffff;
+  background: var(--color-paper);
+  transition: background-color 0.25s ease, color 0.25s ease;
   color: var(--color-ink);
   font-family: var(--font-sans);
   font-size: 17px;
@@ -58,7 +85,7 @@ a {
 }
 
 ::selection {
-  background: #d6e8ee;
+  background: color-mix(in srgb, var(--color-sea) 28%, transparent);
 }
 
 :focus-visible {
@@ -233,20 +260,31 @@ input[type="range"] {
   text-decoration: underline;
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;
-  text-decoration-color: #c4c7cc;
+  text-decoration-color: color-mix(in srgb, var(--color-ink) 28%, transparent);
   transition: text-decoration-color 0.15s;
 }
 .link:hover {
   text-decoration-color: currentColor;
 }
 
-/* Section heading on the home page: small and grey, so the items lead. */
+/* Section heading on the home page: a mono label and a hairline. */
 h2.sec {
-  margin-bottom: 14px;
-  font-size: 13.5px;
-  font-weight: 400;
-  letter-spacing: 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 10px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--color-ink-3);
+}
+h2.sec::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--color-rule);
 }
 
 /* A linked title in a list: plain until hovered. */
@@ -326,4 +364,139 @@ h2.sec {
   letter-spacing: 0.14em;
   font-size: 11.5px;
   font-weight: 500;
+}
+
+/* ------------------------------------------------------------ home page */
+
+/* The dot grid behind the intro. It fades out before the lists start. */
+.dot-field {
+  position: absolute;
+  inset: -64px 0 auto 0;
+  width: 100%;
+  height: 560px;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 45%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 45%, transparent 100%);
+}
+
+/* Sections arrive one after another on load. */
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+.enter {
+  animation: enter 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--i, 0) * 80ms + 60ms);
+}
+
+/* A blinking block after the role line. */
+@keyframes blink {
+  0%,
+  55% {
+    opacity: 1;
+  }
+  56%,
+  100% {
+    opacity: 0;
+  }
+}
+.caret {
+  display: inline-block;
+  width: 7px;
+  height: 12px;
+  margin-left: 6px;
+  vertical-align: -1px;
+  background: var(--color-accent);
+  animation: blink 1.1s steps(1) infinite;
+}
+
+/* Figures in running text. */
+.num {
+  font-family: var(--font-mono);
+  font-size: 0.93em;
+  color: var(--color-ink);
+  background: var(--color-paper-3);
+  border-radius: 4px;
+  padding: 0.08em 0.36em;
+}
+
+/* Link pills under the intro. */
+.chip {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--color-ink-2);
+  background: color-mix(in srgb, var(--color-paper) 70%, transparent);
+  border: 1px solid var(--color-rule);
+  border-radius: 999px;
+  padding: 5px 13px;
+  backdrop-filter: blur(4px);
+  transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+}
+.chip:hover {
+  color: var(--color-paper);
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+}
+
+/* A row in a list: the whole line is the link. */
+.row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin: 0 -12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  transition: background-color 0.15s;
+}
+.row:hover {
+  background: var(--color-paper-3);
+}
+.row-name {
+  font-weight: 500;
+  color: var(--color-ink);
+}
+.row-arrow {
+  opacity: 0;
+  transform: translate(-3px, 3px);
+  transition: opacity 0.18s, transform 0.18s;
+}
+.row:hover .row-arrow {
+  opacity: 1;
+  transform: none;
+  color: var(--color-accent);
+}
+
+.theme-toggle {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  color: var(--color-ink-3);
+  cursor: pointer;
+  transition: color 0.15s, background-color 0.15s, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.theme-toggle:hover {
+  color: var(--color-ink);
+  background: var(--color-paper-3);
+}
+[data-theme="dark"] .theme-toggle {
+  transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .enter,
+  .caret {
+    animation: none;
+  }
 }
