@@ -94,10 +94,8 @@ export default function Home() {
               master&apos;s in computer science at USC in May 2027.
             </p>
             <p>
-              At Innovius I rebuilt the firm&apos;s startup-ranking model. Of its top 20 picks,{" "}
-              <span className="num">90%</span> advanced, up from <span className="num">20%</span>{" "}
-              with the model it replaced. Before that I did machine learning for drug discovery at
-              QIAGEN and studied economics at Santa Clara, where I played Division I tennis.
+              Before that I did machine learning for drug discovery at QIAGEN and studied
+              economics at Santa Clara, where I played Division I tennis.
             </p>
           </div>
           <p className="enter mt-7 flex flex-wrap gap-x-6 gap-y-1" style={{ "--i": 2 } as React.CSSProperties}>
