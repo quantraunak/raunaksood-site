@@ -1,4 +1,4 @@
-# raunaksood.vercel.app
+# raunaksood.com
 
 Personal site and project write-ups. Next.js, TypeScript, Tailwind v4, no chart library —
 every figure is hand-built inline SVG so the page ships no third-party JS and the marks
