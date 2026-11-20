@@ -76,12 +76,6 @@ export default function Home() {
     <div className="relative">
       <DotField />
       <div className="relative mx-auto w-full max-w-[620px] px-6 pb-24 pt-20 text-[15.5px] leading-[1.65] sm:px-8 sm:pt-28">
-        <Link href="/work/quant" className="back clock left-6 sm:left-8" aria-label="Clock: the leakprobe demo">
-          Clock
-          <span id="clock-days" className="clock-days">
-            +0d
-          </span>
-        </Link>
         <header>
           <div className="enter" style={{ "--i": 0 } as React.CSSProperties}>
             <h1 className="text-[22px] font-medium tracking-[-0.02em]">Raunak Sood</h1>
