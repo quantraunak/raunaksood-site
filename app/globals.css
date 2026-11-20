@@ -245,11 +245,25 @@ h2.sec::after {
   -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 45%, transparent 100%);
   mask-image: linear-gradient(to bottom, #000 0%, #000 45%, transparent 100%);
 }
+/* On a phone: a short band between the top row and the name. */
 @media (max-width: 759px) {
   .dot-field {
-    -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 70px, transparent 150px);
-    mask-image: linear-gradient(to bottom, #000 0, #000 70px, transparent 150px);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 62px, #000 76px, #000 112px, transparent 144px);
+    mask-image: linear-gradient(to bottom, transparent 62px, #000 76px, #000 112px, transparent 144px);
   }
+}
+
+/* The clock the dots are reading, top left, level with the theme switch. */
+.clock {
+  position: absolute;
+  top: -26px;
+  z-index: 20;
+  height: 26px;
+}
+.clock-days {
+  min-width: 4ch;
+  color: var(--color-accent);
+  font-variant-numeric: tabular-nums;
 }
 
 /* Sections arrive one after another on load. */
