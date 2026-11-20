@@ -2,14 +2,18 @@
 
 import { useEffect, useRef } from "react";
 
-/* The one moving thing on the home page: a grid of dots behind the intro.
+/* The one moving thing on the home page: a grid of dots around the intro.
    A slow wave passes through it, and dots near the pointer swell and take
-   the accent colour. It reads its colours from the theme, stops when it is
-   off screen or the tab is hidden, and draws a still grid under
-   prefers-reduced-motion. */
+   the accent colour. The dots stay out of the text column at rest, so none
+   of them ever sits behind a word. It reads its colours from the theme,
+   stops when it is off screen or the tab is hidden, and draws a still grid
+   under prefers-reduced-motion. */
 
-const GAP = 22;
+const GAP = 24;
 const REACH = 150;
+/* Half-width kept clear around the centre line, and the fade beyond it. */
+const CLEAR = 300;
+const FADE = 80;
 
 function rgb(value: string): [number, number, number] {
   const v = value.trim().replace("#", "");
@@ -55,6 +59,8 @@ export function DotField() {
       pointer.x += (pointer.tx - pointer.x) * 0.14;
       pointer.y += (pointer.ty - pointer.y) * 0.14;
       const offX = ((w % GAP) + GAP) / 2;
+      // on a phone there is no margin; the stylesheet keeps the dots above the name
+      const narrow = w < 760;
 
       for (let y = GAP / 2; y < h; y += GAP) {
         for (let x = offX; x < w; x += GAP) {
@@ -64,8 +70,11 @@ export function DotField() {
           const near = pointer.on && d < REACH ? 1 - d / REACH : 0;
           const k = near * near;
 
-          const alpha = 0.12 + wave * 0.12 + k * 0.6;
-          const r = 0.9 + k * 1.7;
+          // 0 inside the text column, 1 out in the margins
+          const edge = narrow ? 1 : Math.min(1, Math.max(0, (Math.abs(x - w / 2) - CLEAR) / FADE));
+          const alpha = (0.14 + wave * 0.1) * edge + k * 0.6 * (0.35 + 0.65 * edge);
+          if (alpha < 0.004) continue;
+          const r = 1 + k * 1.7;
           const c0 = ink[0] + (accent[0] - ink[0]) * k;
           const c1 = ink[1] + (accent[1] - ink[1]) * k;
           const c2 = ink[2] + (accent[2] - ink[2]) * k;

@@ -38,14 +38,10 @@ function Arrow() {
 function Row({ href, name, line, tag }: { href: string; name: string; line: string; tag: string }) {
   const inner = (
     <>
-      <span className="min-w-0">
-        <span className="row-name">{name}</span>
-        {line && <span className="mt-0.5 block text-ink-2">{line}</span>}
-      </span>
-      <span className="tech flex shrink-0 items-center gap-1.5 pt-[3px] text-ink-3">
-        {tag}
-        <Arrow />
-      </span>
+      <span className="row-name">{name}</span>
+      <span className="row-tag tech">{tag}</span>
+      {line && <span className="row-line">{line}</span>}
+      <Arrow />
     </>
   );
   const internal = href.startsWith("/") && !href.endsWith(".pdf");
@@ -83,10 +79,7 @@ export default function Home() {
         <header>
           <div className="enter" style={{ "--i": 0 } as React.CSSProperties}>
             <h1 className="text-[22px] font-medium tracking-[-0.02em]">Raunak Sood</h1>
-            <p className="tech mt-2 text-ink-3">
-              Machine learning engineer
-              <span className="caret" aria-hidden />
-            </p>
+            <p className="tech mt-2 text-ink-3">Machine learning engineer</p>
           </div>
           <div className="enter mt-8 space-y-4" style={{ "--i": 1 } as React.CSSProperties}>
             <p>
@@ -108,7 +101,7 @@ export default function Home() {
         </header>
 
         <Section label="Projects" i={3}>
-          <ul>
+          <ul className="rows">
             {PROJECTS.map(([href, name, line, tag]) => (
               <Row key={href} href={href} name={name} line={line} tag={tag} />
             ))}
@@ -116,7 +109,7 @@ export default function Home() {
         </Section>
 
         <Section label="Writing" i={4}>
-          <ul>
+          <ul className="rows">
             {WRITING.map(([href, name, line, tag]) => (
               <Row key={href} href={href} name={name} line={line} tag={tag} />
             ))}

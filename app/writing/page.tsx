@@ -13,11 +13,9 @@ export const metadata: Metadata = {
 function Item({ title, blurb, meta }: { title: string; blurb: string; meta: string }) {
   return (
     <>
-      <span className="min-w-0">
-        <span className="row-name">{title}</span>
-        <span className="mt-1 block text-[14.5px] leading-[1.6] text-ink-2">{blurb}</span>
-      </span>
-      <span className="tech shrink-0 whitespace-nowrap pt-[3px] text-ink-3">{meta}</span>
+      <span className="row-name">{title}</span>
+      <span className="row-tag tech">{meta}</span>
+      <span className="row-line text-[14.5px] leading-[1.6]">{blurb}</span>
     </>
   );
 }
@@ -31,7 +29,7 @@ export default function WritingIndex() {
         <h2 className="sec">
           <span>Essays</span>
         </h2>
-        <ul>
+        <ul className="rows">
           {WRITING.map(([href, title, blurb, when]) => (
             <li key={href}>
               <Link href={href} className="row">
@@ -46,7 +44,7 @@ export default function WritingIndex() {
         <h2 className="sec">
           <span>Papers</span>
         </h2>
-        <ul>
+        <ul className="rows">
           {PAPERS.map(([href, title, blurb, meta]) => (
             <li key={href}>
               <a href={href} className="row">

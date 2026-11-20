@@ -1,19 +1,19 @@
 @import "tailwindcss";
 
-/* Light, always. White page, near-black ink, one accent kept for the figures. */
+/* White page, near-black ink, neutral greys, one accent kept for the figures. */
 
 @theme {
-  --color-paper: #fcfcfb;
-  --color-paper-2: #fbfbfa;
-  --color-paper-3: #f4f4f2;
-  --color-paper-4: #e8e8e5;
+  --color-paper: #ffffff;
+  --color-paper-2: #fafafa;
+  --color-paper-3: #f4f4f5;
+  --color-paper-4: #e8e8ea;
 
   --color-ink: #16181c;
   --color-ink-2: #4c5257;
-  --color-ink-3: #8b9199;
+  --color-ink-3: #6b7178;
 
-  --color-rule: #e6e6e3;
-  --color-rule-soft: #f0f0ee;
+  --color-rule: #e8e8ea;
+  --color-rule-soft: #f1f1f2;
 
   --color-shallow: #6fb4c8;
   --color-sea: #10657f;
@@ -40,7 +40,7 @@
 
   --color-ink: #ededee;
   --color-ink-2: #a5a5ab;
-  --color-ink-3: #6c6c74;
+  --color-ink-3: #8a8a93;
 
   --color-rule: #242428;
   --color-rule-soft: #19191c;
@@ -206,7 +206,7 @@ h2.sec {
   font-family: var(--font-mono);
   font-size: 11.5px;
   font-weight: 500;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-ink-3);
 }
@@ -215,12 +215,20 @@ h2.sec::after {
   flex: 1;
   height: 1px;
   background: var(--color-rule);
+  transform-origin: left;
+  animation: draw 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--i, 0) * 55ms + 140ms);
+}
+@keyframes draw {
+  from {
+    transform: scaleX(0);
+  }
 }
 
 .tech {
   font-family: var(--font-mono);
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.1em;
   font-size: 11.5px;
   font-weight: 500;
 }
@@ -236,6 +244,12 @@ h2.sec::after {
   pointer-events: none;
   -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 45%, transparent 100%);
   mask-image: linear-gradient(to bottom, #000 0%, #000 45%, transparent 100%);
+}
+@media (max-width: 759px) {
+  .dot-field {
+    -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 70px, transparent 150px);
+    mask-image: linear-gradient(to bottom, #000 0, #000 70px, transparent 150px);
+  }
 }
 
 /* Sections arrive one after another on load. */
@@ -254,27 +268,6 @@ h2.sec::after {
   animation-delay: calc(var(--i, 0) * 55ms + 40ms);
 }
 
-/* A blinking block after the role line. */
-@keyframes blink {
-  0%,
-  55% {
-    opacity: 1;
-  }
-  56%,
-  100% {
-    opacity: 0;
-  }
-}
-.caret {
-  display: inline-block;
-  width: 7px;
-  height: 12px;
-  margin-left: 6px;
-  vertical-align: -1px;
-  background: var(--color-accent);
-  animation: blink 1.1s steps(1) infinite;
-}
-
 /* Links under the intro: small mono, underlined on hover. */
 .mlink {
   font-family: var(--font-mono);
@@ -284,7 +277,7 @@ h2.sec::after {
   text-decoration: underline;
   text-underline-offset: 4px;
   text-decoration-thickness: 1px;
-  text-decoration-color: var(--color-rule);
+  text-decoration-color: color-mix(in srgb, var(--color-ink) 30%, transparent);
   transition: color 0.15s, text-decoration-color 0.15s;
 }
 .mlink:hover {
@@ -292,33 +285,63 @@ h2.sec::after {
   text-decoration-color: var(--color-accent);
 }
 
-/* A row in a list: the whole line is the link. */
+/* A row in a list: the whole line is the link. Name and tag share a line,
+   the description sits under the name. */
 .row {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 24px;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 24px;
   margin: 0 -12px;
   padding: 10px 12px;
   border-radius: 8px;
-  transition: background-color 0.15s;
-}
-.row:hover {
-  background: var(--color-paper-3);
+  transition: background-color 0.15s, opacity 0.2s;
 }
 .row-name {
   font-weight: 500;
   color: var(--color-ink);
 }
+.row-tag {
+  padding-top: 3px;
+  white-space: nowrap;
+  color: var(--color-ink-3);
+  transition: transform 0.18s;
+}
+.row-line {
+  grid-column: 1;
+  margin-top: 2px;
+  color: var(--color-ink-2);
+}
 .row-arrow {
+  position: absolute;
+  top: 17px;
+  right: 12px;
   opacity: 0;
   transform: translate(-3px, 3px);
+  color: var(--color-accent);
   transition: opacity 0.18s, transform 0.18s;
 }
-.row:hover .row-arrow {
-  opacity: 1;
-  transform: none;
-  color: var(--color-accent);
+@media (hover: hover) {
+  .row:hover {
+    background: var(--color-paper-3);
+  }
+  .row:hover .row-tag {
+    transform: translateX(-16px);
+  }
+  .row:hover .row-arrow {
+    opacity: 1;
+    transform: none;
+  }
+  /* The rows you are not pointing at step back. */
+  .rows:hover .row:not(:hover) {
+    opacity: 0.55;
+  }
+}
+/* On a phone the description gets the full width. */
+@media (max-width: 520px) {
+  .row-line {
+    grid-column: 1 / -1;
+  }
 }
 
 .theme-toggle {
@@ -326,6 +349,7 @@ h2.sec::after {
   place-items: center;
   width: 26px;
   height: 26px;
+  margin-right: -6px;
   border-radius: 999px;
   color: var(--color-ink-3);
   cursor: pointer;
@@ -344,7 +368,7 @@ h2.sec::after {
     scroll-behavior: auto;
   }
   .enter,
-  .caret {
+  h2.sec::after {
     animation: none;
   }
 }
@@ -373,7 +397,7 @@ h2.sec::after {
   font-family: var(--font-mono);
   font-size: 11.5px;
   font-weight: 500;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-ink-3);
   transition: color 0.15s;
@@ -436,14 +460,14 @@ h2.sec::after {
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-ink-3);
 }
 .summary dd {
   font-size: 15px;
   line-height: 1.62;
-  color: var(--color-ink-2);
+  color: var(--color-ink);
 }
 @media (max-width: 520px) {
   .summary > div {
